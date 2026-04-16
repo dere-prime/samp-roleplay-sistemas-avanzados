@@ -1,0 +1,42 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build-normal",
+			"type": "shell",
+			"command": "${workspaceRoot}/pawncc/pawncc.exe",
+			"args": ["${file}", "--%", "-D${relativeFileDirname}", "-;+", "-(+", "-d2"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"isBackground": false,
+			"presentation": {
+				"reveal": "silent",
+				"panel": "dedicated"
+			},
+			"problemMatcher": "$pawncc"
+		},
+		{
+			"label": "build-prime",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceRoot}/pawncc/build-prime.ps1"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"isBackground": false,
+			"presentation": {
+				"reveal": "silent",
+				"panel": "dedicated"
+			},
+			"problemMatcher": "$pawncc"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+logs/log-core.log
+logs/warnings.log
+logs/errors.log
+logs/plugins/mysql.log
+server_log.txt
+gamemodes/prime.amx
+filterscripts/maps.amx
+crashinfo.txt
+Misc/Utilidades/samp-textdraw-editor/scriptfiles/export
+Misc/Utilidades/samp-textdraw-editor/scriptfiles/import
+Misc/Utilidades/samp-textdraw-editor/scriptfiles/projects
+Misc/Utilidades/samp-textdraw-editor/scriptfiles/projects.db

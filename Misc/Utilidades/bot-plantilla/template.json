@@ -1,0 +1,82 @@
+{
+  "roles": [
+    {
+      "name": "Owner",
+      "color": "#e74c3c"
+    },
+    {
+      "name": "Lead Developer",
+      "color": "#f1c40f"
+    },
+    {
+      "name": "Developer",
+      "color": "#2ecc71"
+    },
+    {
+      "name": "Tester",
+      "color": "#3498db"
+    }
+  ],
+
+  "categories": [
+    {
+      "name": "📢 Información"
+    },
+    {
+      "name": "💻 Desarrollo"
+    },
+    {
+      "name": "🧪 Testing"
+    },
+    {
+      "name": "🔊 Voz"
+    }
+  ],
+
+  "channels": [
+    {
+      "name": "anuncios",
+      "type": "text",
+      "category": "📢 Información",
+      "topic": "Anuncios oficiales del proyecto SA-MP"
+    },
+    {
+      "name": "reglas",
+      "type": "text",
+      "category": "📢 Información",
+      "topic": "Reglas internas del equipo"
+    },
+
+    {
+      "name": "general-dev",
+      "type": "text",
+      "category": "💻 Desarrollo",
+      "topic": "Chat general de desarrollo"
+    },
+    {
+      "name": "pawn-scripting",
+      "type": "text",
+      "category": "💻 Desarrollo",
+      "topic": "Código Pawn, gamemode y filterscripts"
+    },
+    {
+      "name": "bugs-y-fixes",
+      "type": "text",
+      "category": "💻 Desarrollo",
+      "topic": "Reporte y solución de bugs"
+    },
+
+    {
+      "name": "testing",
+      "type": "text",
+      "category": "🧪 Testing",
+      "topic": "Resultados de pruebas y testing del servidor"
+    },
+
+    {
+      "name": "Voz Desarrollo",
+      "type": "voice",
+      "category": "🔊 Voz"
+    }
+  ]
+}
