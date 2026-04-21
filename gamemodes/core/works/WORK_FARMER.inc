@@ -97,7 +97,7 @@ Farmer_StartWork(playerid) {
 }
 
 Farmer_EndWork(playerid) {
-	RemovePlayerStatusLabel(playerid);
+	#pragma unused playerid
 	return 1;
 }
 

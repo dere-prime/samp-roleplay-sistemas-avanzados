@@ -96,7 +96,7 @@ const MAX_PLAYERS = 100;
 #define MEMBERSHIP_COLOR "FFBF00"
 
 /* Hex */
-#define COLOR_FADE1 0xE6E6E6E6ºº
+#define COLOR_FADE1 0xE6E6E6E6
 #define COLOR_FADE2 0xC8C8C8C8
 #define COLOR_FADE3 0xAAAAAAAA
 #define COLOR_FADE4 0x8C8C8C8C
@@ -137,7 +137,7 @@ new
 	Jail_Areas[4],
 
 	server_hostname[][] = { //Max. 28c
-		"Android & PC",
+		"Android·PC",
 		"Rol bajo/medio",
 		"Invita a tus amigos!",
 		"Invita a tus enemigos!",
@@ -2391,6 +2391,7 @@ enum Temp_Enum {
 	pt_FARMER_PLANT_TIMER,
 	pt_NEEDED_REP_FOR_NEXT_LEVEL,
 	pt_BLACK_SCREEN_ANIMATOR,
+	pt_HEALTH_INDICATOR_TIMER
 };
 new PLAYER_TEMP[MAX_PLAYERS][Temp_Enum]; // PT (PlayerTemp), variables que no van a ser guardadas en base de datos.
 
@@ -3532,7 +3533,7 @@ public OnPlayerConnect(playerid) {
 	CancelSelectTextDrawEx(playerid);
 	SetPlayerScore(playerid, 0);
 	ResetPlayerWeapons(playerid);
-	SetPlayerColorEx(playerid, PLAYER_COLOR);
+	SetPlayerColor(playerid, PLAYER_COLOR);
 	CancelEdit(playerid);
 	clear_the_apperance_data(playerid);
 
@@ -3943,8 +3944,6 @@ public OnPlayerSpawn(playerid) {
 		SetCameraBehindPlayer(playerid);
 		PLAYER_TEMP[playerid][pt_TIMERS][3] = SetTimerEx("TogglePlayerControl", 2000, false, "ib", playerid, true);
 	}
-
-	RemovePlayerStatusLabel(playerid);
 	
 	if (PLAYER_TEMP[playerid][pt_WORKING_IN] != WORK_POLICE) SetPlayerSkin(playerid, PI[playerid][pi_SKIN]);
 	else SetPlayerSkin(playerid, PI[playerid][pi_POLICE_DUTY]);
@@ -3953,7 +3952,6 @@ public OnPlayerSpawn(playerid) {
 	SetPlayerToys(playerid);
 	if (PI[playerid][pi_STATE] != ROLEPLAY_STATE_HOSPITAL) SetPlayerWantedLevelEx(playerid, PI[playerid][pi_WANTED_LEVEL]);
 	SetPlayerArmedWeapon(playerid, 0);
-	SetPlayerNormalColor(playerid);
 	SetPlayerCityWeather(playerid);
 	GameTextForPlayer(playerid, "_", 500, 3);
 	PLAYER_TEMP[playerid][pt_CONTROL] = false;
@@ -4307,6 +4305,7 @@ public OnGameModeInit() {
 	FormatDialogStrings();
 	UsePlayerPedAnims();
 	CA_Init();
+	ShowNameTags(false);
 	return 1;
 }
 
@@ -10821,7 +10820,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 												if (connected)
 												{
 													CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_ONLINE_MEMBERS] --;
-													SetPlayerNormalColor(pid);
 													if (PLAYER_TEMP[playerid][pt_LAST_TERRITORY] != INVALID_STREAMER_ID)
 													{
 														TextDrawHideForPlayer(pid, Textdraws[textdraw_TERRITORY_BOX]);
@@ -10852,7 +10850,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 								CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_MEMBERS] --;
 								if (connected) {
 									CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_ONLINE_MEMBERS] --;
-									SetPlayerNormalColor(pid);
 									if (PLAYER_TEMP[playerid][pt_LAST_TERRITORY] != INVALID_STREAMER_ID)
 									{
 										TextDrawHideForPlayer(pid, Textdraws[textdraw_TERRITORY_BOX]);
@@ -11184,7 +11181,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					if (IsPlayerConnected(i)) {
 						if (PI[i][pi_CREW]) {
 							if (PI[i][pi_CREW] == PI[playerid][pi_CREW]) {
-								SetPlayerNormalColor(i);
 								HidePlayerGangZones(i);
 								if (PLAYER_TEMP[i][pt_LAST_TERRITORY] != INVALID_STREAMER_ID) {
 									TextDrawHideForPlayer(i, Textdraws[textdraw_TERRITORY_BOX]);
@@ -11240,8 +11236,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 									
 									mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "UPDATE player SET crew = NULL, crew_rank = 0 WHERE id = %d;", PI[playerid][pi_ID]);
 									mysql_tquery(handle_db, QUERY_BUFFER);
-									
-									SetPlayerNormalColor(playerid);
 									CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_MEMBERS] --;
 									CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_ONLINE_MEMBERS] --;
 									HidePlayerGangZones(playerid);
@@ -11263,8 +11257,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					
 					mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "UPDATE player SET crew = NULL, crew_rank = 0 WHERE id = %d;", PI[playerid][pi_ID]);
 					mysql_tquery(handle_db, QUERY_BUFFER);
-					
-					SetPlayerNormalColor(playerid);
 					CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_MEMBERS] --;
 					CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_ONLINE_MEMBERS] --;
 					HidePlayerGangZones(playerid);
@@ -12250,10 +12242,6 @@ public OnPlayerEnterDynamicArea(playerid, areaid) {
 					if (TERRITORIES[index][territory_WAR]) {
 						SendPlayerClientMessage(playerid, "Este territorio está siendo atacado por la banda '%s'.",CREW_INFO[ TERRITORIES[index][territory_ATTACKER_CREW_INDEX] ][crew_NAME]);
 						
-						new r, g, b, a;
-						HexToRGBA(CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR], r, g, b, a);
-						SetPlayerColorEx(playerid, RGBAToHex(r, g, b, 0));
-						
 						TextDrawShowForPlayer(playerid, Textdraws[textdraw_TERRITORY_BOX]);
 						TextDrawShowForPlayer(playerid, TERRITORIES[index][territory_TEXTDRAW]);
 					}
@@ -12300,7 +12288,6 @@ public OnPlayerLeaveDynamicArea(playerid, areaid) {
 			
 			if (TERRITORIES[index][territory_VALID]) {
 				if (PI[playerid][pi_CREW]) {
-					SetPlayerNormalColor(playerid);
 					TextDrawHideForPlayer(playerid, Textdraws[textdraw_TERRITORY_BOX]);
 					TextDrawHideForPlayer(playerid, TERRITORIES[index][territory_TEXTDRAW]);
 				}
@@ -15991,7 +15978,7 @@ public HungryThirstDown(playerid) {
 
 	new current_gettime = gettime();
 	
-	UpdatePlayerRoleplayStatus(playerid);
+	UpdatePlayerRoleplayNameInfo(playerid);
 
 	if (PI[playerid][pi_VIP]) {
 		if (current_gettime - PLAYER_TEMP[playerid][pt_LAST_SU_CHECK] > 300) {
@@ -18693,6 +18680,11 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 }
 
 public OnPlayerGiveDamage(playerid, damagedid, Float: amount, weaponid, bodypart) {
+	PLAYER_TEMP[playerid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
+	PLAYER_TEMP[damagedid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
+	UpdatePlayerRoleplayNameInfo(playerid);
+	UpdatePlayerRoleplayNameInfo(damagedid);
+
 	if (!PLAYER_WORKS[playerid][WORK_POLICE][pwork_SET]) {
 		if (gettime() > PLAYER_TEMP[playerid][pt_LAST_SAFE_ZONE_WARNING] + 60) {
 			if (IsPlayerInSafeZone(playerid)) {
@@ -21524,7 +21516,6 @@ public StartPlayerJob(playerid, work, vehicleid) {
 
 forward EndPlayerJob(playerid, work, bool:changeskin);
 public EndPlayerJob(playerid, work, bool:changeskin) {
-	RemovePlayerStatusLabel(playerid);
 	new const current_work_vehicle = GetPVarInt(playerid, "CurrentWorkVehicleid");
 
 	switch(PLAYER_TEMP[playerid][pt_WORKING_IN]) {
@@ -22117,10 +22108,6 @@ StartTerritoryAttack(crew_index, territory_index, time) {
 				if (IsPlayerInDynamicArea(i, TERRITORIES[territory_index][territory_AREA])) {	
 					if (PI[i][pi_WANTED_LEVEL] < 3)
 						SetPlayerWantedLevelEx(i, 3);
-
-					new r, g, b, a;
-					HexToRGBA(CREW_INFO[ PLAYER_TEMP[i][pt_CREW_INDEX] ][crew_COLOR], r, g, b, a);
-					SetPlayerColorEx(i, RGBAToHex(r, g, b, 0));
 					
 					TextDrawShowForPlayer(i, Textdraws[textdraw_TERRITORY_BOX]);
 					TextDrawShowForPlayer(i, TERRITORIES[territory_index][territory_TEXTDRAW]);
@@ -22180,8 +22167,6 @@ public UpdateTerritoryAttack(territory_index) {
 							GivePlayerCash(i, prize, true, false);
 							SendClientMessage(i, -1, prize_message);
 						}
-						SetPlayerNormalColor(i);
-						
 						TextDrawHideForPlayer(i, Textdraws[textdraw_TERRITORY_BOX]);
 						TextDrawHideForPlayer(i, TERRITORIES[territory_index][territory_TEXTDRAW]);
 					}
@@ -22219,8 +22204,6 @@ public UpdateTerritoryAttack(territory_index) {
 				if (PI[i][pi_CREW]) {
 					SendClientMessage(i, -1, message);
 					if (IsPlayerInDynamicArea(i, TERRITORIES[territory_index][territory_AREA])) {
-						SetPlayerNormalColor(i);
-						
 						TextDrawHideForPlayer(i, Textdraws[textdraw_TERRITORY_BOX]);
 						TextDrawHideForPlayer(i, TERRITORIES[territory_index][territory_TEXTDRAW]);
 					}
@@ -22251,11 +22234,6 @@ CountCrewPlayersInTerritory(crew_index, territory_index) {
 		}
 	}
 	return count;
-}
-
-SetPlayerColorEx(playerid, color) {
-	PLAYER_TEMP[playerid][pt_PLAYER_COLOR] = color;
-	return SetPlayerColor(playerid, color);
 }
 	
 LoadServerInfo() {

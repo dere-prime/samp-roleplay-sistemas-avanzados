@@ -8,7 +8,6 @@
 CMD:duty(playerid) {
 	if (PLAYER_TEMP[playerid][pt_ADMIN_SERVICE]) {
 		PLAYER_TEMP[playerid][pt_ADMIN_SERVICE] = false;
-        RemovePlayerStatusLabel(playerid);
 		SendPlayerClientMessage(playerid, "Ahora no estás de servicio como %s.", ADMIN_LEVELS[ PI[playerid][pi_ADMIN_LEVEL] ]);
 	} else {
 		PLAYER_TEMP[playerid][pt_ADMIN_SERVICE] = true;

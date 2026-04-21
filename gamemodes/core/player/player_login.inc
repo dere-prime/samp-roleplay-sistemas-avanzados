@@ -95,7 +95,6 @@ public OnPlayerLogin(playerid) {
 	SetPlayerHealthEx(playerid, PI[playerid][pi_HEALTH]);
 	SetPlayerArmourEx(playerid, PI[playerid][pi_ARMOUR]);
 	SetPlayerVirtualWorld(playerid, 0);
-	SetPlayerNormalColor(playerid);
 	StopAudioStreamForPlayer(playerid);
 	SetSpawnInfo(playerid, NO_TEAM, PI[playerid][pi_SKIN], PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], 0, 0, 0, 0, 0, 0);
 	SetPlayerInterior(playerid, PI[playerid][pi_INTERIOR]);
