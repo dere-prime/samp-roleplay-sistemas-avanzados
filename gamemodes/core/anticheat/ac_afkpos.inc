@@ -19,7 +19,7 @@ hook OnPlayerSpawn(playerid) {
     SetAFKPosInfo(playerid);
 }
 
-hook OnPlayerDeath(playerid, killerid, reason) {
+OnPlayerDeathAFK(playerid) {
     if(pAFKPosTimer[playerid] != -1) {
         KillTimer(pAFKPosTimer[playerid]);
         pAFKPosTimer[playerid] = -1;

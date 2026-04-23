@@ -14,7 +14,7 @@ public OnPlayerDeathRefresh(playerid) {
     if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK) {
         SetPlayerHud(playerid);
         if(PLAYER_TEMP[playerid][pt_GAME_STATE] == GAME_STATE_DEAD) SetPlayerHealthEx(playerid, 100.0);
-        SetCameraBehindPlayer(playerid);
+        //SetCameraBehindPlayer(playerid);
         SendAlertToMedics(playerid);
         
         if(pInjuredTimer[playerid] != -1) {
@@ -32,13 +32,35 @@ public OnPlayerDeathRefresh(playerid) {
     }
 }
 
+hook OnPlayerSpawn(playerid) {
+    if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK) {
+        SetPlayerHud(playerid);
+        if(PLAYER_TEMP[playerid][pt_GAME_STATE] == GAME_STATE_DEAD) SetPlayerHealthEx(playerid, 100.0);
+        SetCameraBehindPlayer(playerid);
+        SendAlertToMedics(playerid);
+        
+        if(pInjuredTimer[playerid] != -1) {
+            KillTimer(pInjuredTimer[playerid]);
+            pInjuredTimer[playerid] = -1;
+        }
+        pInjuredTimer[playerid] = SetTimerEx("UpdatePlayerInjured", 3000, false, "i", playerid);
+        
+        ApplyAnimation(playerid, "ped", "KO_skid_back", 4.1, false, false, false, true, 0, 1);
+        if(PI[playerid][pi_WANTED_LEVEL] > 0) SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido abatido, no podras hacer nada hasta que la {"#ERROR_COLOR"}policia te arreste{ffffff}.");
+        else {
+            SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Estas abatido. Espera a un {"#ERROR_COLOR"}medico{ffffff} para recibir atencion.");
+            SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Pulsa {"#ERROR_COLOR"}Y{ffffff} para morir pagando 5000{"#ERROR_COLOR"}${ffffff} si no quieres esperar.");
+        }
+    }
+}
+
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
     if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK) {
         if(newkeys & KEY_YES) {
-            if (gettime() > PLAYER_TEMP[playerid][pt_DEATH_TIME] + 30) {
+            if (gettime() > PLAYER_TEMP[playerid][pt_DEATH_TIME] + 5) {
                 Dialog_Show(playerid, Dialog:DeathConfirmation);
             } else {
-                ShowPlayerMessage(playerid, "Debes esperar 30 segundos desde la ultima vez que moriste.");
+                ShowPlayerTimeOut(PLAYER_TEMP[playerid][pt_DEATH_TIME], 5, playerid, "Debes esperar ~b~%s~w~ para poder ser enviado al hospital.");
             }
             return Y_HOOKS_BREAK_RETURN_1;
         }

@@ -4003,6 +4003,8 @@ public OnPlayerPrepareDeath(playerid, animlib[32], animname[32], &anim_lock, &re
 	if (PLAYER_TEMP[playerid][pt_KICKED] || !PLAYER_TEMP[playerid][pt_USER_LOGGED]) return 0;
 
 	DropEquippedCurrentWeapon(playerid);
+	OnPlayerDeathAFK(playerid);
+
 	PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 5;
 	
 	KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][16]);
@@ -4108,12 +4110,48 @@ public OnPlayerPrepareDeath(playerid, animlib[32], animname[32], &anim_lock, &re
 	}
 	
 	if (PLAYER_TEMP[playerid][pt_ALLOW_DEATH] && PI[playerid][pi_WANTED_LEVEL] <= 0 && (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || GetPlayerInterior(playerid) != 0 || GetPlayerVirtualWorld(playerid) != 0)) {
-		DisablePlayerInjuredMark(playerid);
 		PLAYER_TEMP[playerid][pt_HOSPITAL] = GetNearestHospitalForPlayer(playerid);
+
 		PI[playerid][pi_STATE] = ROLEPLAY_STATE_HOSPITAL;
+		DisablePlayerInjuredMark(playerid);
+		pos[0], pos[1], pos[2], pos[3]
+
+		new Float:pos[4];
+		GetHospitalSpawnPosition(PLAYER_TEMP[playerid][pt_HOSPITAL], pos[0], pos[1], pos[2], pos[3], PI[playerid][pi_INTERIOR], PI[playerid][pi_LOCAL_INTERIOR]);
+
+		DisablePlayerActiveStaticPos(playerid);
+		PI[playerid][pi_LOCAL_INTERIOR] = 0;
+		PLAYER_TEMP[playerid][pt_INTERIOR_INDEX] = -1;
+		SetSpawnInfo(playerid, NO_TEAM, PI[playerid][pi_SKIN], pos[0], pos[1], pos[2], pos[3], 0, 0, 0, 0, 0, 0);
+		SetPlayerPosEx(playerid, pos[0], pos[1], pos[2], pos[3], PI[playerid][pi_INTERIOR], 0);
+
+		TogglePlayerSpectatingEx(playerid, true);
+		SetPlayerInterior(playerid, 0);
+		SetPlayerVirtualWorld(playerid, 0);
 		PLAYER_TEMP[playerid][pt_PLAYER_FINISH_HOSPITAL] = false;
-		KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][16]);
-		SetSpawnInfo(playerid, NO_TEAM, PI[playerid][pi_SKIN], PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], 0, 0, 0, 0, 0, 0);
+		PI[playerid][pi_STATE] = ROLEPLAY_STATE_HOSPITAL;
+		PI[playerid][pi_LOCAL_INTERIOR] = 0;
+		if (PLAYER_TEMP[playerid][pt_INTERIOR_INDEX] != -1) {
+			CallLocalFunction("OnPlayerExitInterior", "ii", playerid, PLAYER_TEMP[playerid][pt_INTERIOR_INDEX]);
+		}
+		PLAYER_TEMP[playerid][pt_INTERIOR_INDEX] = -1;
+		PLAYER_TEMP[playerid][pt_PROPERTY_INDEX] = -1;
+		
+		PLAYER_TEMP[playerid][pt_HOSPITAL_LIFE] = 35.0;
+		UpdateHospitalSizeTextdrawLife(playerid);
+		KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][4]);
+		PLAYER_TEMP[playerid][pt_TIMERS][4] = SetTimerEx("HealthUp", 1000, false, "i", playerid);
+
+		DeleteIlegalInv(playerid);
+		PlayerTextDrawShow(playerid, PlayerTextdraws[playerid][ptextdraw_HOSPITAL][0]);
+		PlayerTextDrawShow(playerid, PlayerTextdraws[playerid][ptextdraw_HOSPITAL][1]);
+		PlayerTextDrawShow(playerid, PlayerTextdraws[playerid][ptextdraw_HOSPITAL][2]);
+		
+		ClearPlayerChat(playerid);
+		SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido trasladado al {"#ERROR_COLOR"}centro medico{ffffff} mas cercano. Espera tu recuperacion.");
+		
+		InterpolateCameraPos(playerid, Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][0], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][1], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][2], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][0], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][1], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][2], 1000, CAMERA_CUT);
+		InterpolateCameraLookAt(playerid, Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][3], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][4], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][5], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][3], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][4], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][5], 1000, CAMERA_CUT);
 	} else {	
 		PLAYER_TEMP[playerid][pt_ALLOW_DEATH] = false;
 		PLAYER_TEMP[playerid][pt_DEATH_TIME] = gettime();
@@ -15335,7 +15373,7 @@ GetNearestHospitalForPlayer(playerid) {
 	return closest;
 }
 
-GetHospitalSpawnPosition(hospital, &Float:x, &Float:y, &Float:z, &Float:angle, &interior, &local_interior, &rp_state) {
+GetHospitalSpawnPosition(hospital, &Float:x, &Float:y, &Float:z, &Float:angle, &interior = 0, &local_interior = 0, &rp_state = 0) {
 	angle = Hospital_Spawn_Positions[hospital][hspi_ANGLE];
 	x = Hospital_Spawn_Positions[hospital][hspi_X] + (2.0 * floatsin(-Hospital_Spawn_Positions[hospital][hspi_ANGLE], degrees));
 	y = Hospital_Spawn_Positions[hospital][hspi_Y] + (2.0 * floatcos(-Hospital_Spawn_Positions[hospital][hspi_ANGLE], degrees));
@@ -18674,6 +18712,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 
 public OnPlayerDamage(&playerid, &Float:amount, &issuerid, &WEAPON:weapon, &bodypart) {
 	if (issuerid == INVALID_PLAYER_ID || weapon == 55) return 1;
+	if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || PI[playerid][pi_STATE] == ROLEPLAY_STATE_ARRESTED || PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL) return 0;
 
 	PLAYER_TEMP[issuerid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
 	PLAYER_TEMP[playerid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
@@ -21815,6 +21854,7 @@ public StandUp(medic, playerid) {
 	else SetPlayerHealthEx(playerid, 25.0);
 	ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.1, 0, 0, 0, 0, 0, true);
 	ClearAnimations(playerid);
+	DisablePlayerInjuredMark(playerid);
 	FreezePlayer(playerid, 500);
 	return 1;
 }

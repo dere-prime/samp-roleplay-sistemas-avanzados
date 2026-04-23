@@ -38,7 +38,7 @@ CMD:debug(playerid) {
     return 1;
 }
 
-hook OnPlayerDeath(playerid, killerid, reason) {
+hook OnPlayerPrepareDeath(playerid, animlib[32], animname[32], &anim_lock, &respawn_time, killerid, reason) {
     SendDeathMessage(killerid, playerid, reason);
     return Y_HOOKS_CONTINUE_RETURN_1;
 }

@@ -36,8 +36,8 @@ CMD:dmute(playerid, params[]) {
 }
 
 CMD:dunmute(playerid, params[]) {
-    new to_playerid;
-    if (sscanf(params, "u", to_playerid)) return ShowPlayerMessage(playerid, "Parametros incorrectos, usa ~y~/dunmute <player_id>");
+    new to_playerid, reason[128];
+    if (sscanf(params, "us[128]", to_playerid, reason)) return ShowPlayerMessage(playerid, "Parametros incorrectos, usa ~y~/dunmute <player_id> <razon>");
     if (!IsPlayerConnected(to_playerid)) return SendPlayerClientMessage(playerid, "{666666}Jugador desconectado");
     if (PI[to_playerid][pi_ADMIN_LEVEL] > PI[playerid][pi_ADMIN_LEVEL]) return SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Error ·{ffffff}El rango administrativo de este jugador es superior al tuyo.");
 	if (gettime() > PI[to_playerid][pi_DOUBT_MUTE]) return SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Error ·{ffffff}Este jugador no está silenciado.");
@@ -45,7 +45,7 @@ CMD:dunmute(playerid, params[]) {
 	PI[to_playerid][pi_DOUBT_MUTE] = 0;
 	SendClientMessage(to_playerid, -1, "{"#ADMIN_COLOR"}Aviso ·{ffffff}Ya puedes volver a enviar dudas.");
 	SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Aviso ·{ffffff}%s (%d) ha sido des-silenciado.", PI[to_playerid][pi_NAME], to_playerid);
-    SendAdminPlayerModerationAd(playerid, to_playerid, "Admin - Canal Dudas", "Des-silenciado", "N/A");
+    SendAdminPlayerModerationAd(playerid, to_playerid, "Admin - Canal Dudas", "Des-silenciado", reason);
 
     CmdLog("dunmute");
 	return 1;

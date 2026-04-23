@@ -2011,9 +2011,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 	if (s_BeingResynced[playerid]) {
 		s_TrueDeath[playerid] = false;
-
 		SpawnPlayerInPlace(playerid);
-
 		return 0;
 	}
 
@@ -2052,7 +2050,6 @@ public OnPlayerRequestClass(playerid, classid)
 
 		SetPlayerVirtualWorld(playerid, WC_DEATH_WORLD);
 		SpawnPlayerInPlace(playerid);
-
 		return 0;
 	}
 }
@@ -3652,7 +3649,7 @@ static SetHealthBarVisible(playerid, bool:toggle)
 	}
 }
 
-static SpawnPlayerInPlace(playerid) {
+stock SpawnPlayerInPlace(playerid) {
 	new Float:x, Float:y, Float:z, Float:r;
 
 	GetPlayerPos(playerid, x, y, z);
@@ -4715,7 +4712,10 @@ public WC_PlayerDeathRespawn(playerid)
 
 	PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX] = GetPlayerAnimationIndex(playerid);
 
-	s_IsDying[playerid] = false;
+	if (s_IsDying[playerid]) {
+		OnPlayerDeathFinished(playerid, false, INVALID_PLAYER_ID, 255);
+		s_IsDying[playerid] = false;
+	}
 	s_TrueDeath[playerid] = false;
 
 	if (!OnPlayerDeathFinished(playerid, true, INVALID_PLAYER_ID, 255)) {
@@ -4741,9 +4741,6 @@ public WC_PlayerDeathRespawn(playerid)
 	);
 	GetPlayerFacingAngle(playerid, s_PlayerFallbackSpawnInfo[playerid][e_Rot]);
 
-	if (s_IsDying[playerid]) {
-		s_IsDying[playerid] = false;
-	}
 	if (PI[playerid][pi_HEALTH] == 0.0) {
 		PI[playerid][pi_HEALTH] = s_PlayerMaxHealth[playerid];
 	}
