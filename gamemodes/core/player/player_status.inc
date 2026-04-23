@@ -64,7 +64,7 @@ public UpdatePlayerRoleplayNameInfo(const playerid) {
         UpdateDynamic3DTextLabelText(PLAYER_TEMP[playerid][pt_STATUS_LABEL], -1, name_tag_info);
     }
     else {
-        PLAYER_TEMP[playerid][pt_STATUS_LABEL] = CreateDynamic3DTextLabel(name_tag_info, -1, 0.0, 0.0, 0.4, 20.0, playerid, .testlos = true);
+        PLAYER_TEMP[playerid][pt_STATUS_LABEL] = CreateDynamic3DTextLabel(name_tag_info, -1, 0.0, 0.0, 0.4, 40.0, playerid, .testlos = true);
     }
     return 1;
 }

@@ -2391,7 +2391,10 @@ enum Temp_Enum {
 	pt_FARMER_PLANT_TIMER,
 	pt_NEEDED_REP_FOR_NEXT_LEVEL,
 	pt_BLACK_SCREEN_ANIMATOR,
-	pt_HEALTH_INDICATOR_TIMER
+	pt_HEALTH_INDICATOR_TIMER,
+	pt_DEATH_ANIMLIB[32],
+	pt_DEATH_ANIMNAME[32],
+	pt_DEATH_ANIMINDEX
 };
 new PLAYER_TEMP[MAX_PLAYERS][Temp_Enum]; // PT (PlayerTemp), variables que no van a ser guardadas en base de datos.
 
@@ -3470,16 +3473,15 @@ new
 /* 
 	Header Modules afther IMPL code.
 */
-/* ETC */
 #include "core/etc/fetch_last_build"
-/* PLAYER */
 #include "core/player/inventory/header"
-/* WORKS */
 #include "core/works/work_info/header"
 
 /*
 	IMPL Gamemode Code and Others Modules
 */
+
+#include <weapon-config>
 
 /* MISSIONS  IMPL */
 #include "core/missions/core"
@@ -3520,6 +3522,9 @@ public OnPlayerConnect(playerid) {
 	PLAYER_TEMP[playerid][pt_LOGIN_KICK_TIMER] = -1;
 	PLAYER_TEMP[playerid][pt_REGISTER_UPDATES_TIMER] = -1;
 	PLAYER_TEMP[playerid][pt_REGISTER_UPDATES] = 0;
+	format(PLAYER_TEMP[playerid][pt_DEATH_ANIMLIB], 4, "ped");
+	format(PLAYER_TEMP[playerid][pt_DEATH_ANIMNAME], 13, "KO_skid_back");
+	PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX] = 1208;
 	for(new i = 0; i != MAX_OBJECTS_PER_ROUTE; i ++) TRASH_PLAYER_OBJECTS[playerid][i] = INVALID_STREAMER_ID;
 
 	GetPlayerName(playerid, PLAYER_TEMP[playerid][pt_NAME], 24);
@@ -3721,6 +3726,7 @@ public OnPlayerSpawn(playerid) {
 			PLAYER_TEMP[playerid][pt_LOGIN_KICK_TIMER] = -1;
 		}
 
+		UpdatePlayerRoleplayNameInfo(playerid);
 		format(PI[playerid][pi_IP], 16, "%s", PLAYER_TEMP[playerid][pt_IP]);
 		
 		if (PI[playerid][pi_CREW]) SetPlayerGangZones(playerid);
@@ -3993,7 +3999,7 @@ CMD:cpos(playerid, params[]) {
 	return 1;
 }
 
-hook OnPlayerDeath(playerid, killerid, reason) {
+public OnPlayerPrepareDeath(playerid, animlib[32], animname[32], &anim_lock, &respawn_time, killerid, reason) {
 	if (PLAYER_TEMP[playerid][pt_KICKED] || !PLAYER_TEMP[playerid][pt_USER_LOGGED]) return 0;
 
 	DropEquippedCurrentWeapon(playerid);
@@ -4101,38 +4107,24 @@ hook OnPlayerDeath(playerid, killerid, reason) {
 		}
 	}
 	
-	if (PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL) {
-		KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][15]);
-		PLAYER_TEMP[playerid][pt_PLAYER_FINISH_HOSPITAL] = true;
-		PI[playerid][pi_POLICE_JAIL_TIME] -= gettime() - PLAYER_TEMP[playerid][pt_ENTER_JAIL_TIME];
-		if (PI[playerid][pi_POLICE_JAIL_TIME] < 5) PI[playerid][pi_POLICE_JAIL_TIME] = 5;
-		PLAYER_TEMP[playerid][pt_ENTER_JAIL_TIME] = gettime();
-		SetSpawnInfo(playerid, NO_TEAM, PI[playerid][pi_SKIN], JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID] ][jail_X], JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID]  ][jail_Y], JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID]  ][jail_Z], JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID]  ][jail_ANGLE], 0, 0, 0, 0, 0, 0);
-		PI[playerid][pi_INTERIOR] = JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID]  ][jail_INTERIOR];
-		SetPlayerVirtualWorld(playerid, 0);
-		SetPlayerHealthEx(playerid, 100.0);
-		SetPlayerPosEx(playerid, JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID] ][jail_X], JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID]  ][jail_Y], JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID]  ][jail_Z], JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID]  ][jail_ANGLE], JAIL_POSITIONS[ PI[playerid][pi_POLICE_JAIL_ID]  ][jail_INTERIOR], 0, false);
-	} else {
-		if (PLAYER_TEMP[playerid][pt_ALLOW_DEATH] && PI[playerid][pi_WANTED_LEVEL] <= 0 && (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || GetPlayerInterior(playerid) != 0 || GetPlayerVirtualWorld(playerid) != 0)) {
-			DisablePlayerInjuredMark(playerid);
-			PLAYER_TEMP[playerid][pt_HOSPITAL] = GetNearestHospitalForPlayer(playerid);
-			PI[playerid][pi_STATE] = ROLEPLAY_STATE_HOSPITAL;
-			PLAYER_TEMP[playerid][pt_PLAYER_FINISH_HOSPITAL] = false;
-			KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][16]);
-			SetSpawnInfo(playerid, NO_TEAM, PI[playerid][pi_SKIN], PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], 0, 0, 0, 0, 0, 0);
-		} else {	
-            PLAYER_TEMP[playerid][pt_ALLOW_DEATH] = false;
-			PLAYER_TEMP[playerid][pt_DEATH_TIME] = gettime();
-			PI[playerid][pi_STATE] = ROLEPLAY_STATE_CRACK;
-			
-			GetPlayerPos(playerid, PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z]);
-			GetPlayerFacingAngle(playerid, PI[playerid][pi_ANGLE]);
-			SetSpawnInfo(playerid, NO_TEAM, PI[playerid][pi_SKIN], PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], 0, 0, 0, 0, 0, 0);
-			SetPlayerHealthEx(playerid, 100.0);
-			SetPlayerPosEx(playerid, PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], 0, 0, false);
-		}
+	if (PLAYER_TEMP[playerid][pt_ALLOW_DEATH] && PI[playerid][pi_WANTED_LEVEL] <= 0 && (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || GetPlayerInterior(playerid) != 0 || GetPlayerVirtualWorld(playerid) != 0)) {
+		DisablePlayerInjuredMark(playerid);
+		PLAYER_TEMP[playerid][pt_HOSPITAL] = GetNearestHospitalForPlayer(playerid);
+		PI[playerid][pi_STATE] = ROLEPLAY_STATE_HOSPITAL;
+		PLAYER_TEMP[playerid][pt_PLAYER_FINISH_HOSPITAL] = false;
+		KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][16]);
+		SetSpawnInfo(playerid, NO_TEAM, PI[playerid][pi_SKIN], PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], 0, 0, 0, 0, 0, 0);
+	} else {	
+		PLAYER_TEMP[playerid][pt_ALLOW_DEATH] = false;
+		PLAYER_TEMP[playerid][pt_DEATH_TIME] = gettime();
+		PI[playerid][pi_STATE] = ROLEPLAY_STATE_CRACK;
+		
+		GetPlayerPos(playerid, PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z]);
+		GetPlayerFacingAngle(playerid, PI[playerid][pi_ANGLE]);
+		SetSpawnInfo(playerid, NO_TEAM, PI[playerid][pi_SKIN], PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], 0, 0, 0, 0, 0, 0);
 	}
-	
+
+	UpdatePlayerRoleplayNameInfo(playerid);
 	PLAYER_TEMP[playerid][pt_GAME_STATE] = GAME_STATE_DEAD;
    	return 1;
 }
@@ -4306,6 +4298,7 @@ public OnGameModeInit() {
 	UsePlayerPedAnims();
 	CA_Init();
 	ShowNameTags(false);
+	SetRespawnTime(1000);
 	return 1;
 }
 
@@ -18679,34 +18672,32 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
     return 1;
 }
 
-public OnPlayerGiveDamage(playerid, damagedid, Float: amount, weaponid, bodypart) {
-	PLAYER_TEMP[playerid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
-	PLAYER_TEMP[damagedid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
-	UpdatePlayerRoleplayNameInfo(playerid);
-	UpdatePlayerRoleplayNameInfo(damagedid);
+public OnPlayerDamage(&playerid, &Float:amount, &issuerid, &WEAPON:weapon, &bodypart) {
+	if (issuerid == INVALID_PLAYER_ID || weapon == 55) return 1;
 
-	if (!PLAYER_WORKS[playerid][WORK_POLICE][pwork_SET]) {
-		if (gettime() > PLAYER_TEMP[playerid][pt_LAST_SAFE_ZONE_WARNING] + 60) {
-			if (IsPlayerInSafeZone(playerid)) {
-				SendPlayerClientMessage(playerid, "Estás en una zona segura, la policía ha sido avisada de la agresión.");
+	PLAYER_TEMP[issuerid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
+	PLAYER_TEMP[playerid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
+	UpdatePlayerRoleplayNameInfo(issuerid);
+	UpdatePlayerRoleplayNameInfo(playerid);
+
+	if (!PLAYER_WORKS[issuerid][WORK_POLICE][pwork_SET]) {
+		if (gettime() > PLAYER_TEMP[issuerid][pt_LAST_SAFE_ZONE_WARNING] + 60) {
+			if (IsPlayerInSafeZone(issuerid)) {
+				SendPlayerClientMessage(issuerid, "Estás en una zona segura, la policía ha sido avisada de la agresión.");
 				
 				new city[45], zone[45];
-				GetPlayerZones(playerid, city, zone);
+				GetPlayerZones(issuerid, city, zone);
 
-				if (!PI[playerid][pi_WANTED_LEVEL]) SetPlayerWantedLevelEx(playerid, 1);
+				if (!PI[issuerid][pi_WANTED_LEVEL]) SetPlayerWantedLevelEx(issuerid, 1);
 
 				new message[145];
-				format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {FFFFFF}%s está causando disturbios en {"#PRIMARY_COLOR"}%s, %s.", PLAYER_TEMP[playerid][pt_NAME], city, zone);
+				format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {FFFFFF}%s está causando disturbios en {"#PRIMARY_COLOR"}%s, %s.", PLAYER_TEMP[issuerid][pt_NAME], city, zone);
 				SendPoliceRadioMessage(-1, -1, message);
 				
-				PLAYER_TEMP[playerid][pt_LAST_SAFE_ZONE_WARNING] = gettime();
+				PLAYER_TEMP[issuerid][pt_LAST_SAFE_ZONE_WARNING] = gettime();
 			}
 		}
 	}
-    return 1;
-}
-
-public OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart) {
     return 1;
 }
 

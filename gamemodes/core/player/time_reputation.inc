@@ -3,7 +3,6 @@
 	Player time and reputation management
 		Prime Roleplay
 
-	TODO: Textdraw al subir de nivel
 */
 #include <YSI_Coding\y_hooks>
 

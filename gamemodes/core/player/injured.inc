@@ -9,7 +9,8 @@ hook OnPlayerDisconnect(playerid, reason) {
     }
 }
 
-hook OnPlayerSpawn(playerid) {
+forward OnPlayerDeathRefresh(playerid);
+public OnPlayerDeathRefresh(playerid) {
     if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK) {
         SetPlayerHud(playerid);
         if(PLAYER_TEMP[playerid][pt_GAME_STATE] == GAME_STATE_DEAD) SetPlayerHealthEx(playerid, 100.0);
@@ -22,7 +23,7 @@ hook OnPlayerSpawn(playerid) {
         }
         pInjuredTimer[playerid] = SetTimerEx("UpdatePlayerInjured", 3000, false, "i", playerid);
         
-        ApplyAnimation(playerid, "ped", "KO_skid_back", 4.1, false, false, false, true, 0, 1);
+        if(GetPlayerAnimationIndex(playerid) != PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX]) ApplyAnimation(playerid, PLAYER_TEMP[playerid][pt_DEATH_ANIMLIB], PLAYER_TEMP[playerid][pt_DEATH_ANIMNAME], 4.1, false, false, false, true, 0, 1);
         if(PI[playerid][pi_WANTED_LEVEL] > 0) SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido abatido, no podras hacer nada hasta que la {"#ERROR_COLOR"}policia te arreste{ffffff}.");
         else {
             SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Estas abatido. Espera a un {"#ERROR_COLOR"}medico{ffffff} para recibir atencion.");
@@ -68,15 +69,15 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
 	    GetPlayerPos(playerid, sx, sy, sz);
         RemovePlayerFromVehicle(playerid);
 		SetPlayerPos(playerid, sx, sy, sz);
-		if(GetPlayerAnimationIndex(playerid) != 1208) ApplyAnimation(playerid, "ped", "KO_skid_back", 4.1, false, false, false, true, 0, 1);
+		if(GetPlayerAnimationIndex(playerid) != PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX]) ApplyAnimation(playerid, PLAYER_TEMP[playerid][pt_DEATH_ANIMLIB], PLAYER_TEMP[playerid][pt_DEATH_ANIMNAME], 4.1, false, false, false, true, 0, 1);
 		return Y_HOOKS_BREAK_RETURN_1;
 	}
     return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 hook OnPlayerUpdate(playerid) {
-    if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK) {
-        if(GetPlayerAnimationIndex(playerid) != 1208) UpdatePlayerInjured(playerid);
+    if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK && PLAYER_TEMP[playerid][pt_GAME_STATE] == GAME_STATE_NORMAL) {
+        if(GetPlayerAnimationIndex(playerid) != PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX]) UpdatePlayerInjured(playerid);
         if (!IsPlayerActiveStaticPos(playerid)) SetPlayerActiveStaticPos(playerid);
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
@@ -90,7 +91,7 @@ public UpdatePlayerInjured(playerid) {
     }
     
 	if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK) {
-        if(GetPlayerAnimationIndex(playerid) != 1208) ApplyAnimation(playerid, "ped", "KO_skid_back", 4.1, false, false, false, true, 0, 1);
+        if(GetPlayerAnimationIndex(playerid) != PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX]) ApplyAnimation(playerid, PLAYER_TEMP[playerid][pt_DEATH_ANIMLIB], PLAYER_TEMP[playerid][pt_DEATH_ANIMNAME], 4.1, false, false, false, true, 0, 1);
         pInjuredTimer[playerid] = SetTimerEx("UpdatePlayerInjured", 3000, false, "i", playerid);
     }
 	return 1;
