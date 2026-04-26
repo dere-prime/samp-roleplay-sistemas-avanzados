@@ -12,7 +12,7 @@
 stock SendAdminAd(const text[]) {
 	foreach (new i : Player) {
 		if (IsPlayerConnected(i)) {
-			if (/*!IsPlayerMission(i) && */(PLAYER_TEMP[i][pt_GAME_STATE] == GAME_STATE_NORMAL || PLAYER_TEMP[i][pt_GAME_STATE] == GAME_STATE_DEAD) && PI[i][pi_CONFIG_ADMIN]) {
+			if (/*!IsPlayerMission(i) && */(PLAYER_TEMP[i][pt_GAME_STATE] == GAME_STATE_NORMAL) && PI[i][pi_CONFIG_ADMIN]) {
 				SendPlayerClientMessage(i, text);
 			}
 		}
