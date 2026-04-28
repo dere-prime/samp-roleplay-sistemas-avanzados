@@ -62,6 +62,10 @@ public LoadPlayerDataAndLogin(const playerid) {
                 cache_is_value_name_null(0, "crew", isnull_crew);
                 if (!isnull_crew) cache_get_value_name_int(0, "crew", PI[playerid][pi_CREW]);
                 cache_get_value_name_int(0, "crew_rank", PI[playerid][pi_CREW_RANK]);
+                cache_get_value_name(0, "current_health_bar_config", PI[playerid][pi_CURRENT_HEALTH_BAR_CONFIG], 64);
+                cache_get_value_name(0, "current_armour_bar_config", PI[playerid][pi_CURRENT_ARMOUR_BAR_CONFIG], 64);
+                cache_get_value_name_int(0, "health_bar_colour", PI[playerid][pi_HEALTH_BAR_COLOUR]);
+                cache_get_value_name_int(0, "armour_bar_colour", PI[playerid][pi_ARMOUR_BAR_COLOUR]);
                 CallLocalFunction("OnPlayerLogin", "i", playerid);
             }
             else Kick(playerid);
@@ -85,6 +89,7 @@ public OnPlayerLogin(playerid) {
 	LoadPlayerCrewInfo(playerid);
 	LoadPlayerMissions(playerid);
 	LoadPlayerInventory(playerid);
+    SetPlayerHealthyBarsConfig(playerid);
 
 	SetPlayerScore(playerid, PI[playerid][pi_LEVEL]);
 	PLAYER_TEMP[playerid][pt_DOUBT_CHANNEL_TIME] = gettime();

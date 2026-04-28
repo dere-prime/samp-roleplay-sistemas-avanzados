@@ -55,7 +55,10 @@ CancelPlayerTruckerJob(playerid) {
     p_truck_box[playerid] = false;
     p_truck_index[playerid] = 0;
     p_truck_loading_value[playerid] = 0;
-    if (IsPlayerWorking(playerid, WORK_TRUCK)) CallLocalFunction("EndPlayerJob", "iib", playerid, PLAYER_TEMP[playerid][pt_WORKING_IN], true);
+    if (IsPlayerWorking(playerid, WORK_TRUCK)) {
+        EnablePlayerArmedWeapons(playerid);
+        PLAYER_TEMP[playerid][pt_WORKING_IN] = WORK_NONE;
+    }
 }
 
 ResetTruckInfo(const vehicleid) { 

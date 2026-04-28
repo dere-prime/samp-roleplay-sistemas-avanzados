@@ -3,6 +3,17 @@
 		by: dere.prime
 */
 
+/*
+*
+*	Simbolos Utiles
+*
+*	•
+*	»
+*	«
+*	¿
+*
+*/
+
 @___If_u_can_read_this_u_r_nerd();
 @___If_u_can_read_this_u_r_nerd() {
 	#emit stack 0x7FFFFFFF
@@ -56,6 +67,8 @@ const MAX_PLAYERS = 100;
 #include <pawn-easing-functions>
 #include <mdialog>
 #include <eselection>
+#include <progress2>
+#include <mobile-checker>
 
 #define MAX_BAD_LOGIN_ATTEMPS 3
 #define LOGIN_TIME (3 * 60000)
@@ -1338,7 +1351,8 @@ enum
 	CHECKPOINT_TYPE_TRUCK_CARRY,
 	CHECKPOINT_TYPE_TRUCK_PUT,
 	CHECKPOINT_TYPE_TRUCK_UNLOAD,
-	CHECKPOINT_TYPE_TRUCK_RETURN
+	CHECKPOINT_TYPE_TRUCK_RETURN,
+	CHECKPOINT_TYPE_RAPPELLING
 }
 
 #define MAX_PLAYER_GPS_SAVES	10
@@ -2393,7 +2407,8 @@ enum Temp_Enum {
 	pt_HEALTH_INDICATOR_TIMER,
 	pt_DEATH_ANIMLIB[32],
 	pt_DEATH_ANIMNAME[32],
-	pt_DEATH_ANIMINDEX
+	pt_DEATH_ANIMINDEX,
+	pt_PLAYER_PLATFORM
 };
 new PLAYER_TEMP[MAX_PLAYERS][Temp_Enum]; // PT (PlayerTemp), variables que no van a ser guardadas en base de datos.
 
@@ -3333,7 +3348,11 @@ enum enum_PI
 	pi_DOUBT_MUTE,
 	pi_PLACA_PD,
 	pi_CREW,
-	pi_CREW_RANK
+	pi_CREW_RANK,
+	pi_CURRENT_HEALTH_BAR_CONFIG[64],
+	pi_CURRENT_ARMOUR_BAR_CONFIG[64],
+	pi_HEALTH_BAR_COLOUR,
+	pi_ARMOUR_BAR_COLOUR
 };
 new PI[MAX_PLAYERS][enum_PI];
 
@@ -3480,6 +3499,7 @@ new
 	IMPL Gamemode Code and Others Modules
 */
 
+#include "core/vehicles/rappelling/header"
 #include "core/player/weapon-config"
 
 /* MISSIONS  IMPL */
@@ -3524,6 +3544,7 @@ public OnPlayerConnect(playerid) {
 	format(PLAYER_TEMP[playerid][pt_DEATH_ANIMLIB], 4, "ped");
 	format(PLAYER_TEMP[playerid][pt_DEATH_ANIMNAME], 13, "KO_skid_back");
 	PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX] = 1208;
+	PLAYER_TEMP[playerid][pt_PLAYER_PLATFORM] = IsPlayerUsingSampMobile(playerid);
 	for(new i = 0; i != MAX_OBJECTS_PER_ROUTE; i ++) TRASH_PLAYER_OBJECTS[playerid][i] = INVALID_STREAMER_ID;
 
 	GetPlayerName(playerid, PLAYER_TEMP[playerid][pt_NAME], 24);
@@ -4173,8 +4194,7 @@ FormatDialogStrings() {
 	//Colores bandas
 	format(DIALOG_CREATE_CREW_COLOR_String, sizeof DIALOG_CREATE_CREW_COLOR_String, "");
 	for(new i = 0; i != sizeof(RandomColors); i++) {
-		format(Dialog_Lines_String, sizeof(Dialog_Lines_String), "{%06x}color %d\n", RandomColors[i] >>> 8, i + 1);
-		strcat(DIALOG_CREATE_CREW_COLOR_String, Dialog_Lines_String);
+		strcatf(DIALOG_CREATE_CREW_COLOR_String, "{%06x}color %d\n", RandomColors[i] >>> 8, i + 1);
 	}
 	
 	//Animaciones
@@ -18505,9 +18525,33 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
     return 1;
 }
 
+public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ) {
+	if (PI[playerid][pi_ADMIN_LEVEL] >= CMD_MODERATOR) {
+		PLAYER_AC_INFO[playerid][CHEAT_POS][p_ac_info_IMMUNITY] = gettime() + 3;
+		PLAYER_AC_INFO[playerid][CHEAT_STATE_SPAMMER][p_ac_info_IMMUNITY] = gettime() + 3;
+		PLAYER_AC_INFO[playerid][CHEAT_UNOCCUPIED_VEHICLE_TP][p_ac_info_IMMUNITY] = gettime() + 5;
+		
+		new Float:terrain_z;
+		CA_FindZ_For2DCoord(fX, fY, terrain_z);
+
+		PI[playerid][pi_POS_X] = fX;
+		PI[playerid][pi_POS_Y] = fY;
+		PI[playerid][pi_POS_Z] = terrain_z;
+
+		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
+			new vehicleid = GetPlayerVehicleID(playerid);
+			SetVehiclePos(vehicleid, fX, fY, terrain_z + 2.0);
+		} else {
+			SetPlayerPos(playerid, fX, fY, terrain_z + 2.0);
+		}
+	}
+	return 1;
+}
+
 public OnPlayerDamage(&playerid, &Float:amount, &issuerid, &WEAPON:weapon, &bodypart) {
 	if (issuerid == INVALID_PLAYER_ID || weapon == 55) return 1;
 	if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || PI[playerid][pi_STATE] == ROLEPLAY_STATE_ARRESTED || PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL) return 0;
+	if (issuerid == INVALID_PLAYER_ID && rappelling_data[playerid][r_rappelling]) return 0;
 
 	PLAYER_TEMP[issuerid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
 	PLAYER_TEMP[playerid][pt_HEALTH_INDICATOR_TIMER] = gettime() + 15;
@@ -22351,6 +22395,7 @@ CMD:revivir(playerid, params[]) {
 	ApplyAnimation(to_player, "CARRY", "crry_prtial", 4.1, 0, 0, 0, 0, 0, true);
 	ClearAnimations(to_player);
 	DisablePlayerActiveStaticPos(to_player);
+	FreezePlayer(to_player, 500);
 	
 	SendCmdLogToAdmins(playerid, "revivir", params);
 	return 1;
@@ -24009,7 +24054,11 @@ SavePlayerData(playerid) {
 					doubt_mute = %d,\
 					placa_pd = %d,\
 					crew = %s,\
-					crew_rank = %d \
+					crew_rank = %d,\
+					current_health_bar_config = '%e',\
+					current_armour_bar_config = '%e',\
+					health_bar_colour = %d,\
+					health_bar_colour = %d \
 				WHERE id = %d;\
 			",
 				PI[playerid][pi_NAME], PI[playerid][pi_IP], PI[playerid][pi_EMAIL], PI[playerid][pi_SALT], PI[playerid][pi_PASS], PI[playerid][pi_REG_DATE], PI[playerid][pi_LAST_CONNECTION],
@@ -24022,6 +24071,8 @@ SavePlayerData(playerid) {
 				PI[playerid][pi_PHONE_STATE], PI[playerid][pi_PHONE_VISIBLE_NUMBER], PI[playerid][pi_CONFIG_SOUNDS], PI[playerid][pi_CONFIG_AUDIO], 
 				PI[playerid][pi_CONFIG_TIME], PI[playerid][pi_CONFIG_HUD],
 				PI[playerid][pi_CONFIG_ADMIN], PI[playerid][pi_DOUBT_MUTE], PI[playerid][pi_PLACA_PD], tmp_crew, PI[playerid][pi_CREW_RANK],
+				PI[playerid][pi_CURRENT_HEALTH_BAR_CONFIG], PI[playerid][pi_CURRENT_ARMOUR_BAR_CONFIG],
+				PI[playerid][pi_HEALTH_BAR_COLOUR], PI[playerid][pi_ARMOUR_BAR_COLOUR],
 				PI[playerid][pi_ID]
 		);
 		mysql_tquery(handle_db, QUERY_BUFFER);
@@ -24085,7 +24136,6 @@ SavePlayerWorkLevels(playerid) {
 	}
 #endif
 
-native gpci(playerid, serial[], len);
 CheckPlayerFakeClient(playerid) //experimental
 {  
     if (IsPlayerNPC(playerid)) return 0;
@@ -24485,6 +24535,7 @@ stock GetPlayerNearVehicle(playerid, Float:radi = 5.0) {
 #include "core/player/static_pos"
 #include "core/player/time_reputation"
 #include "core/player/account_info"
+#include "core/player/healty_bars"
 
 /* Administration Commands */
 #include "core/administration/commands/data_management"
@@ -24493,6 +24544,7 @@ stock GetPlayerNearVehicle(playerid, Float:radi = 5.0) {
 #include "core/administration/commands/moderation"
 
 /* Vehicles */
+#include "core/vehicles/rappelling/impl"
 #include "core/vehicles/speedo"
 #include "core/vehicles/air_speedo"
 #include "core/vehicles/air_veh_fuel"

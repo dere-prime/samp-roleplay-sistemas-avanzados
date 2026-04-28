@@ -1842,7 +1842,6 @@ public OnPlayerDeath(playerid, killerid, WEAPON:reason) {
 	}
 
 	UpdateHealthBar(playerid, .forcesync = true);
-
 	return 1;
 }
 
@@ -3154,15 +3153,14 @@ static UpdateHealthBar(playerid, bool:force = false, bool:forcesync = false) {
 		SetPlayerHealth(playerid, 8000000.0 + float(health));
 
 		if (s_HealthBarVisible[playerid] && !s_IsDying[playerid]) {
-
+			UpdateShowPlayerHealthyBars(playerid, false);
 		} else {
-
+			HidePlayerHealthyBars(playerid);
 		}
 	}
 
 	if (armour != s_LastSentArmour[playerid]) {
 		s_LastSentArmour[playerid] = armour;
-
 		SetPlayerArmour(playerid, float(armour));
 	}
 }
@@ -3180,7 +3178,7 @@ static SetHealthBarVisible(playerid, bool:toggle) {
 	if (toggle) {
 		UpdateHealthBar(playerid, true);
 	} else {
-
+		HidePlayerHealthyBars(playerid);
 	}
 }
 
@@ -3859,6 +3857,9 @@ static PlayerDeath(playerid, animlib[32], animname[32], bool:anim_lock = false, 
 	}
 
 	PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX] = GetAnimIndexByName(animname);
+	PLAYER_TEMP[playerid][pt_DEATH_ANIMLIB] = animlib;
+	PLAYER_TEMP[playerid][pt_DEATH_ANIMNAME] = animname;
+	
 	if (animlib[0] && animname[0]) {
 		ApplyAnimation(playerid, animlib, animname, 4.1, false, anim_lock, anim_lock, anim_freeze, 0, FORCE_SYNC:1);
 	} else {

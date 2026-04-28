@@ -245,7 +245,7 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
 	    GetPlayerPos(playerid, sx, sy, sz);
         RemovePlayerFromVehicle(playerid);
 		SetPlayerPos(playerid, sx, sy, sz);
-		if(GetPlayerAnimationIndex(playerid) != PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX]) ApplyAnimation(playerid, PLAYER_TEMP[playerid][pt_DEATH_ANIMLIB], PLAYER_TEMP[playerid][pt_DEATH_ANIMNAME], 4.1, false, false, false, true, 0, 1);
+		if(GetPlayerAnimationIndex(playerid) != PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX]) UpdatePlayerInjured(playerid);
 		return Y_HOOKS_BREAK_RETURN_1;
 	}
     return Y_HOOKS_CONTINUE_RETURN_1;

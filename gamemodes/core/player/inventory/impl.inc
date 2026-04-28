@@ -898,6 +898,9 @@ DialogResponse:PlayerTrickObject(playerid, response, listitem, inputtext[]) {
 
             HidePlayerInventory(PLAYER_TEMP[playerid][pt_TRICK_SELLER_PID]);
             HidePlayerInventory(playerid);
+
+            UpdateSetPlayerEquippedWeapons(PLAYER_TEMP[playerid][pt_TRICK_SELLER_PID]);
+            UpdateSetPlayerEquippedWeapons(playerid);
         }
     } else {
         if (gettime() > PLAYER_TEMP[playerid][pt_TRICK_TIME] + 20) return 1;

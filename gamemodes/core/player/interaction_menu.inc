@@ -24,7 +24,8 @@ new g_interaction_menu_options[][] = {
     "Estadisticas",
     "Experiencia",
     "Inventario",
-    "Configuracion"
+    "Configuracion",
+    "Editar barras del hud"
 };
 
 /* IMPL */
@@ -58,6 +59,7 @@ DialogResponse:InteractionMenu(playerid, response, listitem, inputtext[]) {
             case 11: ShowPlayerSkills(playerid, playerid);
             case 12: ShowPlayerInventory(playerid);
             case 13: PC_EmulateCommand(playerid, "/panel");
+            case 14: Dialog_Show(playerid, Dialog:HealthyBarsEditor);
         }
     }
     return 1;
