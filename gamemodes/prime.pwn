@@ -861,6 +861,8 @@ forward OnCrewLeftTerritory(crewId, crewIndex, territoryId, territoryIndex);
 new RandomColors[] =
 {
 	0xFFFFFFFF,
+	0xDBDBDBFF,
+	0xFF1A44FF,
 	0x000000FF,
     0x99CC00FF,
     0xFF9900FF,
@@ -24058,7 +24060,7 @@ SavePlayerData(playerid) {
 					current_health_bar_config = '%e',\
 					current_armour_bar_config = '%e',\
 					health_bar_colour = %d,\
-					health_bar_colour = %d \
+					armour_bar_colour = %d \
 				WHERE id = %d;\
 			",
 				PI[playerid][pi_NAME], PI[playerid][pi_IP], PI[playerid][pi_EMAIL], PI[playerid][pi_SALT], PI[playerid][pi_PASS], PI[playerid][pi_REG_DATE], PI[playerid][pi_LAST_CONNECTION],

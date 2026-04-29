@@ -31,8 +31,8 @@
 #define PC_ARMOUR_POS "546.0,46.0,63.0,10.0"
 #define PC_HEALTH_POS "546.0,65.0,63.0,10.0"
 
-#define DEFAULT_HEALTH_BAR_COLOR 0xFF1A44FF
-#define DEFAULT_ARMOUR_BAR_COLOR 0xDBDBDBFF
+#define DEFAULT_HEALTH_BAR_COLOR 2
+#define DEFAULT_ARMOUR_BAR_COLOR 1
 
 static PlayerText: healthy_bars_ptd[MAX_PLAYERS][HEALTHY_BARS_TD] = {PlayerText:INVALID_TEXT_DRAW, ...}; //healthy bars editor
 static bool: player_editing_healthy_bar[MAX_PLAYERS];
@@ -49,7 +49,7 @@ UpdatePlayerHealthBar(const playerid) {
         SetPlayerProgressBarPos(playerid, PlayerBar_Health[playerid], player_health_bar_config[playerid][0], player_health_bar_config[playerid][1]);
         SetPlayerProgressBarHeight(playerid, PlayerBar_Health[playerid], player_health_bar_config[playerid][3]);
         SetPlayerProgressBarWidth(playerid, PlayerBar_Health[playerid], player_health_bar_config[playerid][2]);
-        SetPlayerProgressBarColour(playerid, PlayerBar_Health[playerid], (PI[playerid][pi_HEALTH_BAR_COLOUR] | 0x000000FF));
+        SetPlayerProgressBarColour(playerid, PlayerBar_Health[playerid], RandomColors[ PI[playerid][pi_HEALTH_BAR_COLOUR] ]);
         return 1;
     }
     return 0;
@@ -60,7 +60,7 @@ UpdatePlayerArmourBar(const playerid) {
         SetPlayerProgressBarPos(playerid, PlayerBar_Armour[playerid], player_armour_bar_config[playerid][0], player_armour_bar_config[playerid][1]);
         SetPlayerProgressBarHeight(playerid, PlayerBar_Armour[playerid], player_armour_bar_config[playerid][3]);
         SetPlayerProgressBarWidth(playerid, PlayerBar_Armour[playerid], player_armour_bar_config[playerid][2]);
-        SetPlayerProgressBarColour(playerid, PlayerBar_Armour[playerid], (PI[playerid][pi_ARMOUR_BAR_COLOUR] | 0x000000FF));
+        SetPlayerProgressBarColour(playerid, PlayerBar_Armour[playerid],RandomColors[ PI[playerid][pi_ARMOUR_BAR_COLOUR] ]);
         return 1;
     }
     return 0;
@@ -102,8 +102,8 @@ CreatePlayerHealthyBars(const playerid) {
     PI[playerid][pi_HEALTH_BAR_COLOUR] = DEFAULT_HEALTH_BAR_COLOR;
     PI[playerid][pi_ARMOUR_BAR_COLOUR] = DEFAULT_ARMOUR_BAR_COLOR;
 
-    PlayerBar_Health[playerid] = CreatePlayerProgressBar(playerid, player_health_bar_config[playerid][0], player_health_bar_config[playerid][1], player_health_bar_config[playerid][2], player_health_bar_config[playerid][3], PI[playerid][pi_HEALTH_BAR_COLOUR]);
-    PlayerBar_Armour[playerid] = CreatePlayerProgressBar(playerid, player_armour_bar_config[playerid][0], player_armour_bar_config[playerid][1], player_armour_bar_config[playerid][2], player_armour_bar_config[playerid][3], PI[playerid][pi_ARMOUR_BAR_COLOUR]);
+    PlayerBar_Health[playerid] = CreatePlayerProgressBar(playerid, player_health_bar_config[playerid][0], player_health_bar_config[playerid][1], player_health_bar_config[playerid][2], player_health_bar_config[playerid][3], RandomColors[ PI[playerid][pi_HEALTH_BAR_COLOUR] ]);
+    PlayerBar_Armour[playerid] = CreatePlayerProgressBar(playerid, player_armour_bar_config[playerid][0], player_armour_bar_config[playerid][1], player_armour_bar_config[playerid][2], player_armour_bar_config[playerid][3], RandomColors[ PI[playerid][pi_ARMOUR_BAR_COLOUR] ]);
     return 1;
 }
 
@@ -183,11 +183,11 @@ DialogCreate:ArmourBarColorSelect(playerid) { Dialog_Open(playerid, Dialog:Armou
 DialogCreate:HealthBarColorSelect(playerid) { Dialog_Open(playerid, Dialog:HealthBarColorSelect, DIALOG_STYLE_TABLIST, "{"#PRIMARY_COLOR"}·{ffffff}Color barra vida", DIALOG_CREATE_CREW_COLOR_String, "Seleccionar", "Cancelar"); }
 
 DialogResponse:ArmourBarColorSelect(playerid, response, listitem, inputtext[]) { 
-    if (response) { PI[playerid][pi_ARMOUR_BAR_COLOUR] = RandomColors[listitem]; UpdateShowPlayerHealthyBars(playerid); } 
+    if (response) { PI[playerid][pi_ARMOUR_BAR_COLOUR] = listitem; UpdateShowPlayerHealthyBars(playerid); } 
     return 1; 
 }
 DialogResponse:HealthBarColorSelect(playerid, response, listitem, inputtext[]) { 
-    if (response) { PI[playerid][pi_HEALTH_BAR_COLOUR] = RandomColors[listitem]; UpdateShowPlayerHealthyBars(playerid); } 
+    if (response) { PI[playerid][pi_HEALTH_BAR_COLOUR] = listitem; UpdateShowPlayerHealthyBars(playerid); } 
     return 1; 
 }
 
