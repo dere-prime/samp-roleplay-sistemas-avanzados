@@ -115,6 +115,7 @@ public OnPlayerTimeUpdate(const playerid) {
 		ShowPlayerLevelUp(playerid);
 		UpdatePlayerRepBar(playerid);
 		OnPlayerTimeUpdate(playerid);
+		SetPlayerSkillLevels(playerid);
 	}
 
 	p_time_update_timer[playerid] = SetTimerEx("OnPlayerTimeUpdate", 60000, false, "i", playerid);

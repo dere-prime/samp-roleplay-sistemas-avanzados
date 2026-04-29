@@ -7,10 +7,10 @@
 #include <YSI_Coding\y_hooks>
 
 /* RECEPCIONIST */
-static recepcionist_actor = INVALID_ACTOR_ID;
-static recepcionist_timer[MAX_PLAYERS] = -1;
+static taxi_recepcionist_actor = INVALID_ACTOR_ID;
+static taxi_recepcionist_timer[MAX_PLAYERS] = -1;
 hook OnScriptInit() {
-    recepcionist_actor = CreateDynamicActor(9, -1740.2566, 471.1222, 2166.2393, 88.8870, .worldid = 3, .interiorid = 3);
+    taxi_recepcionist_actor = CreateDynamicActor(9, -1740.2566, 471.1222, 2166.2393, 88.8870, .worldid = 3, .interiorid = 3);
     CreateDynamic3DTextLabel("Recepcionista", 0xCCCCCCCC, -1740.2566, 471.1222, 2166.2393 + 1.1, 10.0, .testlos = true, .worldid = 3, .interiorid = 3);
     CreateDynamic3DTextLabel("Acercate para hablar con la recepcionista", 0xCCCCCCCC, -1742.5781, 471.2834, 2166.2485, 5.0, .testlos = true, .worldid = 3, .interiorid = 3);
     new info[3], talk_pickup = CreateDynamicPickup(1314, 1, -1742.5781, 471.2834, 2166.2485, 3, 3);
@@ -24,19 +24,19 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid) {
 	new info[3];
 	Streamer_GetArrayData(STREAMER_TYPE_PICKUP, pickupid, E_STREAMER_EXTRA_ID, info);
 	if (info[0] == PICKUP_TYPE_TAXI_RECEPCIONIST) {
-        if (recepcionist_timer[playerid] != -1) {
-            KillTimer(recepcionist_timer[playerid]);
-            recepcionist_timer[playerid] = -1;
+        if (taxi_recepcionist_timer[playerid] != -1) {
+            KillTimer(taxi_recepcionist_timer[playerid]);
+            taxi_recepcionist_timer[playerid] = -1;
         }
     	TogglePlayerControllableEx(playerid, false);
-        ApplyDynamicActorAnimation(recepcionist_actor, "GANGS", "prtial_gngtlkH", 4.1, false, false, false, false, 0);
-        ApplyDynamicActorAnimation(recepcionist_actor, "GANGS", "prtial_gngtlkH", 4.1, false, false, false, false, 0);
+        ApplyDynamicActorAnimation(taxi_recepcionist_actor, "GANGS", "prtial_gngtlkH", 4.1, false, false, false, false, 0);
+        ApplyDynamicActorAnimation(taxi_recepcionist_actor, "GANGS", "prtial_gngtlkH", 4.1, false, false, false, false, 0);
         if (IsPlayerWork(playerid, WORK_TAXI)) {
             ShowPlayerMissionDialog(playerid, 9, "Recepcionista", "Bienvenido de nuevo, ¿Que te trae por aqui?~n~Bueno, no importa, te mostrare el menu de ayuda, dame unos segundos.");
-            recepcionist_timer[playerid] = SetTimerEx("TaxistHelpTimer", 4000, false, "ii", playerid, true);
+            taxi_recepcionist_timer[playerid] = SetTimerEx("TaxistHelpTimer", 4000, false, "ii", playerid, true);
         } else {
             ShowPlayerMissionDialog(playerid, 9, "Recepcionista", "Bienvenido a unity station, si buscas el trabajo de taxista, esta pasando la puerta que esta detras de mi. Suerte!");
-            recepcionist_timer[playerid] = SetTimerEx("TaxistHelpTimer", 4000, false, "ii", playerid, false);
+            taxi_recepcionist_timer[playerid] = SetTimerEx("TaxistHelpTimer", 4000, false, "ii", playerid, false);
         }
         PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 10;
     }
@@ -56,17 +56,17 @@ public TaxistHelpTimer(playerid, bool: mode) {
 
 /* GLOBAL */
 hook OnPlayerConnect(playerid) {
-    if (recepcionist_timer[playerid] != -1) {
-        KillTimer(recepcionist_timer[playerid]);
-        recepcionist_timer[playerid] = -1;
+    if (taxi_recepcionist_timer[playerid] != -1) {
+        KillTimer(taxi_recepcionist_timer[playerid]);
+        taxi_recepcionist_timer[playerid] = -1;
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 hook OnPlayerDisconnect(playerid) {
-    if (recepcionist_timer[playerid] != -1) {
-        KillTimer(recepcionist_timer[playerid]);
-        recepcionist_timer[playerid] = -1;
+    if (taxi_recepcionist_timer[playerid] != -1) {
+        KillTimer(taxi_recepcionist_timer[playerid]);
+        taxi_recepcionist_timer[playerid] = -1;
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
 }

@@ -800,7 +800,9 @@ enum {
 	AREA_TYPE_MECHANIC,
 	AREA_TYPE_AIRPORT,
 	AREA_TYPE_AIRVEH_FUEL,
-	AREA_TYPE_WATERVEH_STATION
+	AREA_TYPE_WATERVEH_STATION,
+	AREA_TYPE_WF_SEARCH_CARGO,
+	AREA_TYPE_WF_SPAWN_TRUCK,
 };
 
 #define MAX_TERRITORIES	100
@@ -1354,7 +1356,9 @@ enum
 	CHECKPOINT_TYPE_TRUCK_PUT,
 	CHECKPOINT_TYPE_TRUCK_UNLOAD,
 	CHECKPOINT_TYPE_TRUCK_RETURN,
-	CHECKPOINT_TYPE_RAPPELLING
+	CHECKPOINT_TYPE_RAPPELLING,
+
+	CHECKPOINT_TYPE_WF_SPAWN_TRUCK
 }
 
 #define MAX_PLAYER_GPS_SAVES	10
@@ -24559,6 +24563,9 @@ stock GetPlayerNearVehicle(playerid, Float:radi = 5.0) {
 #include "core/etc/key_press"
 #include "core/etc/help"
 #include "core/etc/notification"
+
+/* Game Weapons */
+#include "core/game_weapons/weapons_factory"
 
 /* AntiCheat */
 #include "core/anticheat/ac_anticbug"
