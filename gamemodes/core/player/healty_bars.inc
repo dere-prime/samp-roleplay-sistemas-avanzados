@@ -84,6 +84,10 @@ CancelPlayerHealthyBarsEditor(const playerid) {
     return 1;
 }
 
+stock IsPlayerEditingHealthyBars(const playerid) {
+    return player_editing_healthy_bar[playerid];
+}
+
 CreatePlayerHealthyBars(const playerid) {
     if(PLAYER_TEMP[playerid][pt_PLAYER_PLATFORM]) {
         sscanf(MOBILE_HEALTH_POS, "p<,>ffff", player_health_bar_config[playerid][0], player_health_bar_config[playerid][1], player_health_bar_config[playerid][2], player_health_bar_config[playerid][3]);

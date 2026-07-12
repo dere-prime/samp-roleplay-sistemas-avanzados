@@ -23,7 +23,9 @@ GetWorkInfo(work, string[]) {
                 La experiencia te hace conseguir clientes NPC mas rapido.\n\
                 \n\
                 Los trabajos NPC son totalmente idénticos a los de jugadores; te saldrá un punto rojo en el mapa para ir.\n\
-                Cuando llevas un NPC no podrás elegir tu tarifa, por lo que no es un trabajo preferiblemente rentable comparado con llevar personas."
+                Cuando llevas un NPC no podrás elegir tu tarifa, por lo que no es un trabajo preferiblemente rentable comparado con llevar personas.\n\
+                \n\
+                Desbloqueos y ventajas de la Membresía: Ninguna.\n"
             );
         }
         case WORK_TRUCK: {
@@ -37,7 +39,7 @@ GetWorkInfo(work, string[]) {
                 Una vez completado, lleva el camión al destino indicado y regresa para recibir tu paga.\n\
                 Los viajes que te tocarán serán completamente aleatorios.\n\
                 \n\
-                Desbloqueos y ventajas de la Membresía: Ninguna."
+                Desbloqueos y ventajas de la Membresía: Ninguna.\n"
             );
         }
         case WORK_FARMER: {

@@ -120,7 +120,7 @@ public UpdateTheApperanceMission(const playerid) {
         }
         case 7: {
             EaseShowPlayerBlackScreen(playerid);
-            HidePlayerMissionDialog(playerid);
+            HidePlayerMissionDialog(playerid, false);
         }
         case 8: {  
             CallLocalFunction("OnPlayerFinishMission", "dd", playerid, MISSION_THE_APPERANCE);
@@ -131,7 +131,7 @@ public UpdateTheApperanceMission(const playerid) {
             PLAYER_TEMP[playerid][pt_HUD_TEXTDRAWS] = true;
             SetPlayerHud(playerid);
             TogglePlayerControllableEx(playerid, true);
-            HidePlayerMissionDialog(playerid);
+            HidePlayerMissionDialog(playerid, false);
             clear_the_apperance_data(playerid);
             ShowPlayerWelcomeMessage(playerid);
         }

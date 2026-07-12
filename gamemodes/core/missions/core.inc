@@ -28,7 +28,8 @@ enum {
 }
 
 enum {
-    MISSION_THE_APPERANCE
+    MISSION_THE_APPERANCE,
+    MISSION_CLEAN_THE_BOAT
 }
 
 new 
@@ -116,10 +117,11 @@ stock SavePlayerMissions(const playerid) {
     return 1;
 }
 
-forward HidePlayerMissionDialog(playerid);
-public HidePlayerMissionDialog(playerid) {
+forward HidePlayerMissionDialog(playerid, bool: controllable);
+public HidePlayerMissionDialog(playerid, bool: controllable) {
 	KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][17]);
 	if (!PLAYER_TEMP[playerid][pt_USER_LOGGED]) return 0;
+    if (controllable) TogglePlayerControllableEx(playerid, true);
 	PlayerTextDrawSetString(playerid, Mission_Dialog[playerid][3], "_");
 	PlayerTextDrawHide(playerid, Mission_Dialog[playerid][0]);
 	PlayerTextDrawHide(playerid, Mission_Dialog[playerid][1]);

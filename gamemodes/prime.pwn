@@ -503,10 +503,11 @@ enum {
 	PLAYER_CONFIG_HUD,
 	PLAYER_CONFIG_VISIBLE_NUMBER,
 	PLAYER_CONFIG_ADMIN,
-	PLAYER_CONFIG_DOUBT_CHANNEL
+	PLAYER_CONFIG_DOUBT_CHANNEL,
+	PLAYER_CONFIG_HEALTHY_BARS
 }
 
-#define MAX_TIMERS_PER_PLAYER 22
+#define MAX_TIMERS_PER_PLAYER 23
 
 /* TUNING SYSTEM */
 #define TOTAL_TUNING_PARTS	14
@@ -3228,6 +3229,7 @@ enum {
 	PICKUP_TYPE_FARMER_BUY_SEEDS,
 
 	PICKUP_TYPE_SUPERMARKET,
+	PICKUP_TYPE_FISHER_MISSION
 };
 
 new Intro_Skins[][] = {
@@ -3511,6 +3513,7 @@ new
 /* MISSIONS  IMPL */
 #include "core/missions/core"
 #include "core/missions/the_apperance/mission"
+#include "core/missions/clean_the_boat/mission"
 
 /* IMPL */
 public DeleteIlegalInv(playerid) { return 1; }
@@ -7631,6 +7634,8 @@ ShowDialog(playerid, dialogid) {
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_ADMIN; listitem ++;
 			strcatf(dialog, "{ffffff}Canal de dudas\t%s\n", (PI[playerid][pi_DOUBT_CHANNEL] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_DOUBT_CHANNEL; listitem ++;
+			strcatf(dialog, "{ffffff}Editar barras del hud\t{666666}-\n");
+			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_HEALTHY_BARS; listitem ++;
 			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_TABLIST, ""SERVER_NAME_FORMAT" {ffffff}· Configuracion", dialog, "Cambiar", "Cerrar");	
 			return 1;
 		}
@@ -11831,6 +11836,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			return 1;
 		}
 		case DIALOG_PLAYER_CONFIG: {
+			if (IsPlayerEditingHealthyBars(playerid)) return ShowPlayerMessage(playerid, "Termina primero la edición de las barras de salud.");
+
 			if (response) {
 				switch(PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem]) {
 					case PLAYER_CONFIG_AUDIO: {
@@ -11887,6 +11894,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					case PLAYER_CONFIG_DOUBT_CHANNEL: {
 						if (PI[playerid][pi_DOUBT_CHANNEL]) PI[playerid][pi_DOUBT_CHANNEL] = false;
 						else PI[playerid][pi_DOUBT_CHANNEL] = true;
+					}
+					case PLAYER_CONFIG_HEALTHY_BARS: {
+						Dialog_Show(playerid, Dialog:HealthyBarsEditor);
 					}
 				}
 				ShowDialog(playerid, dialogid);

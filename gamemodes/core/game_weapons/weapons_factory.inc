@@ -108,7 +108,7 @@ public WFCargoTimeOut(playerid) {
 
 forward CargoJobHelperTimer(playerid);
 public CargoJobHelperTimer(playerid) {
-    HidePlayerMissionDialog(playerid);
+    HidePlayerMissionDialog(playerid, false);
     TogglePlayerControllableEx(playerid, true);
     WeaponsFactoryPlayer[playerid][wf_cargo_confirm_timeout] = gettime() + 5;
     return 1;

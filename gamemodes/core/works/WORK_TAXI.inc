@@ -44,7 +44,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid) {
 }
 forward TaxistHelpTimer(playerid, bool: mode);
 public TaxistHelpTimer(playerid, bool: mode) {
-    HidePlayerMissionDialog(playerid);
+    HidePlayerMissionDialog(playerid, false);
     TogglePlayerControllableEx(playerid, true);
     if (mode) {
         new dialog[1800];
