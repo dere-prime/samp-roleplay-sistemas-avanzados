@@ -472,6 +472,15 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid) {
 
             ShowPlayerNotification(playerid, "El camion ha sido regresado al garage, si queires volver a trabajar saca otro camion.");
             CancelPlayerTruckerJob(playerid);
+
+			if (Vehicle_IsValid(vehicleid)) {
+				if (WORK_VEHICLES[vehicleid][work_vehicle_VALID]) {
+					if (WORK_VEHICLES[vehicleid][work_vehicle_PID] == PI[playerid][pi_ID]) {
+						DestroyVehicleEx(vehicleid);
+						SetPVarInt(playerid, "CurrentWorkVehicleid", INVALID_VEHICLE_ID);
+					}
+				}
+			}
         }
     }
     return Y_HOOKS_CONTINUE_RETURN_1;

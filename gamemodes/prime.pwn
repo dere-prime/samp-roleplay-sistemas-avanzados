@@ -11897,6 +11897,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					}
 					case PLAYER_CONFIG_HEALTHY_BARS: {
 						Dialog_Show(playerid, Dialog:HealthyBarsEditor);
+						return 1;
 					}
 				}
 				ShowDialog(playerid, dialogid);

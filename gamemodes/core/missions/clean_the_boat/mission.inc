@@ -31,8 +31,8 @@ hook OnScriptInit() {
     */
 
     //Cubeta
-    CreateDynamicObject(2713, 173.941864, -1886.224731, 0.456985, 0.000000, 0.000000, 0.000000);
-    CreateDynamic3DTextLabel("Pulsa {"#YELLOW_COLOR"}Y{ffffff} para humedecer el trapo en la cubeta", 0xffffffff, 173.941864, -1886.224731, (0.456985 + 0.3), 4.0, .testlos = 1, .worldid = 0, .interiorid = 0);
+    CreateDynamicObject(2713, 163.964828, -1886.073364, 1.102549, 0.000000, 0.000000, 45.000000);
+    CreateDynamic3DTextLabel("Pulsa {"#YELLOW_COLOR"}Y{ffffff} para humedecer el trapo en la cubeta", 0xffffffff, 163.964828, -1886.073364, (1.102549 + 0.2), 4.0, .testlos = 1, .worldid = 0, .interiorid = 0);
 
     //NPC
     CleanTheBoat_fisher_npc = CreateDynamicActor(4, 173.1746, -1887.8440, 1.0492, 343.3241, .worldid = 0, .interiorid = 0);
@@ -50,16 +50,14 @@ hook OnScriptInit() {
 
 hook OnUnoccupiedVehicleUpd(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z) {
     if (vehicleid == CleanTheBoat_vehicle_boat) {
-        SetVehicleVelocity(vehicleid, 0.000, 0.000, 0.000);
-        SetVehicleZAngle(vehicleid, 20.2026);
-
         new Float:pos_x, Float:pos_y, Float:pos_z;
         GetVehiclePos(vehicleid, pos_x, pos_y, pos_z);
-        if(GetDistanceBetweenPoints3D(pos_x, pos_y, pos_z, 172.7958, -1892.4836, 0.3084) > 1.0) {
+        if(GetDistanceBetweenPoints3D(pos_x, pos_y, pos_z, 172.7958, -1892.4836, 0.3084) > 5.0) {
             SetVehiclePos(vehicleid, 172.7958, -1892.4836, 0.3084);
+            SetVehicleZAngle(vehicleid, 20.2026);
+            SetVehicleVelocity(vehicleid, 0.000, 0.000, 0.000);
+            SetVehicleHealth(vehicleid, 99999999.9);
         }
-
-        SetVehicleHealth(vehicleid, 999999999.9);
         return Y_HOOKS_BREAK_RETURN_1;
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
@@ -70,7 +68,7 @@ hook OnVehicleDeath(vehicleid, killerid) {
         DestroyVehicle(CleanTheBoat_vehicle_boat);
         CleanTheBoat_vehicle_boat = AddStaticVehicle(453, 172.7958, -1892.4836, 0.3084, 20.2026, 1, 1);
         SetVehicleParamsEx(CleanTheBoat_vehicle_boat, 1, 0, 0, 1, 0, 0, 0);
-        SetVehicleHealth(CleanTheBoat_vehicle_boat, 999999999.9);
+        SetVehicleHealth(CleanTheBoat_vehicle_boat, 99999999.9);
         if (IsPlayerConnected(killerid)) {
             Kick(killerid);
         }
@@ -83,9 +81,11 @@ hook OnVehicleStreamIn(vehicleid, forplayerid) {
     if (vehicleid == CleanTheBoat_vehicle_boat) {
         new Float:pos_x, Float:pos_y, Float:pos_z;
         GetVehiclePos(vehicleid, pos_x, pos_y, pos_z);
-        if(GetDistanceBetweenPoints3D(pos_x, pos_y, pos_z, 172.7958, -1892.4836, 0.3084) > 1.0) {
+        if(GetDistanceBetweenPoints3D(pos_x, pos_y, pos_z, 172.7958, -1892.4836, 0.3084) > 5.0) {
             SetVehiclePos(vehicleid, 172.7958, -1892.4836, 0.3084);
             SetVehicleZAngle(vehicleid, 20.2026);
+            SetVehicleVelocity(vehicleid, 0.000, 0.000, 0.000);
+            SetVehicleHealth(vehicleid, 99999999.9);
         }
         return Y_HOOKS_BREAK_RETURN_1;
     }
