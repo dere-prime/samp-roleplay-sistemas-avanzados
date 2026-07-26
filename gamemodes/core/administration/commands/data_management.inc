@@ -60,11 +60,12 @@ CMD:giveobj(playerid, params[]) {
 
 /* Rep and payday */
 CMD:addrep(playerid, params[]) {
-	if (sscanf(params, "ud", params[0], params[1])) return ShowPlayerMessage(playerid, "Parametros incorrectos, usa ~y~/addrep <usuario> <cantidad>");
+	new to_playerid, rep;
+	if (sscanf(params, "ud", to_playerid, rep)) return ShowPlayerMessage(playerid, "Parametros incorrectos, usa ~y~/addrep <usuario> <cantidad>");
 
-	AddPlayerReputation(params[0], params[1]);
-	SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Inv ·{ffffff}Has dado +%d de experiencia a %s (%d).", params[1], PLAYER_TEMP[params[0]][pt_NAME], params[0]);
-	SendPlayerClientMessage(params[0], "{"#ADMIN_COLOR"}Inv ·{ffffff}Has recibido +%d de experiencia de un administrador.", params[1]);
+	AddPlayerReputation(to_playerid, rep);
+	SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Inv ·{ffffff}Has dado +%d de experiencia a %s (%d).", rep, PLAYER_TEMP[to_playerid][pt_NAME], to_playerid);
+	SendPlayerClientMessage(to_playerid, "{"#ADMIN_COLOR"}Inv ·{ffffff}Has recibido +%d de experiencia de un administrador.", rep);
 	CmdLog("addrep");
 	return 1;
 }

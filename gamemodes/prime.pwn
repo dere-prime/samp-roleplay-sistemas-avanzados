@@ -69,6 +69,7 @@ const MAX_PLAYERS = 100;
 #include <eselection>
 #include <progress2>
 #include <mobile-checker>
+#include <logger>
 
 #define MAX_BAD_LOGIN_ATTEMPS 3
 #define LOGIN_TIME (3 * 60000)
@@ -4249,11 +4250,6 @@ FormatDialogStrings() {
 }
 
 SanAndreas() {
-	CreateTextDraws();
-	LoadEnterExits();
-	LoadProperties();
-	LoadNPCMovementPath();
-	
 	//Tuning
 	CreateDynamicMapIcon(263.592102, 22.960014, 2.170951, 63, -1, 0, 0);
 	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/tuning {FFFFFF}para tunear tu vehículo", 0xFFFFFFFF, 263.592102, 22.960014, 2.170951, 10.0, .testlos = true, .worldid = 0, .interiorid = 0);
@@ -4513,6 +4509,9 @@ SanAndreas() {
 	LoadFarmerInfo();
 	//Cosechador
 	Harvest_Area = CreateDynamicRectangle(-428.336059, -1667.658569, -116.565414, -1220.122070, 0, 0);
+
+	/* Server Loader */
+	CallLocalFunction("assetsLoaderFunction", "d", 0);
 	return 1;
 }
 
@@ -4726,6 +4725,9 @@ CreateTextDraws() {
 	TextDrawSetProportional(Textdraws[textdraw_SHOP_TUNING][4], 1);
 	TextDrawSetShadow(Textdraws[textdraw_SHOP_TUNING][4], 0);
 	TextDrawSetSelectable(Textdraws[textdraw_SHOP_TUNING][4], true);
+
+	/* Server Loader */
+	CallLocalFunction("assetsLoaderFunction", "d", 1);
 	return 1;
 }
 
@@ -14411,6 +14413,9 @@ LoadEnterExits() {
 
 		total_enterexits ++;
 	}
+
+	/* Server Loader */
+	CallLocalFunction("assetsLoaderFunction", "d", 2);
 	return 1;
 }
 
@@ -14470,7 +14475,6 @@ CreatePropertyInfo(i, pid, pname[]) {
 	return 1;
 }
 
-forward OnPropertiesLoaded();
 LoadProperties() {
 	inline OnPropertiesLoad() {
 		new rows;
@@ -14513,9 +14517,9 @@ LoadProperties() {
 				
 				if (id_player) CreatePropertyInfo(i, id_player, pname);
 				else CreatePropertyInfo(i, 0, "");
-			}
-			CallLocalFunction("OnPropertiesLoaded", "");
-			LoadCrews();
+			}	
+			/* Server Loader */
+			CallLocalFunction("assetsLoaderFunction", "d", 4);
 		}
 	}
 	new query[] = "SELECT properties.*, player.id AS pid, player.name AS pname FROM properties LEFT JOIN player ON properties.id_player = player.id;";
@@ -14595,7 +14599,8 @@ LoadCrews() {
 				mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "SELECT * FROM crew_ranks WHERE id_crew = %d;", CREW_INFO[i][crew_ID]);
 				MySQL_TQueryInline(handle_db,  using inline OnCrewRanksLoad, QUERY_BUFFER);
 			}
-			LoadGangZones();
+			/* Server Loader */
+			CallLocalFunction("assetsLoaderFunction", "d", 5);
 		}
 	}
 	MySQL_TQueryInline(handle_db,  using inline OnCrewsLoad, "SELECT * FROM crews;");
@@ -14666,8 +14671,8 @@ LoadGangZones() {
 				TextDrawSetProportional(TERRITORIES[i][territory_TEXTDRAW], 1);
 				TextDrawSetShadow(TERRITORIES[i][territory_TEXTDRAW], 0);
 			}
-			CallLocalFunction("OnTerritoriesLoaded", "");
-			SendServerLoadedRequest();
+			/* Server Loader */
+			CallLocalFunction("assetsLoaderFunction", "d", 6);
 		}
 	}
 	mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "SELECT territories.*, crews.id AS crewid, crews.color FROM territories LEFT JOIN crews ON territories.id_crew = crews.id WHERE territories.gangzone = 1 LIMIT %d;", MAX_TERRITORIES);
@@ -24331,6 +24336,9 @@ public LoadNPCMovementPath() {
 	FCNPC_AddPointsToMovePath(a_register_path, a_register_npc_movement_path);
 	b_register_path = FCNPC_CreateMovePath();
 	FCNPC_AddPointsToMovePath(b_register_path, b_register_npc_movement_path);
+
+	/* Server Loader */
+	CallLocalFunction("assetsLoaderFunction", "d", 3);
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
@@ -24574,6 +24582,7 @@ stock GetPlayerNearVehicle(playerid, Float:radi = 5.0) {
 #include "core/etc/key_press"
 #include "core/etc/help"
 #include "core/etc/notification"
+#include "core/etc/server_loader"
 
 /* Game Weapons */
 #include "core/game_weapons/weapons_factory"

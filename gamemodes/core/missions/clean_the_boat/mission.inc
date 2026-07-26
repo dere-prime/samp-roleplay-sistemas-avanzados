@@ -4,6 +4,9 @@
         Mission
 
     Name:CleanTheBoat
+
+    Mision Jugable tipo secundaria.
+    No lleva variables core.
 */
 
 #include <YSI_Coding\y_hooks>
@@ -25,6 +28,32 @@ static CleanTheBoat_fisher_strt_dlgs[][] = {
     "Ven a limpiarme el bote, te dare algo ahi para que te compres un refresco."
 };
 
+forward CleanTheBoat_fisher_dialog(const playerid);
+public CleanTheBoat_fisher_dialog(const playerid) {
+    HidePlayerMissionDialog(playerid, true);
+    Dialog_Open(playerid, Dialog:CleanTheBoat_Mission_Prompt, DIALOG_STYLE_MSGBOX, "{"#PRIMARY_COLOR"}·{ffffff}Limpiar el bote", "{ffffff}¿Te gustaria limpiar el bote de el pescador por una recompensa?", "Aceptar", "Rechazar");
+    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 8;
+    return 1;
+}
+
+restoreMissionBoat() {
+    if (IsValidVehicle(CleanTheBoat_vehicle_boat)) DestroyVehicle(CleanTheBoat_vehicle_boat);
+    CleanTheBoat_vehicle_boat = AddStaticVehicle(453, 172.7958, -1892.4836, 0.3084, 20.2026, 1, 1);
+    SetVehicleParamsEx(CleanTheBoat_vehicle_boat, 1, 0, 0, 1, 0, 0, 0);
+    SetVehicleHealth(CleanTheBoat_vehicle_boat, 999999999.9);
+    return 1;
+}
+
+adjustMissionBoat() {
+    if (!IsValidVehicle(CleanTheBoat_vehicle_boat)) return restoreMissionBoat();
+    SetVehicleParamsEx(CleanTheBoat_vehicle_boat, 1, 0, 0, 1, 0, 0, 0);
+    SetVehicleHealth(CleanTheBoat_vehicle_boat, 999999999.9);
+    SetVehiclePos(CleanTheBoat_vehicle_boat, 172.7958, -1892.4836, 0.3084);
+    SetVehicleZAngle(CleanTheBoat_vehicle_boat, 20.2026);
+    SetVehicleVelocity(CleanTheBoat_vehicle_boat, 0.000, 0.000, 0.000);
+    return 1;
+}
+
 hook OnScriptInit() {
     /*
         Cargar preparativos
@@ -43,9 +72,7 @@ hook OnScriptInit() {
     Streamer_SetArrayData(STREAMER_TYPE_PICKUP, talk_pickup, E_STREAMER_EXTRA_ID, info);
 
     //bote
-    CleanTheBoat_vehicle_boat = AddStaticVehicle(453, 172.7958, -1892.4836, 0.3084, 20.2026, 1, 1);
-    SetVehicleParamsEx(CleanTheBoat_vehicle_boat, 1, 0, 0, 1, 0, 0, 0);
-    SetVehicleHealth(CleanTheBoat_vehicle_boat, 999999999.9);
+    restoreMissionBoat();
 }
 
 hook OnUnoccupiedVehicleUpd(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z) {
@@ -53,10 +80,7 @@ hook OnUnoccupiedVehicleUpd(vehicleid, playerid, passenger_seat, Float:new_x, Fl
         new Float:pos_x, Float:pos_y, Float:pos_z;
         GetVehiclePos(vehicleid, pos_x, pos_y, pos_z);
         if(GetDistanceBetweenPoints3D(pos_x, pos_y, pos_z, 172.7958, -1892.4836, 0.3084) > 5.0) {
-            SetVehiclePos(vehicleid, 172.7958, -1892.4836, 0.3084);
-            SetVehicleZAngle(vehicleid, 20.2026);
-            SetVehicleVelocity(vehicleid, 0.000, 0.000, 0.000);
-            SetVehicleHealth(vehicleid, 99999999.9);
+            adjustMissionBoat();
         }
         return Y_HOOKS_BREAK_RETURN_1;
     }
@@ -65,10 +89,7 @@ hook OnUnoccupiedVehicleUpd(vehicleid, playerid, passenger_seat, Float:new_x, Fl
 
 hook OnVehicleDeath(vehicleid, killerid) {
     if (vehicleid == CleanTheBoat_vehicle_boat) {
-        DestroyVehicle(CleanTheBoat_vehicle_boat);
-        CleanTheBoat_vehicle_boat = AddStaticVehicle(453, 172.7958, -1892.4836, 0.3084, 20.2026, 1, 1);
-        SetVehicleParamsEx(CleanTheBoat_vehicle_boat, 1, 0, 0, 1, 0, 0, 0);
-        SetVehicleHealth(CleanTheBoat_vehicle_boat, 99999999.9);
+        restoreMissionBoat();
         if (IsPlayerConnected(killerid)) {
             Kick(killerid);
         }
@@ -82,10 +103,7 @@ hook OnVehicleStreamIn(vehicleid, forplayerid) {
         new Float:pos_x, Float:pos_y, Float:pos_z;
         GetVehiclePos(vehicleid, pos_x, pos_y, pos_z);
         if(GetDistanceBetweenPoints3D(pos_x, pos_y, pos_z, 172.7958, -1892.4836, 0.3084) > 5.0) {
-            SetVehiclePos(vehicleid, 172.7958, -1892.4836, 0.3084);
-            SetVehicleZAngle(vehicleid, 20.2026);
-            SetVehicleVelocity(vehicleid, 0.000, 0.000, 0.000);
-            SetVehicleHealth(vehicleid, 99999999.9);
+            adjustMissionBoat();
         }
         return Y_HOOKS_BREAK_RETURN_1;
     }
@@ -117,7 +135,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid) {
             ApplyDynamicActorAnimation(CleanTheBoat_fisher_npc, "GANGS", "prtial_gngtlkH", 4.1, false, false, false, false, 0);
             ApplyDynamicActorAnimation(CleanTheBoat_fisher_npc, "GANGS", "prtial_gngtlkH", 4.1, false, false, false, false, 0);
             ShowPlayerMissionDialog(playerid, 4, "Pescador", "%s", CleanTheBoat_fisher_strt_dlgs[random(sizeof(CleanTheBoat_fisher_strt_dlgs))]);
-            PLAYER_TEMP[playerid][pt_TIMERS][22] = SetTimerEx("HidePlayerMissionDialog", 4000, false, "ib", playerid, true);
+            PLAYER_TEMP[playerid][pt_TIMERS][22] = SetTimerEx("CleanTheBoat_fisher_dialog", 4000, false, "ib", playerid, true);
         }
 
         PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 8;
