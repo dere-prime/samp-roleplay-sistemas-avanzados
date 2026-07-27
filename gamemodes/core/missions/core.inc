@@ -15,7 +15,8 @@ enum e_player_mission_info {
     mission_id,
     mission_step,
     mission_updates,
-    mission_updates_timer
+    mission_updates_timer,
+    mission_checkpoint
 }
 
 enum e_player_missions {
@@ -38,7 +39,7 @@ new
     
     PlayerText:Mission_Dialog[MAX_PLAYERS][4];
 
-forward OnPlayerFinishMission(const playerid, const index);
+forward OnPlayerFinishMission(const playerid, const index); //Starter
 
 #define IsPlayerMission(%0) mission_info[%0][mission_current]
 #define PlayerMissionId(%0) mission_info[%0][mission_id]
@@ -49,38 +50,19 @@ forward OnPlayerFinishMission(const playerid, const index);
 
 //Impl
 public OnPlayerFinishMission(const playerid, const index) {
-    if (index == MISSION_THE_APPERANCE) {
-        if(PlayerMissionId(playerid) != MISSION_THE_APPERANCE) return 0;
-
-        player_mission[playerid][MISSION_THE_APPERANCE][m_completed] = true;
-        mission_info[playerid][mission_step] = -1;
-
-        TogglePlayerSpectatingEx(playerid, false);
-
-        PI[playerid][pi_STATE] = ROLEPLAY_STATE_NORMAL;
-        PI[playerid][pi_LOCAL_INTERIOR] = 0;
-        PI[playerid][pi_POS_X] = SERVER_MAIN_SPAWN_X;
-        PI[playerid][pi_POS_Y] = SERVER_MAIN_SPAWN_Y;
-        PI[playerid][pi_POS_Z] = SERVER_MAIN_SPAWN_Z;
-        PI[playerid][pi_ANGLE] = SERVER_MAIN_SPAWN_ANGLE;
-        PI[playerid][pi_INTERIOR] = 0;
-        
-        SetPlayerPosEx(playerid, PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], PI[playerid][pi_INTERIOR], 0);
-
-        SetCameraBehindPlayer(playerid);
-        TogglePlayerControllableEx(playerid, false);
-        SetPlayerVirtualWorld(playerid, 0);
-
-        EaseHidePlayerBlackScreen(playerid);
-        return 1;
+    switch (index) {
+        case MISSION_THE_APPERANCE: {
+            missionTAFinish(playerid);
+        }
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
+/* Code */
 stock PlayPlayerMission(const playerid, const mission[], const index, const bool:bypass = false) {
     if (IsPlayerMission(playerid)) return ShowPlayerMessage(playerid, "~r~Ahora mismo estas en una mision.");
-    if (bypass == false && PLAYER_TEMP[playerid][pt_GAME_STATE] != GAME_STATE_NORMAL || PI[playerid][pi_STATE] != ROLEPLAY_STATE_NORMAL) return ShowPlayerMessage(playerid, "~r~Ahora no puedes hacer misiones.");
-    
+    if (bypass == false && PI[playerid][pi_WANTED_LEVEL] > 0 || PLAYER_TEMP[playerid][pt_GAME_STATE] != GAME_STATE_NORMAL || PI[playerid][pi_STATE] != ROLEPLAY_STATE_NORMAL) return ShowPlayerMessage(playerid, "~r~Ahora no puedes hacer misiones.");
+
     mission_info[playerid][mission_current] = true;
     mission_info[playerid][mission_id] = index;
     //mission_info[playerid][mission_step] = 0;
@@ -90,7 +72,6 @@ stock PlayPlayerMission(const playerid, const mission[], const index, const bool
     CallLocalFunction(gMissionFunction, "dd", playerid, index);
     return 1;
 }
-
 stock LoadPlayerMissions(const playerid) {
 	if(PI[playerid][pi_ID] == 0) return 0;
 	
@@ -108,7 +89,6 @@ stock LoadPlayerMissions(const playerid) {
 	MySQL_TQueryInline(handle_db,  using inline OnPlayerMissionsLoad, QUERY_BUFFER);
     return 1;
 }
-
 stock SavePlayerMissions(const playerid) {
     for (new i = 0; i != MAX_MISSIONS; i ++) {
         mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "INSERT INTO missions (id_player, id_mission, completed) VALUES(%d, %d, %d) ON DUPLICATE KEY UPDATE completed = VALUES(completed);", PI[playerid][pi_ID], i, player_mission[playerid][i][m_completed]);
@@ -116,7 +96,6 @@ stock SavePlayerMissions(const playerid) {
     }
     return 1;
 }
-
 forward HidePlayerMissionDialog(playerid, bool: controllable);
 public HidePlayerMissionDialog(playerid, bool: controllable) {
 	KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][17]);
@@ -129,6 +108,41 @@ public HidePlayerMissionDialog(playerid, bool: controllable) {
 	PlayerTextDrawHide(playerid, Mission_Dialog[playerid][3]);
 	return 1;
 }
+stock ShowPlayerMissionDialog(playerid, skin, const tittle[], const message[], GLOBAL_TAG_TYPES:...) {
+    if (!skin) skin = 19300;
+	if (YSI_CheckNumargs__(4))
+		return bool:PlayerTextDrawSetString(playerid, Mission_Dialog[playerid][3], __const(message)),
+        PlayerTextDrawSetPreviewModel(playerid, Mission_Dialog[playerid][1], skin),
+        bool:PlayerTextDrawSetString(playerid, Mission_Dialog[playerid][2], __const(tittle)),
+		PlayerTextDrawShow(playerid, Mission_Dialog[playerid][0]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][1]),
+        PlayerTextDrawShow(playerid, Mission_Dialog[playerid][2]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][3]);
+	return
+		format(YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, message, ___(4)),
+        PlayerTextDrawSetPreviewModel(playerid, Mission_Dialog[playerid][1], skin),
+		bool:PlayerTextDrawSetString(playerid, Mission_Dialog[playerid][3], YSI_UNSAFE_HUGE_STRING),
+        bool:PlayerTextDrawSetString(playerid, Mission_Dialog[playerid][2], __const(tittle)),
+		PlayerTextDrawShow(playerid, Mission_Dialog[playerid][0]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][1]),
+        PlayerTextDrawShow(playerid, Mission_Dialog[playerid][2]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][3]);
+}
+
+stock createMissionCheckpoint(const playerid, Float: x, Float: y, Float: z, world, interior, Float: size = 5.0) {
+	if (IsValidDynamicCP(mission_info[playerid][mission_checkpoint])) DestroyDynamicCP(mission_info[playerid][mission_checkpoint]);
+	mission_info[playerid][mission_checkpoint] = CreateDynamicCP(x, y, z, size, world, interior, playerid, 9999999999.0);
+	
+	new info[1];
+	info[0] = CHECKPOINT_TYPE_MISSION;
+	Streamer_SetArrayData(STREAMER_TYPE_CP, mission_info[playerid][mission_checkpoint], E_STREAMER_EXTRA_ID, info);
+	Streamer_Update(playerid, STREAMER_TYPE_CP);
+}
+
+/*hook OnPlayerEnterDynamicCP(playerid, checkpointid) {
+    new info[1];
+	Streamer_GetArrayData(STREAMER_TYPE_CP, checkpointid, E_STREAMER_EXTRA_ID, info);
+	if (info[0] == CHECKPOINT_TYPE_MISSION) {
+        return Y_HOOKS_BREAK_RETURN_1;
+    }
+    return Y_HOOKS_CONTINUE_RETURN_1;
+}*/
 
 hook OnPlayerConnect(playerid) {
     Mission_Dialog[playerid][0] = CreatePlayerTextDraw(playerid, 320.000, 325.000, "bg");
@@ -176,21 +190,4 @@ hook OnPlayerConnect(playerid) {
     PlayerTextDrawBackgroundColor(playerid, Mission_Dialog[playerid][3], 0);
     PlayerTextDrawFont(playerid, Mission_Dialog[playerid][3], 1);
     PlayerTextDrawSetProportional(playerid, Mission_Dialog[playerid][3], 1);
-}
-
-stock ShowPlayerMissionDialog(playerid, skin, const tittle[], const message[], GLOBAL_TAG_TYPES:...) {
-    if (!skin) skin = 19300;
-	if (YSI_CheckNumargs__(4))
-		return bool:PlayerTextDrawSetString(playerid, Mission_Dialog[playerid][3], __const(message)),
-        PlayerTextDrawSetPreviewModel(playerid, Mission_Dialog[playerid][1], skin),
-        bool:PlayerTextDrawSetString(playerid, Mission_Dialog[playerid][2], __const(tittle)),
-		PlayerTextDrawShow(playerid, Mission_Dialog[playerid][0]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][1]),
-        PlayerTextDrawShow(playerid, Mission_Dialog[playerid][2]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][3]);
-	return
-		format(YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, message, ___(4)),
-        PlayerTextDrawSetPreviewModel(playerid, Mission_Dialog[playerid][1], skin),
-		bool:PlayerTextDrawSetString(playerid, Mission_Dialog[playerid][3], YSI_UNSAFE_HUGE_STRING),
-        bool:PlayerTextDrawSetString(playerid, Mission_Dialog[playerid][2], __const(tittle)),
-		PlayerTextDrawShow(playerid, Mission_Dialog[playerid][0]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][1]),
-        PlayerTextDrawShow(playerid, Mission_Dialog[playerid][2]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][3]);
 }

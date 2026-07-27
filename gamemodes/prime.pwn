@@ -1359,6 +1359,7 @@ enum
 	CHECKPOINT_TYPE_TRUCK_UNLOAD,
 	CHECKPOINT_TYPE_TRUCK_RETURN,
 	CHECKPOINT_TYPE_RAPPELLING,
+	CHECKPOINT_TYPE_MISSION,
 
 	CHECKPOINT_TYPE_WF_SPAWN_TRUCK
 }
@@ -18790,7 +18791,7 @@ CMD:bomba(playerid, params[]) {
 	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return 1;
 	if (GetPlayerAnimationIndex(playerid) != 1189) return 0;
 
-    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.0, 0, 1, 1, 0,0);//bomba
+    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.0, 0, 1, 1, 0, 0);//bomba
     SendPlayerClientMessage(playerid, "Para cancelar la animacion utiliza /parar.");
 	return 1;
 }

@@ -139,6 +139,30 @@ public UpdateTheApperanceMission(const playerid) {
     return 1;
 }
 
+missionTAFinish(playerid) {
+    player_mission[playerid][MISSION_THE_APPERANCE][m_completed] = true;
+    mission_info[playerid][mission_step] = -1;
+
+    TogglePlayerSpectatingEx(playerid, false);
+
+    PI[playerid][pi_STATE] = ROLEPLAY_STATE_NORMAL;
+    PI[playerid][pi_LOCAL_INTERIOR] = 0;
+    PI[playerid][pi_POS_X] = SERVER_MAIN_SPAWN_X;
+    PI[playerid][pi_POS_Y] = SERVER_MAIN_SPAWN_Y;
+    PI[playerid][pi_POS_Z] = SERVER_MAIN_SPAWN_Z;
+    PI[playerid][pi_ANGLE] = SERVER_MAIN_SPAWN_ANGLE;
+    PI[playerid][pi_INTERIOR] = 0;
+
+    SetPlayerPosEx(playerid, PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], PI[playerid][pi_INTERIOR], 0);
+
+    SetCameraBehindPlayer(playerid);
+    TogglePlayerControllableEx(playerid, false);
+    SetPlayerVirtualWorld(playerid, 0);
+
+    EaseHidePlayerBlackScreen(playerid);
+    return 1;
+}
+
 Mission:TheApperance(playerid, index) {
     mission_info[playerid][mission_step] = MISSION_STEP_CINEMATIC;
     clear_the_apperance_data(playerid);
