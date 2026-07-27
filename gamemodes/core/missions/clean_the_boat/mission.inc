@@ -284,7 +284,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid) {
                 mission_info[playerid][mission_updates_timer] = -1;
                 mission_info[playerid][mission_checkpoint] = -1;
 
-	            AddPlayerReputation(playerid, minrand(50, 100));
+	            PI[playerid][pi_REP] += minrand(50, 100);
 
                 new reward = minrand(0, 5);
                 switch (reward) {
