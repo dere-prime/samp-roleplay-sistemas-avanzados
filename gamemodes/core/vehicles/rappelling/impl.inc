@@ -37,8 +37,7 @@ stock start_player_rappeling(const playerid, const vehicleid) {
         z -= 0.5;
     }
 
-    KillTimer(rappelling_data[playerid][r_rappelling_timeout]);
-    rappelling_data[playerid][r_rappelling_timeout] = SetTimerEx("rappeling_timeout", 700, false, "d", playerid);
+    rappeling_timeout(playerid);
     return 1;
 }
 
@@ -73,7 +72,7 @@ public rappeling_timeout(const playerid) {
             }
             return 1;
         }
-        rappelling_data[playerid][r_rappelling_timeout] = SetTimerEx("rappeling_timeout", 500, false, "d", playerid);
+        rappelling_data[playerid][r_rappelling_timeout] = SetTimerEx("rappeling_timeout", 1000, false, "d", playerid);
     }
     return 1;
 }

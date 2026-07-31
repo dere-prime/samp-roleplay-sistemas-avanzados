@@ -34,6 +34,8 @@
 	#emit zero cellmin
 }
 
+#define CGEN_MEMORY 20000
+
 #pragma option -d2
 #pragma warning disable 239
 
@@ -70,6 +72,10 @@ const MAX_PLAYERS = 100;
 #include <progress2>
 #include <mobile-checker>
 #include <logger>
+
+#if DEVELOPER_MODE != 1
+	#undef LOGGER_LOG_IN_CHAT
+#endif
 
 #define MAX_BAD_LOGIN_ATTEMPS 3
 #define LOGIN_TIME (3 * 60000)
@@ -1361,7 +1367,8 @@ enum
 	CHECKPOINT_TYPE_RAPPELLING,
 	CHECKPOINT_TYPE_MISSION,
 
-	CHECKPOINT_TYPE_WF_SPAWN_TRUCK
+	CHECKPOINT_TYPE_WF_SPAWN_TRUCK,
+	CHECKPOINT_TYPE_WF_MISSION
 }
 
 #define MAX_PLAYER_GPS_SAVES	10
@@ -2417,7 +2424,8 @@ enum Temp_Enum {
 	pt_DEATH_ANIMLIB[32],
 	pt_DEATH_ANIMNAME[32],
 	pt_DEATH_ANIMINDEX,
-	pt_PLAYER_PLATFORM
+	pt_PLAYER_PLATFORM,
+	pt_MISSION_VIRTUAL_WORLD
 };
 new PLAYER_TEMP[MAX_PLAYERS][Temp_Enum]; // PT (PlayerTemp), variables que no van a ser guardadas en base de datos.
 
@@ -3891,17 +3899,19 @@ public OnPlayerSpawn(playerid) {
 				PlayerTextDrawShow(playerid, PlayerTextdraws[playerid][ptextdraw_HOSPITAL][0]);
 				PlayerTextDrawShow(playerid, PlayerTextdraws[playerid][ptextdraw_HOSPITAL][1]);
 				PlayerTextDrawShow(playerid, PlayerTextdraws[playerid][ptextdraw_HOSPITAL][2]);
-								
+				
+				SendPlayerClientMessage(playerid, "==============================================================");
 				//ClearPlayerChat(playerid);
 				if (PI[playerid][pi_WANTED_LEVEL] > 0) {
 					if (PI[playerid][pi_VIP]) PI[playerid][pi_POLICE_JAIL_TIME] = 150 * PI[playerid][pi_WANTED_LEVEL];
 					else PI[playerid][pi_POLICE_JAIL_TIME] = 300 * PI[playerid][pi_WANTED_LEVEL];
-					
+
 					SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido trasladado al {"#ERROR_COLOR"}centro medico{ffffff} mas cercano. Espera tu recuperacion.");
 				}
 				else {
 					SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido trasladado al {"#ERROR_COLOR"}centro medico{ffffff} mas cercano. Espera tu recuperacion.");
 				}
+				SendPlayerClientMessage(playerid, "==============================================================");
 
 				InterpolateCameraPos(playerid, Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][0], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][1], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][2], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][0], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][1], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][2], 1000, CAMERA_CUT);
 				InterpolateCameraLookAt(playerid, Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][3], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][4], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][5], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][3], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][4], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][5], 1000, CAMERA_CUT);
@@ -17163,7 +17173,7 @@ public OnVehicleSpawn(vehicleid) {
 	SetVehiclePosEx(vehicleid, GLOBAL_VEHICLES[vehicleid][gb_vehicle_SPAWN_X], GLOBAL_VEHICLES[vehicleid][gb_vehicle_SPAWN_Y], GLOBAL_VEHICLES[vehicleid][gb_vehicle_SPAWN_Z]);
 	SetVehicleZAngle(vehicleid, GLOBAL_VEHICLES[vehicleid][gb_vehicle_SPAWN_ANGLE]);
 	LinkVehicleToInteriorEx(vehicleid, GLOBAL_VEHICLES[vehicleid][gb_vehicle_INTERIOR]);
-	SetVehicleVirtualWorldEx(vehicleid, 0);//GLOBAL_VEHICLES[vehicleid][gb_vehicle_WORLD]);
+	SetVehicleVirtualWorldEx(vehicleid, GLOBAL_VEHICLES[vehicleid][gb_vehicle_WORLD]);
 	AddVehicleComponents(vehicleid);
 	
 	GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_ENGINE] = 0;
@@ -23361,7 +23371,7 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags) {
 	
 	if (strcmp(cmd, "debug")) {
 		if (PLAYER_TEMP[playerid][pt_GAME_STATE] != GAME_STATE_NORMAL || PI[playerid][pi_STATE] == ROLEPLAY_STATE_HOSPITAL || PlayerMissionStep(playerid) == MISSION_STEP_CINEMATIC) {
-			SendPlayerClientMessage(playerid, "{666666}Ahora no puedes usar comandos.");
+			ShowPlayerMessage(playerid, "Ahora no puedes usar comandos.");
 			return 0;
 		}
 		if (PLAYER_TEMP[playerid][pt_SELECT_TEXTDRAW]) { SendPlayerClientMessage(playerid, "{666666}Ahora no puedes usar comandos, pulsa 'ESCAPE' para cerrar el menú."); return 0; }
@@ -24522,6 +24532,25 @@ stock GetPlayerNearVehicle(playerid, Float:radi = 5.0) {
 	return vehicle;
 }
 
+stock FCNPC_Createf(const fmat[], GLOBAL_TAG_TYPES:...) {
+	if (YSI_CheckNumargs__(1))
+		return FCNPC_Create(__const(fmat));
+	return
+		format(YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, fmat, ___(1)),
+		FCNPC_Create(YSI_UNSAFE_HUGE_STRING);
+}
+
+stock GetVehicleOccupants(const vehicleid) {
+	if (!Vehicle_IsValid(vehicleid)) return -1;
+	new count = 0;
+	foreach (new playerid : Player) { 
+		if (GetPlayerVehicleID(playerid) == vehicleid) {
+			count ++;
+		}
+	}
+	return count;
+}
+
 /* =============== Módulos =============== */
 
 /* Developer Mode */
@@ -24530,6 +24559,7 @@ stock GetPlayerNearVehicle(playerid, Float:radi = 5.0) {
 	#include "core/developer_mode/camera_editor"
 	#include "core/developer_mode/debug"
 	#include "core/developer_mode/prev_model_editor"
+	#include "core/developer_mode/actor_maker"
 #endif
 
 /* Administration */
@@ -24577,6 +24607,7 @@ stock GetPlayerNearVehicle(playerid, Float:radi = 5.0) {
 #include "core/vehicles/boat_repair_points"
 #include "core/vehicles/veh_interaction_menu"
 #include "core/vehicles/vehicle_boot"
+#include "core/vehicles/static_vehicles"
 
 /* Etc */
 #include "core/etc/animations"
@@ -24586,7 +24617,8 @@ stock GetPlayerNearVehicle(playerid, Float:radi = 5.0) {
 #include "core/etc/server_loader"
 
 /* Game Weapons */
-#include "core/game_weapons/weapons_factory"
+#include "core/weapons_factory/factory"
+#include "core/weapons_factory/mission"
 
 /* AntiCheat */
 #include "core/anticheat/ac_anticbug"

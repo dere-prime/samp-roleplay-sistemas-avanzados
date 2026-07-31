@@ -31,6 +31,10 @@
 	#define MAX_FIELD_VALUE (256)
 #endif
 
+#if !defined LOGGER_LOG_IN_CHAT //dere.prime
+	#define LOGGER_LOG_IN_CHAT
+#endif
+
 #define MAX_FIELD_LENGTH	(MAX_FIELD_NAME + 3 + MAX_FIELD_VALUE)
 #define MAX_EVENT_LENGTH	(MAX_EVENT_FIELDS * MAX_FIELD_LENGTH)
 
@@ -64,7 +68,10 @@ stock Logger_Log(const text[], LOGGER_FIELD:...) {
 
 	if (total == 1) {
 		print(EventBuffer);
-		return;
+		#if defined LOGGER_LOG_IN_CHAT
+			SendClientMessageToAll(-1, EventBuffer);
+		#endif
+		return 0;
 	}
 
 	for(new arg = 1; arg < total && arg < MAX_EVENT_FIELDS; ++arg) {
@@ -80,6 +87,10 @@ stock Logger_Log(const text[], LOGGER_FIELD:...) {
 	}
 
 	print(EventBuffer);
+	#if defined LOGGER_LOG_IN_CHAT
+		SendClientMessageToAll(-1, EventBuffer);
+	#endif
+	return 0;
 }
 
 // dbg is a conditional version of log, it behaves the same but with one extra parameter which is
@@ -98,6 +109,9 @@ stock Logger_Dbg(const handler[], const text[], LOGGER_FIELD:...) {
 
 	if (total == 2) {
 		print(EventBuffer);
+		#if defined LOGGER_LOG_IN_CHAT
+			SendClientMessageToAll(-1, EventBuffer);
+		#endif
 		return;
 	}
 
@@ -116,6 +130,9 @@ stock Logger_Dbg(const handler[], const text[], LOGGER_FIELD:...) {
 	// todo: process crashdetect backtrace to grab call site
 
 	print(EventBuffer);
+	#if defined LOGGER_LOG_IN_CHAT
+		SendClientMessageToAll(-1, EventBuffer);
+	#endif
 }
 
 stock Logger_Err(const text[], LOGGER_FIELD:...) {
@@ -176,6 +193,9 @@ stock Logger_Fatal(const text[], LOGGER_FIELD:...) {
 
 static stock _PrintBufferAmxBacktrace(bool:crash = false) {
 	print(EventBuffer);
+	#if defined LOGGER_LOG_IN_CHAT
+		SendClientMessageToAll(-1, EventBuffer);
+	#endif
 	PrintAmxBacktrace();
 
 	if(crash) {

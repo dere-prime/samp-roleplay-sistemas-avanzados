@@ -107,3 +107,4 @@ hook OnScriptInit() {
     }
     return 1;
 }
+

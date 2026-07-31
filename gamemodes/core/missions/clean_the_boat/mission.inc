@@ -105,9 +105,10 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid) {
     new info[1];
 	Streamer_GetArrayData(STREAMER_TYPE_CP, checkpointid, E_STREAMER_EXTRA_ID, info);
 	if (info[0] == CHECKPOINT_TYPE_MISSION) {
-        KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
         switch (MissionUpdates(playerid)) {
             case 0: {
+                KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
+                
                 MissionUpdates(playerid) = 1;
                 cleanTheBoat_player_rag[playerid] = true;
                 ShowPlayerNotificationModel(playerid, 2844, 0.0, 0.0, 0.0, "~n~~r~-1~w~~h~ Trapo seco~n~");
@@ -163,6 +164,8 @@ public UpdatePlayerCleaningTheBoat(const playerid) {
 
         ShowPlayerMessage(playerid, "_");
         DisablePlayerActiveStaticPos(playerid);
+
+        KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
 
         cleanTheBoat_player_steps[playerid] ++;
         if (cleanTheBoat_player_steps[playerid] >= 6) {
@@ -284,7 +287,9 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid) {
                 mission_info[playerid][mission_updates_timer] = -1;
                 mission_info[playerid][mission_checkpoint] = -1;
 
-	            PI[playerid][pi_REP] += minrand(50, 100);
+                new rep = minrand(50, 100);
+	            PI[playerid][pi_REP] += rep;
+                ShowPlayerNotification(playerid, "+%d de experiencia", rep);
 
                 new reward = minrand(0, 5);
                 switch (reward) {

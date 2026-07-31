@@ -30,7 +30,8 @@ enum {
 
 enum {
     MISSION_THE_APPERANCE,
-    MISSION_CLEAN_THE_BOAT
+    MISSION_CLEAN_THE_BOAT,
+    MISSION_WEAPONS_FACTORY
 }
 
 new 
@@ -124,7 +125,6 @@ stock ShowPlayerMissionDialog(playerid, skin, const tittle[], const message[], G
 		PlayerTextDrawShow(playerid, Mission_Dialog[playerid][0]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][1]),
         PlayerTextDrawShow(playerid, Mission_Dialog[playerid][2]), PlayerTextDrawShow(playerid, Mission_Dialog[playerid][3]);
 }
-
 stock createMissionCheckpoint(const playerid, Float: x, Float: y, Float: z, world, interior, Float: size = 5.0) {
 	if (IsValidDynamicCP(mission_info[playerid][mission_checkpoint])) DestroyDynamicCP(mission_info[playerid][mission_checkpoint]);
 	mission_info[playerid][mission_checkpoint] = CreateDynamicCP(x, y, z, size, world, interior, playerid, 9999999999.0);
@@ -133,6 +133,48 @@ stock createMissionCheckpoint(const playerid, Float: x, Float: y, Float: z, worl
 	info[0] = CHECKPOINT_TYPE_MISSION;
 	Streamer_SetArrayData(STREAMER_TYPE_CP, mission_info[playerid][mission_checkpoint], E_STREAMER_EXTRA_ID, info);
 	Streamer_Update(playerid, STREAMER_TYPE_CP);
+}
+
+stock createMissionVehicle(modelid, Float: X, Float: Y, Float: Z, Float: Angle, world, interior, Color1, Color2, bool: static_veh) { 
+	new vehicle_id = INVALID_VEHICLE_ID;
+	vehicle_id = CreateVehicle(modelid, X, Y, Z, Angle, Color1, Color2, -1, false);
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_VALID] = true;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_TYPE] = VEHICLE_TYPE_NONE;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MODELID] = modelid;
+	format(GLOBAL_VEHICLES[vehicle_id][gb_vehicle_NUMBER_PLATE], 32, "SAMP");
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_X] = X;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Y] = Y;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Z] = Z;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_ANGLE] = Angle;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_POS][0] = GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_X];
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_POS][1] = GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Y];
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_POS][2] = GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Z];
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_HEALTH] = 1000.0;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_DAMAGE_PANELS] = 0;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_DAMAGE_DOORS] = 0;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_DAMAGE_LIGHTS] = 0;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_DAMAGE_TIRES] = 0;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_COLOR_1] = Color1;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_COLOR_2] = Color2;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_PAINTJOB] = 3; // No paintjob
+    if (static_veh) {
+        GLOBAL_VEHICLES[vehicle_id][gb_vehicle_PARAMS_DOORS] = 1;
+        GLOBAL_VEHICLES[vehicle_id][gb_vehicle_PARAMS_ENGINE] = 0;
+        GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MAX_GAS] = 0.0;
+        GLOBAL_VEHICLES[vehicle_id][gb_vehicle_GAS] = 0.0;
+    } else {
+        GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MAX_GAS] = VEHICLE_INFO[modelid - 400][vehicle_info_MAX_GAS];
+        GLOBAL_VEHICLES[vehicle_id][gb_vehicle_GAS] = GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MAX_GAS];
+        GLOBAL_VEHICLES[vehicle_id][gb_vehicle_PARAMS_DOORS] = 0;
+    }
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_STATE] = VEHICLE_STATE_NORMAL;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_INTERIOR] = interior;
+	GLOBAL_VEHICLES[vehicle_id][gb_vehicle_WORLD] = world;		
+	UpdateVehicleParams(vehicle_id);
+	SetVehicleVirtualWorldEx(vehicle_id, world);
+	SetVehicleToRespawnEx(vehicle_id);
+    if (static_veh) SetVehicleActiveStaticPos(vehicle_id);
+	return vehicle_id;
 }
 
 /*hook OnPlayerEnterDynamicCP(playerid, checkpointid) {

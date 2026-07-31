@@ -40,17 +40,17 @@ hook OnScriptInit() {
         Ayuda mínima de: {"#SECONDARY_COLOR"}Joseph1416{FFFFFF}\n\
         Número de compilación (versión): {"#SECONDARY_COLOR"}#%d{FFFFFF}\n\
         \n\
-        {"#PRIMARY_COLOR"}Encuéntranos en: {FFFFFF}\n\
+        {"#PRIMARY_COLOR"}Encuéntranos en:{FFFFFF}\n\
         Discord: {"#SECONDARY_COLOR"}"SERVER_WEBSITE"{FFFFFF}\n\
         \n\
-        {"#PRIMARY_COLOR"}Librerías y plugins: {FFFFFF}\n\
-        {{"#SECONDARY_COLOR"}•{FFFFFF} ColAndreas, Crashdetect, FCNPC, MySQL, PawnCMD, PawnPlus\n\
-        {{"#SECONDARY_COLOR"}•{FFFFFF} PawnRaknet, PawnRegex, SSCANF, streamer, YSF\n\
+        {"#PRIMARY_COLOR"}Librerías y plugins:{FFFFFF}\n\
+        {"#SECONDARY_COLOR"}•{FFFFFF} ColAndreas, Crashdetect, FCNPC, MySQL, PawnCMD, PawnPlus\n\
+        {"#SECONDARY_COLOR"}•{FFFFFF} PawnRaknet, PawnRegex, SSCANF, streamer, YSF\n\
         \n\
         {{"#SECONDARY_COLOR"}•{FFFFFF} YSI, pawn-easing-functions, mdialog, logger, TextureStudio, samp-textdraw-editor\n\
         \n\
         {"#PRIMARY_COLOR"}Mapeos: {FFFFFF}\n\
-        {{"#SECONDARY_COLOR"}•{FFFFFF} La mayoría fueron sacados de internet (foros, Discord, etc.), y algunos mapeos simples fueron propios.\n\
+        {"#SECONDARY_COLOR"}•{FFFFFF} La mayoría fueron sacados de internet (foros, Discord, etc.), y algunos mapeos simples fueron propios.\n\
         \n\
         {cccccc}¡Es todo!\n\
         ", g_last_build_version

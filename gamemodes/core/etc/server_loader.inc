@@ -45,7 +45,6 @@ public assetsLoaderFunction(checkpoint) { // -- Cada funcion llamara al callback
         case 0: CreateTextDraws();
         case 1: LoadEnterExits();
         case 2: LoadNPCMovementPath();
-
         case 3: LoadProperties();
         case 4: LoadCrews();
         case 5: LoadGangZones();
