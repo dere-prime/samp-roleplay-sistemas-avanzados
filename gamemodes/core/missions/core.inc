@@ -7,7 +7,7 @@
 
 #include <YSI_Coding\y_hooks>
 
-#define MAX_MISSIONS 2
+#define MAX_MISSIONS 3
 
 //Header
 enum e_player_mission_info {
@@ -24,6 +24,7 @@ enum e_player_missions {
 }
 
 enum {
+    MISSION_STEP_NONE,
     MISSION_STEP_PLAYABLE,
     MISSION_STEP_CINEMATIC
 }
@@ -232,4 +233,24 @@ hook OnPlayerConnect(playerid) {
     PlayerTextDrawBackgroundColor(playerid, Mission_Dialog[playerid][3], 0);
     PlayerTextDrawFont(playerid, Mission_Dialog[playerid][3], 1);
     PlayerTextDrawSetProportional(playerid, Mission_Dialog[playerid][3], 1);
+}
+
+hook OnPlayerStateChange(playerid, newstate, oldstate) {
+    if (oldstate == PLAYER_STATE_SPECTATING) {
+        if (IsPlayerMission(playerid) && PlayerMissionStep(playerid) == MISSION_STEP_CINEMATIC) {
+            if (ac_Info[CHEAT_MISSION_MANIPULATION][ac_Enabled]) {
+                if (gettime() > PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_IMMUNITY]) {
+                    if (!ac_Info[CHEAT_MISSION_MANIPULATION][ac_Interval]) OnPlayerCheatDetected(playerid, CHEAT_MISSION_MANIPULATION, 0.0);
+                    else {
+                        if (gettime() - PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_LAST_DETECTION] > ac_Info[CHEAT_MISSION_MANIPULATION][ac_Interval]) PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_DETECTIONS] = 0;
+                        else PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_DETECTIONS] ++;
+                        
+                        PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_LAST_DETECTION] = gettime();
+                        if (PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_DETECTIONS] >= ac_Info[CHEAT_MISSION_MANIPULATION][ac_Detections]) OnPlayerCheatDetected(playerid, CHEAT_MISSION_MANIPULATION, 0.0);
+                    }
+                }
+            }
+        }
+    }
+    return Y_HOOKS_CONTINUE_RETURN_1;
 }

@@ -84,7 +84,7 @@ hook Animator_OnFinish(playerid, animator, type) {
 public UpdateTheApperanceMission(const playerid) {
     switch (MissionUpdates(playerid)) {
         case 0: {
-            EaseHidePlayerBlackScreen(playerid);
+            EaseHidePlayerBlackScreen(playerid, 1000);
         }
         case 1: {
             ShowPlayerMissionDialog(playerid, 4, "Pescador", "Bingo! encontre algo que me sacara de la quiebra");
@@ -159,7 +159,7 @@ missionTAFinish(playerid) {
     TogglePlayerControllableEx(playerid, false);
     SetPlayerVirtualWorld(playerid, 0);
 
-    EaseHidePlayerBlackScreen(playerid);
+    EaseHidePlayerBlackScreen(playerid, 1000);
     return 1;
 }
 

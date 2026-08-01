@@ -8,6 +8,8 @@
 
 #include <YSI_Coding\y_hooks>
 
+#define MAX_WFM_OBJECTS 15
+
 #define wfm_MissionUpdater(%0,%1) \
     KillTimer(mission_info[%0][mission_updates_timer]); \
     mission_info[%0][mission_updates_timer]=SetTimerEx("_wfm_MissionUpdater",%1,false,"d",%0)
@@ -16,9 +18,7 @@ enum {
     WFM_VEHICLE_NONE,
     WFM_VEHICLE_FORKLIFT
 }
-
 enum wfm_objects_enum {
-    wobjectid,
     wmodelid,
 
     Float: wx,
@@ -29,7 +29,6 @@ enum wfm_objects_enum {
     Float: wrot_y,
     Float: wrot_z
 }
-
 enum wfm_vehicles_info_enum {
     vmodelid,
 
@@ -41,42 +40,45 @@ enum wfm_vehicles_info_enum {
     bool: vstatic_veh, //Si se pone en false se podra usar el auto
     vtype
 }
-
-enum global_wfm_data { //Para definir actores y NPCS con el mismo enum.
-    set, //actorid, npcid, etc
+enum global_wfm_data {
     extra,
     Float: x,
     Float: y,
     Float: z,
     Float:angle
 }
-
 enum wfm_vehicle_enum {
     bool: valid,
     bool: static_veh,
     type,
     pid
 }
-
 enum p_wfm_data {
     wfm_cinematic_vehicle,
     wfm_cinematic_npc_player,
-    wfm_boss_npc
+    wfm_boss_npc,
+    wfm_interruption_counter,
+    wfm_mission_objects[MAX_WFM_OBJECTS],
+    wfm_mission_actor[MAX_WFM_OBJECTS],
+    wfm_mission_npcs[MAX_WFM_OBJECTS],
+    wfm_mission_cp,
+    wfm_mission_cp_state, //0 - buscar / 1 - llevar al dft
+    wfm_mission_progress //10 recorridos de cajas
 }
 
 new
     wfm_objects[][wfm_objects_enum] = {
-        {INVALID_STREAMER_ID, 12932, -531.149353, 2513.694091, 56.844841, 2.299999, -0.799999, 174.199890},
-        {INVALID_STREAMER_ID, 2991, -528.583374, 2533.439208, 53.101757, 0.000000, 0.000000, 0.000000},
-        {INVALID_STREAMER_ID, 2991, -528.585266, 2533.436767, 54.355636, 0.000000, 0.000000, 0.000000},
-        {INVALID_STREAMER_ID, 19624, -528.930175, 2540.657714, 53.435665, 0.000000, 0.000000, 0.000000},
-        {INVALID_STREAMER_ID, 19624, -527.738891, 2544.712158, 52.905628, 0.000000, 0.000000, 59.500007}
+        {12932, -531.149353, 2513.694091, 56.844841, 2.299999, -0.799999, 174.199890},
+        {2991, -528.583374, 2533.439208, 53.101757, 0.000000, 0.000000, 0.000000},
+        {2991, -528.585266, 2533.436767, 54.355636, 0.000000, 0.000000, 0.000000},
+        {19624, -528.930175, 2540.657714, 53.435665, 0.000000, 0.000000, 0.000000},
+        {19624, -527.738891, 2544.712158, 52.905628, 0.000000, 0.000000, 59.500007}
     },
     
     Float: wfm_static_actors[][global_wfm_data] = {
-        {0, 113, -528.8569, 2540.3955, 53.5156, 277.1041},
-        {0, 57, -533.1757, 2543.6409, 53.5156, 1.5795},
-        {0, 68, -500.1123, 2539.5747, 53.5156, 351.1607}
+        {113, -528.8569, 2540.3955, 53.5156, 277.1041},
+        {57, -533.1757, 2543.6409, 53.5156, 1.5795},
+        {68, -500.1123, 2539.5747, 53.5156, 351.1607}
     },
 
     /*
@@ -84,10 +86,10 @@ new
         asi que mejor creo npcs estaticos y les doy armas
     */
     Float: wfm_static_npc_weapons[][global_wfm_data] = {
-        {0, 117, -508.7785, 2532.5425, 53.5156, 350.6838}, // npcconarma
-        {0, 117, -504.6788, 2565.4563, 53.5156, 320.4364}, // npcconarma
-        {0, 118, -525.1388, 2558.0176, 53.5703, 246.1990}, // npcconarma
-        {0, 120, -540.6816, 2533.8423, 53.5584, 134.8184} // npcconarma
+        {117, -508.7785, 2532.5425, 53.5156, 350.6838}, // npcconarma
+        {117, -504.6788, 2565.4563, 53.5156, 320.4364}, // npcconarma
+        {118, -525.1388, 2558.0176, 53.5703, 246.1990}, // npcconarma
+        {120, -540.6816, 2533.8423, 53.5584, 134.8184} // npcconarma
     },
 
     wfm_vehicles_info[][wfm_vehicles_info_enum] = {
@@ -145,7 +147,10 @@ new
     wfm_npc_boss_path,
     wfm_npc_return_path,
 
-    p_wfm[MAX_PLAYERS][p_wfm_data]
+    p_wfm[MAX_PLAYERS][p_wfm_data],
+
+    Float: wfm_forklift_cargo_cp[3] = {-527.2520, 2534.7957, 53.5170},
+    Float: wfm_dft_cargo_cp[3] = {-512.6239, 2564.9097, 53.1781}
 ;
 
 /*
@@ -156,23 +161,23 @@ new
 
 createWfMissionStage(const playerid, const player_worldid) {
     for (new i = 0; i != sizeof(wfm_objects); i ++) {
-        wfm_objects[i][wobjectid] = CreateDynamicObject(
+        p_wfm[playerid][wfm_mission_objects][i] = CreateDynamicObject(
             wfm_objects[i][wmodelid], wfm_objects[i][wx], wfm_objects[i][wy], wfm_objects[i][wz], wfm_objects[i][wrot_x], wfm_objects[i][wrot_y], wfm_objects[i][wrot_z], 
             player_worldid, 0
         );
     }
     for (new i = 0; i != sizeof(wfm_static_actors); i ++) {
-        wfm_static_actors[i][set] = CreateDynamicActor(
+        p_wfm[playerid][wfm_mission_actor][i] = CreateDynamicActor(
             wfm_static_actors[i][extra], wfm_static_actors[i][x], wfm_static_actors[i][y], wfm_static_actors[i][z], wfm_static_actors[i][angle], .worldid = player_worldid, .interiorid = 0
         );
     }
     for (new i = 0; i != sizeof(wfm_static_npc_weapons); i ++) {
-        wfm_static_npc_weapons[i][set] = FCNPC_Createf("%d_wfp_wpn_%d", PI[playerid][pi_ID], i);
-        FCNPC_Spawn(wfm_static_npc_weapons[i][set], wfm_static_npc_weapons[i][extra], wfm_static_npc_weapons[i][x], wfm_static_npc_weapons[i][y], wfm_static_npc_weapons[i][z]);
-        FCNPC_SetAngle(wfm_static_npc_weapons[i][set], wfm_static_npc_weapons[i][angle]);
-        FCNPC_SetVirtualWorld(wfm_static_npc_weapons[i][set], player_worldid);
-        FCNPC_SetWeapon(wfm_static_npc_weapons[i][set], 30);
-        FCNPC_SetInvulnerable(wfm_static_npc_weapons[i][set], true);
+        p_wfm[playerid][wfm_mission_npcs][i] = FCNPC_Createf("%d_wfp_wpn_%d", PI[playerid][pi_ID], i);
+        FCNPC_Spawn(p_wfm[playerid][wfm_mission_npcs][i], wfm_static_npc_weapons[i][extra], wfm_static_npc_weapons[i][x], wfm_static_npc_weapons[i][y], wfm_static_npc_weapons[i][z]);
+        FCNPC_SetAngle(p_wfm[playerid][wfm_mission_npcs][i], wfm_static_npc_weapons[i][angle]);
+        FCNPC_SetVirtualWorld(p_wfm[playerid][wfm_mission_npcs][i], player_worldid);
+        FCNPC_SetWeapon(p_wfm[playerid][wfm_mission_npcs][i], 30);
+        FCNPC_SetInvulnerable(p_wfm[playerid][wfm_mission_npcs][i], true);
     }
 
     p_wfm[playerid][wfm_boss_npc] = FCNPC_Createf("%d_wfp_npc_boss", PI[playerid][pi_ID]);
@@ -188,6 +193,7 @@ createWfMissionStage(const playerid, const player_worldid) {
             wfm_vehicles_info[i][vmodelid], wfm_vehicles_info[i][vx], wfm_vehicles_info[i][vy], wfm_vehicles_info[i][vz], wfm_vehicles_info[i][vangle],
             player_worldid, 0, 1, 1, wfm_vehicles_info[i][vstatic_veh]
         );
+        GLOBAL_VEHICLES[vehicleid][gb_vehicle_VALID] = true;
         if (wfm_vehicles_info[i][vstatic_veh]) SetVehicleParamsEx(vehicleid, 0, 0, 0, 1, 0, 0, 0);
 
         wfm_vehicle[vehicleid][valid] = true;
@@ -225,6 +231,9 @@ Mission:factorySearchWp(playerid, index) {
     PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 15;
 
     MissionUpdates(playerid) = 0;
+    p_wfm[playerid][wfm_interruption_counter] = 0;
+
+    p_wfm[playerid][wfm_mission_cp_state] = 0;
 
     PLAYER_TEMP[playerid][pt_MISSION_VIRTUAL_WORLD] = playerid + PI[playerid][pi_ID] + random(99);
     SetPlayerVirtualWorld(playerid, PLAYER_TEMP[playerid][pt_MISSION_VIRTUAL_WORLD]);
@@ -241,6 +250,8 @@ Mission:factorySearchWp(playerid, index) {
     }
 
     TogglePlayerSpectatingEx(playerid, true);
+
+    ShowPlayerNotification(playerid, "Pausar el juego u otras acciones no cancelaran la cinematica, ya que se ejecuta del lado del servidor. Sin embargo, si abandonas la partida o no completas la mision, esta se cancelara por completo.");
 
     /* Stage 1 */
     p_wfm[playerid][wfm_cinematic_vehicle] = CreateVehicle(578, wfm_truck_route_path[0][0], wfm_truck_route_path[0][1], wfm_truck_route_path[0][2], 180.0, 1, 1, -1, false);
@@ -302,7 +313,7 @@ public _wfm_MissionUpdater(playerid) {
 
             FCNPC_GoByMovePath(p_wfm[playerid][wfm_boss_npc], wfm_npc_boss_path, .type = FCNPC_MOVE_TYPE_WALK);
 
-            EaseHidePlayerBlackScreen(playerid);
+            EaseHidePlayerBlackScreen(playerid, 1000);
             MissionUpdates(playerid) ++;
             wfm_MissionUpdater(playerid, 3000);
         }
@@ -335,6 +346,7 @@ public _wfm_MissionUpdater(playerid) {
             MissionUpdates(playerid) ++;
             wfm_MissionUpdater(playerid, 5000);
 
+            PlayerMissionStep(playerid) = MISSION_STEP_PLAYABLE;
             TogglePlayerSpectatingEx(playerid, false);
 
             new Float: px, Float: py, Float: pz, Float: pang;
@@ -342,12 +354,10 @@ public _wfm_MissionUpdater(playerid) {
             pang = FCNPC_GetAngle(p_wfm[playerid][wfm_cinematic_npc_player]);
             FCNPC_Destroy(p_wfm[playerid][wfm_cinematic_npc_player]);
 
-            PlayerMissionStep(playerid) = MISSION_STEP_PLAYABLE;
-
             SetPlayerPosEx(playerid, px, py, pz, pang, 0, PLAYER_TEMP[playerid][pt_MISSION_VIRTUAL_WORLD]);
         }
         case 12: {
-            EaseHidePlayerBlackScreen(playerid);
+            EaseHidePlayerBlackScreen(playerid, 1000);
             MissionUpdates(playerid) ++;
 
             FCNPC_GoByMovePath(p_wfm[playerid][wfm_boss_npc], wfm_npc_return_path, .type = FCNPC_MOVE_TYPE_WALK);
@@ -361,6 +371,116 @@ public _wfm_MissionUpdater(playerid) {
 }
 
 //Funcion monta cargas
+setPlayerLiftCheckpoint(const playerid) {
+    if (!mission_info[playerid][mission_current]) return 0;
+
+    if (IsValidDynamicCP(p_wfm[playerid][wfm_mission_cp])) {
+        DestroyDynamicCP(p_wfm[playerid][wfm_mission_cp]);
+    }
+
+    switch (p_wfm[playerid][wfm_mission_cp_state]) {
+        case 0: {
+            p_wfm[playerid][wfm_mission_cp] = CreateDynamicCP(wfm_forklift_cargo_cp[0], wfm_forklift_cargo_cp[1], wfm_forklift_cargo_cp[2], 3.0, PLAYER_TEMP[playerid][pt_MISSION_VIRTUAL_WORLD], 0, playerid, 9999999999.0);
+            new info[1];
+            info[0] = CHECKPOINT_TYPE_WF_FORKLIFT;
+            Streamer_SetArrayData(STREAMER_TYPE_CP, p_wfm[playerid][wfm_mission_cp], E_STREAMER_EXTRA_ID, info);
+        }
+        case 1: {
+            p_wfm[playerid][wfm_mission_cp] = CreateDynamicCP(wfm_dft_cargo_cp[0], wfm_dft_cargo_cp[1], wfm_dft_cargo_cp[2], 3.0, PLAYER_TEMP[playerid][pt_MISSION_VIRTUAL_WORLD], 0, playerid, 9999999999.0);
+            new info[1];
+            info[0] = CHECKPOINT_TYPE_WF_FORKLIFT;
+            Streamer_SetArrayData(STREAMER_TYPE_CP, p_wfm[playerid][wfm_mission_cp], E_STREAMER_EXTRA_ID, info);
+        }
+    }
+    return 1;
+}
+
+hook OnPlayerEnterDynamicCP(playerid, checkpointid) {
+    StreamerCPHeader(info);
+
+    if (info[0] == CHECKPOINT_TYPE_WF_FORKLIFT) {
+        if (!mission_info[playerid][mission_current]) return 1;
+        if (mission_info[playerid][mission_id] != MISSION_WEAPONS_FACTORY) return 1;
+        if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return 1;
+        new vehicleid = GetPlayerVehicleID(playerid);
+        if (!Vehicle_IsValid(vehicleid)) return 1;
+        if (!wfm_vehicle[vehicleid][valid]) return 1;
+        if (wfm_vehicle[vehicleid][pid] != playerid) return 1;
+        if (wfm_vehicle[vehicleid][type] != WFM_VEHICLE_FORKLIFT) return 1;
+
+        switch (p_wfm[playerid][wfm_mission_cp_state]) {
+            case 0: {
+                if (IsValidDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT])) DestroyDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT]);
+
+                GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT] = CreateDynamicObject(2912,0.0,0.0,-1000.0,0.0,0.0,0.0,PLAYER_TEMP[playerid][pt_MISSION_VIRTUAL_WORLD]);
+                AttachDynamicObjectToVehicle(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT], vehicleid, -0.009, 0.919, -0.049, 0.000, 0.000, 0.000);
+
+                p_wfm[playerid][wfm_mission_cp_state] = 1;
+                setPlayerLiftCheckpoint(playerid);
+            }
+            case 1: {
+                if (IsValidDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT])) DestroyDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT]);
+
+                p_wfm[playerid][wfm_mission_progress] ++;
+                
+                if (p_wfm[playerid][wfm_mission_progress] >= 10) {
+                    p_wfm[playerid][wfm_mission_cp_state] = 2;
+
+                    SetVehicleParamsEx(vehicleid, 1, 0, 0, 1, 0, 0, 0);
+                    RemovePlayerFromVehicle(playerid);
+
+                    ShowPlayerMissionDialog(playerid, 57, "Jefe de la mafia", "VAMOS!!! VAMOS!!! ya terminaste que haces aqui?, VETE DE UNA VEZ!.");
+                    KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
+                    PLAYER_TEMP[playerid][pt_TIMERS][22] = SetTimerEx("HidePlayerMissionDialog", 4000, false, "ib", playerid, false);
+
+                    /* Crear DFT */
+                    new Float: st_pos[4];
+                    GetVehiclePos(p_wfm[playerid][wfm_cinematic_vehicle], st_pos[0], st_pos[1], st_pos[2]);
+                    GetVehicleZAngle(p_wfm[playerid][wfm_cinematic_vehicle], st_pos[3]);
+                    if (IsValidDynamicObject(GLOBAL_VEHICLES[ p_wfm[playerid][wfm_cinematic_vehicle] ][gb_vehicle_OBJECT])) DestroyDynamicObject(GLOBAL_VEHICLES[ p_wfm[playerid][wfm_cinematic_vehicle] ][gb_vehicle_OBJECT]);
+                    DestroyVehicle(p_wfm[playerid][wfm_cinematic_vehicle]);
+                    p_wfm[playerid][wfm_cinematic_vehicle] = INVALID_VEHICLE_ID;
+
+                    new vehicle_id = INVALID_VEHICLE_ID;
+                    vehicle_id = CreateVehicle(578, st_pos[0], st_pos[1], st_pos[2], st_pos[3], 1, 1, -1, false);
+                    if (!Vehicle_IsValid(vehicle_id)) return ShowPlayerMessage(playerid, "Error, intentalo de nuevo mas tarde.");
+                    GLOBAL_VEHICLES[vehicle_id][gb_vehicle_VALID] = true; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_TYPE] = VEHICLE_TYPE_NONE; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MODELID] = 578;
+                    format(GLOBAL_VEHICLES[vehicle_id][gb_vehicle_NUMBER_PLATE], 32, "%04d %c%c%c", vehicle_id, getRandomLetter(), getRandomLetter(), getRandomLetter());
+                    GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_X] = st_pos[0]; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Y] = st_pos[1]; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Z] = st_pos[2]; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_ANGLE] = st_pos[3];
+                    GLOBAL_VEHICLES[vehicle_id][gb_vehicle_POS][0] = GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_X]; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_POS][1] = GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Y]; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_POS][2] = GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Z];
+                    GLOBAL_VEHICLES[vehicle_id][gb_vehicle_HEALTH] = 1000.0;
+                    GLOBAL_VEHICLES[vehicle_id][gb_vehicle_DAMAGE_PANELS] = 0; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_DAMAGE_DOORS] = 0; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_DAMAGE_LIGHTS] = 0; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_DAMAGE_TIRES] = 0;
+                    GLOBAL_VEHICLES[vehicle_id][gb_vehicle_COLOR_1] = 1; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_COLOR_2] = 1; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_PAINTJOB] = 3;
+                    GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MAX_GAS] = VEHICLE_INFO[578 - 400][vehicle_info_MAX_GAS]; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_GAS] = GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MAX_GAS];
+                    GLOBAL_VEHICLES[vehicle_id][gb_vehicle_STATE] = VEHICLE_STATE_NORMAL; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_INTERIOR] = 0; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_WORLD] = PLAYER_TEMP[playerid][pt_MISSION_VIRTUAL_WORLD];
+                    SetVehicleVirtualWorldEx(vehicle_id, PLAYER_TEMP[playerid][pt_MISSION_VIRTUAL_WORLD]);
+                    SetVehicleToRespawnEx(vehicle_id);
+                    wf_is_cargo_vehicle[vehicle_id] = true;
+                    wf_cargo_vehicle_driver[vehicle_id] = PI[playerid][pi_ID];
+                    SetPVarInt(playerid, "WeaponsFactory_Cargo_Vehicleid", vehicle_id);
+
+                    GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT] = CreateDynamicObject(2991,0.0,0.0,-1000.0,0.0,0.0,0.0,PLAYER_TEMP[playerid][pt_MISSION_VIRTUAL_WORLD]);
+                    AttachDynamicObjectToVehicle(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT], vehicle_id, 0.000, 0.000, 0.360, 0.000, 0.000, 90.000);
+
+                    if (WeaponsFactoryPlayer[playerid][wf_cargo_timer] != -1) {
+                        KillTimer(WeaponsFactoryPlayer[playerid][wf_cargo_timer]);
+                    }
+                    WeaponsFactoryPlayer[playerid][wf_cargo_timer] = -1;
+
+                    WeaponsFactoryPlayer[playerid][wf_player_cargo_state] = PLAYER_CARGO_STATE_RETURN_WARE;
+
+                    setPlayerLiftCheckpoint(playerid);
+                    return 1;
+                }
+
+                p_wfm[playerid][wfm_mission_cp_state] = 0;
+                setPlayerLiftCheckpoint(playerid);
+            }
+        }
+        return Y_HOOKS_BREAK_RETURN_1;
+    }
+    return Y_HOOKS_CONTINUE_RETURN_1;
+}
 
 /* 
 
@@ -377,6 +497,150 @@ clearWfMissionVehicle(const vehicleid) {
     wfm_vehicle[vehicleid] = vfm_vehicle_data;
     return 1;
 }
+clearWfMissionPlayer(const playerid) {
+    static const p_wfm_info[p_wfm_data]; 
+    p_wfm[playerid] = p_wfm_info;
+
+    p_wfm[playerid][wfm_cinematic_vehicle] = INVALID_VEHICLE_ID;
+    p_wfm[playerid][wfm_cinematic_npc_player] = INVALID_PLAYER_ID;
+    p_wfm[playerid][wfm_boss_npc] = INVALID_PLAYER_ID;
+    p_wfm[playerid][wfm_interruption_counter] = 0;
+    p_wfm[playerid][wfm_mission_cp] = INVALID_STREAMER_ID;
+    p_wfm[playerid][wfm_mission_cp_state] = 0;
+    p_wfm[playerid][wfm_mission_progress] = 0;
+    return 1;
+}
+
+destroyWfMissionVehicles(const playerid) {
+    foreach (new vehicleid : Vehicle) {
+        if (!wfm_vehicle[vehicleid][valid]) continue;
+        if (wfm_vehicle[vehicleid][pid] != playerid) continue;
+
+        clearWfMissionVehicle(vehicleid);
+        DestroyVehicleEx(vehicleid);
+    }
+
+    if (Vehicle_IsValid(p_wfm[playerid][wfm_cinematic_vehicle])) {
+        DestroyVehicle(p_wfm[playerid][wfm_cinematic_vehicle]);
+    }
+    return 1;
+}
+destroyWfMissionNPCs(const playerid) {
+    if (FCNPC_IsValid(p_wfm[playerid][wfm_boss_npc])) {
+        FCNPC_Destroy(p_wfm[playerid][wfm_boss_npc]);
+    }
+    if (FCNPC_IsValid(p_wfm[playerid][wfm_cinematic_npc_player])) {
+        FCNPC_Destroy(p_wfm[playerid][wfm_cinematic_npc_player]);
+    }
+
+    for (new i = 0; i != MAX_WFM_OBJECTS; i ++) {
+        if (FCNPC_IsValid(p_wfm[playerid][wfm_mission_npcs][i])) {
+            FCNPC_Destroy(p_wfm[playerid][wfm_mission_npcs][i]);
+        }
+    }
+    return 1;
+}
+destroyWfMissionObjects(const playerid) {
+    for (new i = 0; i != MAX_WFM_OBJECTS; i ++) {
+        if (IsValidDynamicObject(p_wfm[playerid][wfm_mission_objects][i])) {
+            DestroyDynamicObject(p_wfm[playerid][wfm_mission_objects][i]);
+        }
+    }
+    return 1;
+}
+destroyWfMissionActors(const playerid) {
+    for (new i = 0; i != MAX_WFM_OBJECTS; i ++) {
+        if (IsValidDynamicActor(p_wfm[playerid][wfm_mission_actor][i])) {
+            DestroyDynamicActor(p_wfm[playerid][wfm_mission_actor][i]);
+        }
+    }
+    return 1;
+}
+
+cancelWFMission(const playerid) {
+    destroyWfMissionVehicles(playerid);
+    destroyWfMissionActors(playerid);
+    destroyWfMissionObjects(playerid);
+    destroyWfMissionNPCs(playerid);
+    clearWfMissionPlayer(playerid);
+
+    if (IsValidDynamicCP(p_wfm[playerid][wfm_mission_cp])) {
+        DestroyDynamicCP(p_wfm[playerid][wfm_mission_cp]);
+    }
+
+    mission_info[playerid][mission_current] = false;
+    mission_info[playerid][mission_id] = -1;
+    PLAYER_TEMP[playerid][pt_HUD_TEXTDRAWS] = true;
+    SetPlayerHud(playerid);
+    TogglePlayerControllableEx(playerid, true);
+    HidePlayerMissionDialog(playerid, false);
+    TogglePlayerSpectatingEx(playerid, false);
+
+    PI[playerid][pi_STATE] = ROLEPLAY_STATE_NORMAL;
+    PI[playerid][pi_LOCAL_INTERIOR] = 0;
+    PI[playerid][pi_POS_X] = -354.251861;
+    PI[playerid][pi_POS_Y] = 2517.010986;
+    PI[playerid][pi_POS_Z] = 35.836589;
+    PI[playerid][pi_ANGLE] = frandom(360.0, 0.0, 2);
+    PI[playerid][pi_INTERIOR] = 0;
+
+    SetPlayerPosEx(playerid, PI[playerid][pi_POS_X], PI[playerid][pi_POS_Y], PI[playerid][pi_POS_Z], PI[playerid][pi_ANGLE], PI[playerid][pi_INTERIOR], 0);
+
+    SetCameraBehindPlayer(playerid);
+    SetPlayerVirtualWorld(playerid, 0);
+    ClearAnimations(playerid);
+
+	ShowPlayerBlackScreen(playerid);
+    SetTimerEx("HidePlayerBlackScreen", 2000, false, "d", playerid);
+
+    SetTimerEx("pc_cmd_sentarse", 500, false, "d", playerid);
+
+    ShowPlayerNotification(playerid, "La mision de la busqueda de las piezas de armas ha sido interrumpida.");
+    return 1;
+}
+
+// Finalizacion
+forward FinishWFMission(playerid, vehicleid);
+public FinishWFMission(playerid, vehicleid) {
+    player_mission[playerid][MISSION_WEAPONS_FACTORY][m_completed] = true;
+
+    //PlayerTextDrawHide(playerid, PlayerTextdraws[playerid][ptextdraw_BLACK_SCREEN]);
+
+    destroyWfMissionVehicles(playerid);
+    destroyWfMissionActors(playerid);
+    destroyWfMissionObjects(playerid);
+    destroyWfMissionNPCs(playerid);
+    clearWfMissionPlayer(playerid);
+
+    if (IsValidDynamicCP(p_wfm[playerid][wfm_mission_cp])) {
+        DestroyDynamicCP(p_wfm[playerid][wfm_mission_cp]);
+    }
+
+    mission_info[playerid][mission_current] = false;
+    mission_info[playerid][mission_id] = -1;
+    mission_info[playerid][mission_step] = MISSION_STEP_NONE;
+    PLAYER_TEMP[playerid][pt_HUD_TEXTDRAWS] = true;
+    SetPlayerHud(playerid);
+    TogglePlayerControllableEx(playerid, true);
+    HidePlayerMissionDialog(playerid, false);
+    TogglePlayerSpectatingEx(playerid, false);
+
+    SetCameraBehindPlayer(playerid);
+    SetPlayerVirtualWorld(playerid, 0);
+    SetVehicleVirtualWorldEx(vehicleid, 0);
+
+    if (IsValidDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT])) DestroyDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT]);
+    GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT] = CreateDynamicObject(2991,0.0,0.0,-1000.0,0.0,0.0,0.0);
+    AttachDynamicObjectToVehicle(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT], vehicleid, 0.000, 0.000, 0.360, 0.000, 0.000, 90.000);
+
+    PutPlayerInVehicleEx(playerid, vehicleid, 0);
+
+    ShowPlayerNotification(playerid, "~y~¡Felicidades!~w~~h~~n~has finalizado la etapa de la mision de la busqueda de las piezas de armas.~n~~n~Regresa a la fabrica para recibir tu paga y entregar las ~b~piezas de armas~w~~h~.");
+    SetWeaponsFactoryCheckpoint(playerid);
+
+    EaseHidePlayerBlackScreen(playerid, 1400);
+    return 1;
+}
 
 /*
 
@@ -384,10 +648,94 @@ clearWfMissionVehicle(const vehicleid) {
 
 */
 
-hook OnVehicleSpawn(vehicleid) {
+hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
+    if (IsPlayerMission(playerid) == true) {
+        if (PlayerMissionId(playerid) == MISSION_WEAPONS_FACTORY) {
+            if (!ispassenger) {
+                if (wf_is_cargo_vehicle[vehicleid]) {
+                    EaseShowPlayerBlackScreen(playerid);
+                    mission_info[playerid][mission_step] = MISSION_STEP_CINEMATIC; //Bloquear funciones tempororalmente
+                    SetTimerEx("FinishWFMission", 4000, false, "dd", playerid, vehicleid);
+                }
+            }
+        }
+    }
+    return Y_HOOKS_CONTINUE_RETURN_1;
+}
+
+hook OnPlayerStateChange(playerid, newstate, oldstate) {
+    if (newstate == PLAYER_STATE_DRIVER) {
+        if (IsPlayerMission(playerid) == true) {
+            if (PlayerMissionId(playerid) == MISSION_WEAPONS_FACTORY) {
+                new vehicleid = GetPlayerVehicleID(playerid);
+                PLAYER_TEMP[playerid][pt_LAST_VEHICLE_ID] = vehicleid;
+                if (wfm_vehicle[vehicleid][valid] && !wfm_vehicle[vehicleid][static_veh] && wfm_vehicle[vehicleid][type] == WFM_VEHICLE_FORKLIFT) {
+                    HidePlayerMissionDialog(playerid, false);
+                    if (p_wfm[playerid][wfm_interruption_counter] < 1) ShowPlayerNotification(playerid, "Ve al punto rojo para recoger las cajas y llevarlas al DFT.~n~~n~Recuerda terminar antes del tiempo establecido para poder completar la mision.");
+                    setPlayerLiftCheckpoint(playerid);
+                } else {
+                    if (p_wfm[playerid][wfm_mission_progress] < 10 || !wf_is_cargo_vehicle[vehicleid]) {
+                        if (ac_Info[CHEAT_MISSION_MANIPULATION][ac_Enabled]) {
+                            if (gettime() > PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_IMMUNITY]) {
+                                if (!ac_Info[CHEAT_MISSION_MANIPULATION][ac_Interval]) OnPlayerCheatDetected(playerid, CHEAT_MISSION_MANIPULATION, 0.0);
+                                else {
+                                    if (gettime() - PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_LAST_DETECTION] > ac_Info[CHEAT_MISSION_MANIPULATION][ac_Interval]) PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_DETECTIONS] = 0;
+                                    else PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_DETECTIONS] ++;
+                                    
+                                    PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_LAST_DETECTION] = gettime();
+                                    if (PLAYER_AC_INFO[playerid][CHEAT_MISSION_MANIPULATION][p_ac_info_DETECTIONS] >= ac_Info[CHEAT_MISSION_MANIPULATION][ac_Detections]) OnPlayerCheatDetected(playerid, CHEAT_MISSION_MANIPULATION, 0.0);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (oldstate == PLAYER_STATE_DRIVER) {
+        new vehicleid = PLAYER_TEMP[playerid][pt_LAST_VEHICLE_ID];
+        if (wfm_vehicle[vehicleid][valid] && !wfm_vehicle[vehicleid][static_veh] && wfm_vehicle[vehicleid][type] == WFM_VEHICLE_FORKLIFT) {
+            if (p_wfm[playerid][wfm_mission_progress] < 10) {
+                if (p_wfm[playerid][wfm_interruption_counter] > 2) {
+                    cancelWFMission(playerid);
+                }
+                else {
+                    PutPlayerInVehicleEx(playerid, vehicleid, 0);
+                    ShowPlayerNotification(playerid, "Primero debes terminar de subir todas las cajas al camion antes de bajarte del montacargas.~n~~n~Si sigues ~r~abandonando el montacargas~w~~h~ antes de completar la carga, la mision sera ~y~cancelada~w~~h~.");
+                    p_wfm[playerid][wfm_interruption_counter] ++;
+                }
+            }
+        }
+    }
     return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 hook OnVehicleDeath(vehicleid, killerid) {
+    if (wfm_vehicle[vehicleid][valid]) {
+        if (IsPlayerConnected(wfm_vehicle[vehicleid][pid]) && PLAYER_TEMP[ wfm_vehicle[vehicleid][pid] ][pt_USER_LOGGED] && PlayerMissionId(wfm_vehicle[vehicleid][pid]) == MISSION_WEAPONS_FACTORY) {
+            cancelWFMission(wfm_vehicle[vehicleid][pid]);
+        }
+    }
+    return Y_HOOKS_CONTINUE_RETURN_1;
+}
+
+hook OnPlayerDisconnect(playerid, reason) {
+    if (mission_info[playerid][mission_current]) {
+        if (mission_info[playerid][mission_id] == MISSION_WEAPONS_FACTORY) {
+            destroyWfMissionVehicles(playerid);
+            destroyWfMissionActors(playerid);
+            destroyWfMissionObjects(playerid);
+            destroyWfMissionNPCs(playerid);
+            clearWfMissionPlayer(playerid);
+
+            if (IsValidDynamicCP(p_wfm[playerid][wfm_mission_cp])) {
+                DestroyDynamicCP(p_wfm[playerid][wfm_mission_cp]);
+            }
+
+            mission_info[playerid][mission_current] = false;
+            mission_info[playerid][mission_id] = -1;
+        }
+    }
     return Y_HOOKS_CONTINUE_RETURN_1;
 }

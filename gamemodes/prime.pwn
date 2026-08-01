@@ -139,6 +139,7 @@ const MAX_PLAYERS = 100;
 #define PlayerTimeOut(%0,%1,%2,%3) if (gettime() < ((%0) + (%1))) return SendPlayerClientMessage((%2), (%3), TimeConvertAsText((%1) - (gettime() - (%0))))
 #define ShowPlayerTimeOut(%0,%1,%2,%3) if (gettime() < ((%0) + (%1))) return ShowPlayerMessage((%2), (%3), TimeConvertAsText((%1) - (gettime() - (%0))))
 #define SecondsToMs(%0) (%0*1000)
+#define StreamerCPHeader(%0) new %0[1]; Streamer_GetArrayData(STREAMER_TYPE_CP, checkpointid, E_STREAMER_EXTRA_ID, %0)
 
 #define P_CURR "~g~$~w~~h~"
 #define N_CURR "~r~$~w~~h~"
@@ -268,7 +269,8 @@ enum {
 	CHEAT_FAKE_TRAILER_SYNC,
 	CHEAT_DESTROY_VEHICLE,
 	CHEAT_CBUG,
-	CHEAT_AFKPOS
+	CHEAT_AFKPOS,
+	CHEAT_MISSION_MANIPULATION
 }
 
 enum e_ac_Info
@@ -308,7 +310,8 @@ new ac_Info[][e_ac_Info] = /* Valores por defecto si no se carga de AC.txt */
 	{"fake trailer sync",		true, true,		1, 0},
 	{"destroy vehicle",			true, false,	1, 0},
 	{"cbug",					true, false,	1, 0},
-	{"afk pos",					true, true,		1, 0}
+	{"afk pos",					true, true,		1, 0},
+	{"bug mision",				true, true,		1, 0}
 };
 
 enum e_PLAYER_AC_INFO
@@ -662,7 +665,8 @@ enum Global_Vehicles_Info
 	gb_vehicle_TP_IMMUNITY,
 	gb_vehicle_VIP,
 	gb_vehicle_ATTACHED_TO,
-	Text3D:gb_vehicle_LABEL
+	Text3D:gb_vehicle_LABEL,
+	gb_vehicle_OBJECT
 }
 new GLOBAL_VEHICLES[MAX_VEHICLES][Global_Vehicles_Info];
 
@@ -1368,7 +1372,9 @@ enum
 	CHECKPOINT_TYPE_MISSION,
 
 	CHECKPOINT_TYPE_WF_SPAWN_TRUCK,
-	CHECKPOINT_TYPE_WF_MISSION
+	CHECKPOINT_TYPE_WF_MISSION,
+	CHECKPOINT_TYPE_WF_FORKLIFT,
+	CHECKPOINT_TYPE_WF_RETURN_WARE
 }
 
 #define MAX_PLAYER_GPS_SAVES	10
@@ -2266,6 +2272,7 @@ enum Temp_Enum {
 	pt_PLAYER_PHONE_CALL_TIMER,
 	pt_PLAYER_PHONE_CALL_STATE,
 	pt_PLAYER_PHONE_CALL_PLAYERID,
+	pt_PLAYER_PHONE_CALL_NUMBER,
 	pt_PLAYER_LISTITEM[MAX_LISTITEMS],
 	pt_PLAYER_PHONE_BOOK_ADD_NUMBER,
 	pt_PLAYER_PHONE_BOOK_SELECTED,
@@ -5264,6 +5271,10 @@ CMD:colgar(playerid, params[]) {
 			SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{ffffff}No has respondido la llamada.");
 		}
 		case CALL_STATE_ESTABLISHED: {
+			switch (PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_NUMBER]) {
+				case 616103: return ShowPlayerNotification(playerid, "No puedes colgar esta llamada, espera a que termine el dialogo.");
+			}
+
 			EndPhoneCall(playerid);
 			SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{ffffff}Llamada finalizada.");
 		}
@@ -12936,6 +12947,9 @@ EndPhoneCall(playerid) {
 	PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_STATE] = CALL_GAME_STATE_NONE;
 	PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_PLAYERID] = INVALID_PLAYER_ID;
 	
+	PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_NUMBER] = 0;
+	PLAYER_TEMP[to_playerid][pt_PLAYER_PHONE_CALL_NUMBER] = 0;
+
 	UpdatePlayerCallingCard(playerid);
 	UpdatePlayerCallingCard(to_playerid);
 	return 1;
@@ -12951,8 +12965,12 @@ convertPhoneNumber(playerid, number) {
 			break;
 		}
 	}
-
 	if (!exists) format(f_string, sizeof f_string, "%d", number);
+	switch (number) {
+		case 616103: {
+			format(f_string, sizeof f_string, "Roy");
+		}
+	}
 	return f_string;
 }
 
@@ -17134,6 +17152,8 @@ public OnVehicleSpawn(vehicleid) {
 	GLOBAL_VEHICLES[vehicleid][gb_vehicle_DRIVER] = INVALID_PLAYER_ID;
 	GLOBAL_VEHICLES[vehicleid][gb_vehicle_LAST_DRIVER] = INVALID_PLAYER_ID;
 	GLOBAL_VEHICLES[vehicleid][gb_vehicle_OCCUPIED] = false;
+
+	if (IsValidDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT])) DestroyDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT]);
 	
 	if (GLOBAL_VEHICLES[vehicleid][gb_vehicle_HEALTH] < MIN_VEHICLE_HEALTH) GLOBAL_VEHICLES[vehicleid][gb_vehicle_HEALTH] = MIN_VEHICLE_HEALTH;
 	
@@ -17266,6 +17286,8 @@ public OnVehicleDeath(vehicleid, killerid) {
 		DestroyDynamic3DTextLabel(GLOBAL_VEHICLES[vehicleid][gb_vehicle_LABEL]);
 		GLOBAL_VEHICLES[vehicleid][gb_vehicle_LABEL] = Text3D:INVALID_STREAMER_ID;
 	}
+
+	if (IsValidDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT])) DestroyDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT]);
 	
 	switch(GLOBAL_VEHICLES[vehicleid][gb_vehicle_TYPE]) {
 		case VEHICLE_TYPE_TEST: DestroyVehicleEx(vehicleid);
@@ -17713,6 +17735,8 @@ DestroyVehicleEx(vehicleid) {
 			DestroyDynamic3DTextLabel(GLOBAL_VEHICLES[vehicleid][gb_vehicle_LABEL]);
 			GLOBAL_VEHICLES[vehicleid][gb_vehicle_LABEL] = Text3D:INVALID_STREAMER_ID;
 		}
+
+		if (IsValidDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT])) DestroyDynamicObject(GLOBAL_VEHICLES[vehicleid][gb_vehicle_OBJECT]);
 
 		new temp_GLOBAL_VEHICLES[Global_Vehicles_Info]; GLOBAL_VEHICLES[vehicleid] = temp_GLOBAL_VEHICLES;
 		new temp_PLAYER_VEHICLES[Player_Vehicles_Info]; PLAYER_VEHICLES[vehicleid] = temp_PLAYER_VEHICLES;
@@ -24159,15 +24183,9 @@ SavePlayerWorkLevels(playerid) {
 	return 1;
 }
 
-#if DEVELOPER_MODE == 1
-	task change_server_hostname[15 * 1000]() {
-		SendRconCommand("hostname « "SERVER_NAME" | Modo desarrollador »");
-	}
-#else
-	task change_server_hostname[15 * 1000]() {
-		va_SendRconCommand("hostname « "SERVER_NAME" | %s »", server_hostname[ random(sizeof(server_hostname)) ]);
-	}
-#endif
+task change_server_hostname[15 * 1000]() {
+	va_SendRconCommand("hostname « "SERVER_NAME" | %s »", server_hostname[ random(sizeof(server_hostname)) ]);
+}
 
 CheckPlayerFakeClient(playerid) //experimental
 {  
@@ -24398,7 +24416,8 @@ stock ShowPlayerBlackScreen(playerid) {
 	return 1;
 }
 
-stock HidePlayerBlackScreen(playerid) {
+forward HidePlayerBlackScreen(playerid);
+public HidePlayerBlackScreen(playerid) {
 	TextDrawHideForPlayer(playerid, Textdraws[textdraw_BLACK_SCREEN]);
 	return 1;
 }
@@ -24409,8 +24428,9 @@ stock EaseShowPlayerBlackScreen(playerid, duration = 1000) {
 	return 1;
 }
 
-stock EaseHidePlayerBlackScreen(playerid, duration = 1000) {
+stock EaseHidePlayerBlackScreen(playerid, duration) {
 	TextDrawHideForPlayer(playerid, Textdraws[textdraw_BLACK_SCREEN]);
+	PlayerTextDrawBoxColor(playerid, PlayerTextdraws[playerid][ptextdraw_BLACK_SCREEN], 0x000000FF);
 	PLAYER_TEMP[playerid][pt_BLACK_SCREEN_ANIMATOR] = PlayerText_InterpolateBoxColor(playerid, PlayerTextdraws[playerid][ptextdraw_BLACK_SCREEN], 0x00000000, duration, EASE_IN_OUT_SINE);
 	return 1;
 }

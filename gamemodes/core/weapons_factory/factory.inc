@@ -6,6 +6,8 @@
 
 #include <YSI_Coding\y_hooks>
 
+#define WEAPONS_FACTORY_PAYMENT 4800 // + random (1500)
+
 enum {
     PLAYER_CARGO_STATE_SPAWN_TRUCK,
     PLAYER_CARGO_STATE_SEARCH_WARE,
@@ -30,6 +32,8 @@ static Float: wf_search_cargo_pos[3] = {-2148.1987, -241.8855, 36.5156};
 
 static Float: wf_spawn_truck_pos[3] = {-2177.9182, -236.1390, 36.5220};
 static Float: wf_spawned_truck_pos[4] = {-2170.3462, -209.8348, 35.9451, 268.3435}; //DFT 578
+
+static Float: wf_cargo_return_pos[3] = {-2134.716552, -237.888732, 35.320312};
 
 new bool: wf_is_cargo_vehicle[MAX_VEHICLES];
 new wf_cargo_vehicle_driver[MAX_VEHICLES];
@@ -72,6 +76,12 @@ SetWeaponsFactoryCheckpoint(const playerid) {
         case PLAYER_CARGO_STATE_SEARCH_WARE: {
             WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint] = CreateDynamicCP(-333.9665, 2516.0408, 35.2259, 5.0, 0, 0, playerid, 9999999999.0);
             info[0] = CHECKPOINT_TYPE_WF_MISSION;
+            Streamer_SetArrayData(STREAMER_TYPE_CP, WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint], E_STREAMER_EXTRA_ID, info);
+            Streamer_Update(playerid, STREAMER_TYPE_CP);
+        }
+        case PLAYER_CARGO_STATE_RETURN_WARE: {
+            WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint] = CreateDynamicCP(wf_cargo_return_pos[0], wf_cargo_return_pos[1], wf_cargo_return_pos[2], 5.0, 0, 0, playerid, 9999999999.0);
+            info[0] = CHECKPOINT_TYPE_WF_RETURN_WARE;
             Streamer_SetArrayData(STREAMER_TYPE_CP, WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint], E_STREAMER_EXTRA_ID, info);
             Streamer_Update(playerid, STREAMER_TYPE_CP);
         }
@@ -118,6 +128,60 @@ public CargoJobHelperTimer(playerid) {
     HidePlayerMissionDialog(playerid, false);
     TogglePlayerControllableEx(playerid, true);
     WeaponsFactoryPlayer[playerid][wf_cargo_confirm_timeout] = gettime() + 5;
+    return 1;
+}
+
+forward EstablishRoyCall(playerid);
+public EstablishRoyCall(playerid) {
+    EndPhoneCall(playerid);
+    PLAYER_TEMP[playerid][pt_PLAYER_IN_CALL] = true; /* Bloquear para que otros jugadores no puedan llamar */
+    PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_STATE] = CALL_STATE_INCOMING_CALL;
+    PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_PLAYERID] = INVALID_PLAYER_ID;
+    PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_NUMBER] = 616103;
+
+    UpdatePlayerCallingCard(playerid, 616103);
+    ShowPlayerCallingCard(playerid);
+
+    new str_text[64];
+    format(str_text, sizeof(str_text), "* El telefono de %s esta sonando...", PLAYER_TEMP[playerid][pt_NAME]);
+    ProxDetector(playerid, 15.0, str_text, 0xADFF2FAA, 0xADFF2FAA, 0xADFF2FAA, 0xADFF2FAA, 0xADFF2FAA, 85);
+    PlayerPlaySoundEx(playerid, 20804);
+
+    ShowPlayerNotification(playerid, "La llamada de Roy se respondera automaticamente, pero puedes cancelarla usando ~r~/colgar~w~~h~ antes de que sea contestada. Una vez respondas la llamada, ya no podras cancelarla.");
+
+    KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][6]);
+    PLAYER_TEMP[playerid][pt_TIMERS][6] = SetTimerEx("AutoRoyCallResponse", 5000, false, "i", playerid);
+    return 1;
+}
+
+forward AutoRoyCallResponse(playerid);
+public AutoRoyCallResponse(playerid) {
+    ShowPlayerMissionDialog(playerid, 30, "Roy", "Hola, amigo. ¿Como estas?~n~Me alegra que la ultima mision haya salido bien. Espero verte mas seguido por aqui. Solo queria llamarte para darte las gracias. Y recuerda... no le cuentes a nadie lo que hiciste.");
+    KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
+    PLAYER_TEMP[playerid][pt_TIMERS][22] = SetTimerEx("HidePlayerMissionDialog", 6000, false, "ib", playerid, false);
+
+    PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_STATE] = CALL_STATE_ESTABLISHED;
+    UpdatePlayerCallingCard(playerid, 616103);
+
+    KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][6]);
+    PLAYER_TEMP[playerid][pt_TIMERS][6] = SetTimerEx("EndRoyPhoneCall", 8000, false, "i", playerid);
+    return 1;
+}
+
+forward EndRoyPhoneCall(playerid);
+public EndRoyPhoneCall(playerid) {
+    PLAYER_TEMP[playerid][pt_PLAYER_IN_CALL] = false;
+    PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_STATE] = CALL_GAME_STATE_NONE;
+    PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_PLAYERID] = INVALID_PLAYER_ID;
+	PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_NUMBER] = 0;
+    
+    SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
+    UpdatePlayerCallingCard(playerid);
+
+    KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
+    KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][6]);
+
+	SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}Llamada finalizada.");
     return 1;
 }
 
@@ -229,7 +293,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid) {
             if (WeaponsFactory_Cargo_Vehicleid == INVALID_VEHICLE_ID) return ShowPlayerMessage(playerid, "Necesitas estar conduciendo tu unidad asignada.");
             if (!wf_is_cargo_vehicle[WeaponsFactory_Cargo_Vehicleid]) return ShowPlayerMessage(playerid, "Necesitas estar conduciendo tu unidad asignada.");
             if (wf_cargo_vehicle_driver[WeaponsFactory_Cargo_Vehicleid] != PI[playerid][pi_ID]) return ShowPlayerMessage(playerid, "Necesitas estar conduciendo tu unidad asignada.");
-            if (GetVehicleOccupants(vehicleid) > 1) return ShowPlayerMessage(playerid, "El camion debe estar sin pasajeros.");
+            if (GetVehicleOccupants(WeaponsFactory_Cargo_Vehicleid) > 1) return ShowPlayerMessage(playerid, "El camion debe estar sin pasajeros.");
             
             if (IsValidDynamicCP(WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint])) {
                 DestroyDynamicCP(WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint]);
@@ -237,6 +301,34 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid) {
             WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint] = INVALID_STREAMER_ID;
 
             PlayPlayerMission(playerid, "factorySearchWp", MISSION_WEAPONS_FACTORY, false);
+        }
+        case CHECKPOINT_TYPE_WF_RETURN_WARE: {
+            if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return ShowPlayerMessage(playerid, "Necesitas estar conduciendo tu unidad asignada.");
+            new WeaponsFactory_Cargo_Vehicleid = GetPVarInt(playerid, "WeaponsFactory_Cargo_Vehicleid");
+            if (GetPlayerVehicleID(playerid) != WeaponsFactory_Cargo_Vehicleid) return ShowPlayerMessage(playerid, "Necesitas estar conduciendo tu unidad asignada.");
+            if (WeaponsFactory_Cargo_Vehicleid == INVALID_VEHICLE_ID) return ShowPlayerMessage(playerid, "Necesitas estar conduciendo tu unidad asignada.");
+            if (!wf_is_cargo_vehicle[WeaponsFactory_Cargo_Vehicleid]) return ShowPlayerMessage(playerid, "Necesitas estar conduciendo tu unidad asignada.");
+            if (wf_cargo_vehicle_driver[WeaponsFactory_Cargo_Vehicleid] != PI[playerid][pi_ID]) return ShowPlayerMessage(playerid, "Necesitas estar conduciendo tu unidad asignada.");
+            if (GetVehicleOccupants(WeaponsFactory_Cargo_Vehicleid) > 1) return ShowPlayerMessage(playerid, "El camion debe estar sin pasajeros.");
+
+            DestroyCargoVehicle(WeaponsFactory_Cargo_Vehicleid);
+            ResetWeaponsFactoryData(playerid);
+            SetPVarInt(playerid, "WeaponsFactory_Cargo_Vehicleid", INVALID_VEHICLE_ID);
+            
+            new payment = WEAPONS_FACTORY_PAYMENT + random(1500);
+            new parts_cargo = 200 + random(300);
+
+            if (GivePlayerCash(playerid, payment, true, false)) {
+                ShowPlayerNotificationModel(playerid, 1212, 0.0, 0.0, 45.0, "Has entregado el cargamento de piezas y has recibido ~g~$%s~w~~h~.", number_format_thousand(payment));
+                wf_current_wp_parts += parts_cargo;
+                updateWeaponsFactoryParts3DTxt();
+                ShowPlayerNotification(playerid, "El almacen de piezas ha recibido ~y~%s~w~~h~ piezas de armas.", number_format_thousand(parts_cargo));
+            }
+            
+            EndPhoneCall(playerid);
+
+            KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][6]);
+            PLAYER_TEMP[playerid][pt_TIMERS][6] = SetTimerEx("EstablishRoyCall", 4000, false, "i", playerid);
         }
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
@@ -259,9 +351,10 @@ hook OnPlayerDisconnect(playerid, reason) {
 hook OnVehicleDeath(vehicleid, killerid) {
     if (wf_is_cargo_vehicle[vehicleid]) {
         new cargo_playerid = GetPlayerIdFromAccountId(wf_cargo_vehicle_driver[vehicleid]);
-        if (IsPlayerConnected(playerid)) {
-            if (PLAYER_TEMP[playerid][pt_USER_LOGGED]) {
-                ShowPlayerNotification(playerid, "Tu unidad asignada desde la fabrica de armas ha sido destruida.");
+        if (IsPlayerConnected(cargo_playerid)) {
+            if (PLAYER_TEMP[cargo_playerid][pt_USER_LOGGED]) {
+                ResetWeaponsFactoryData(cargo_playerid);
+                ShowPlayerNotification(cargo_playerid, "Tu unidad asignada desde la fabrica de armas ha sido destruida.");
             }
         }
 
@@ -292,6 +385,8 @@ hook OnPlayerStateChange(playerid, newstate, oldstate) {
             if (wf_is_cargo_vehicle[WeaponsFactory_Cargo_Vehicleid]) {
                 if (vehicleid == WeaponsFactory_Cargo_Vehicleid) {
                     if (IsValidVehicle(vehicleid)) {
+                        SetWeaponsFactoryCheckpoint(playerid);
+
                         if (WeaponsFactoryPlayer[playerid][wf_cargo_timer] != -1) {
                             KillTimer(WeaponsFactoryPlayer[playerid][wf_cargo_timer]);
                         }
@@ -307,6 +402,10 @@ hook OnPlayerStateChange(playerid, newstate, oldstate) {
         if (WeaponsFactory_Cargo_Vehicleid != INVALID_VEHICLE_ID) {
             if (wf_is_cargo_vehicle[WeaponsFactory_Cargo_Vehicleid]) {
                 if (vehicleid == WeaponsFactory_Cargo_Vehicleid) {
+                    if (IsValidDynamicCP(WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint])) {
+                        DestroyDynamicCP(WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint]);
+                    }
+
                     KillTimer(WeaponsFactoryPlayer[playerid][wf_cargo_timer]);
                     WeaponsFactoryPlayer[playerid][wf_cargo_timer] = SetTimerEx("WFCargoTimeOut", SecondsToMs(30), false, "d", playerid);
                     ShowPlayerNotification(playerid, "Tienes ~y~30 segundos~w~~h~ para volver al camion, si no vuelves el viaje se cancelara.");

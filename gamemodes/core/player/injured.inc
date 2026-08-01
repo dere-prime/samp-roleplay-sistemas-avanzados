@@ -12,6 +12,8 @@ hook OnPlayerDisconnect(playerid, reason) {
 public OnPlayerPrepareDeath(playerid, a_lib[32], a_name[32], &anim_lock, killerid, reason) {
 	if (PLAYER_TEMP[playerid][pt_KICKED] || !PLAYER_TEMP[playerid][pt_USER_LOGGED]) return 0;
 
+    if (PlayerMissionId(playerid) == MISSION_WEAPONS_FACTORY) cancelWFMission(playerid);
+
 	DropEquippedCurrentWeapon(playerid);
 	OnPlayerDeathAFK(playerid);
 
