@@ -176,11 +176,7 @@ public AutoRoyCallResponse(playerid, type) {
         case 0: ShowPlayerMissionDialog(playerid, 30, "Roy", "Hola, amigo. ¿Como estas?~n~Me alegra que la ultima mision haya salido bien. Espero verte mas seguido por aqui. Solo queria llamarte para darte las gracias. Y recuerda... no le cuentes a nadie lo que hiciste.");
         case 1: ShowPlayerMissionDialog(playerid, 30, "Roy", "Bien, amigo. Esto es lo que haras: al llegar no te alejes de la zona o el trabajo se cancelara y tendras que volver a pie. Tampoco empujes ni jodas los vehiculos, o esos tipos se iran y te dejaran tirado. ¡Suerte!");
     }
-
-    if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
-        temporarilyHidePlayerSpeedoMetr(playerid, 11000);
-    }
-
+    
     KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
     PLAYER_TEMP[playerid][pt_TIMERS][22] = SetTimerEx("HidePlayerMissionDialog", 6000, false, "ib", playerid, false);
 
@@ -268,6 +264,16 @@ hook OnPlayerEnterDynamicArea(playerid, areaid) {
             return Y_HOOKS_BREAK_RETURN_1;
         }
         case AREA_TYPE_WF_SPAWN_TRUCK: {
+            if (gettime() > WeaponsFactoryPlayer[playerid][wf_cargo_talked_to_roy_time] + 15) return ShowPlayerMessage(playerid, "Para hacer esta mision necesitas hablar con Roy primero.");
+            ShowPlayerTimeOut(WeaponsFactoryPlayer[playerid][wf_cargo_timeout], 30, playerid, "Debes esperar ~b~%s~w~ para volver a buscar otro cargamento.");
+            if (WeaponsFactoryPlayer[playerid][wf_player_cargo_state] != PLAYER_CARGO_STATE_SPAWN_TRUCK) return ShowPlayerMessage(playerid, "No puedes sacar otro camion hasta que termines tu viaje.");
+            if (PI[playerid][pi_WANTED_LEVEL] > 0) return ShowPlayerMessage(playerid, "No puedes estar siendo buscado por la policia.");
+            if (IsPlayerMission(playerid)) return ShowPlayerMessage(playerid, "Esta funcion no esta disponible actualmente.");
+            if (IsPlayerWork(playerid, WORK_POLICE)) return ShowPlayerMessage(playerid, "Esta funcion no esta disponible actualmente.");
+            if (IsPlayerNotWorking(playerid, WORK_NONE)) return ShowPlayerMessage(playerid, "Esta funcion no esta disponible actualmente.");
+            if (PI[playerid][pi_LEVEL] < 5) return ShowPlayerMessage(playerid, "Necesitas ser nivel 5 para poder hacer esta mision.");
+            if (!GetValidPlayerPhoneNumber(playerid)) return ShowPlayerMessage(playerid, "Necesitas tener un telefono para poder hacer esta mision.");
+
             Dialog_Open(
                 playerid, Dialog:WFCargoMissionStart, DIALOG_STYLE_MSGBOX, 
                 "{"#PRIMARY_COLOR"}·{ffffff}Cargamento de piezas", 
@@ -436,7 +442,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate) {
             }
         }
     }
-    return Y_HOOKS_CONTINUE_RETURN_1;
+    return 0;
 }
 
 /* 
@@ -450,26 +456,27 @@ DialogResponse:ConfirmStartWFCargo(playerid, response, listitem, inputtext[]) {
         ResetWeaponsFactoryData(playerid);
         WeaponsFactoryPlayer[playerid][wf_player_cargo_state] = PLAYER_CARGO_STATE_SPAWN_TRUCK;
         WeaponsFactoryPlayer[playerid][wf_cargo_talked_to_roy_time] = gettime();
+        WeaponsFactoryPlayer[playerid][wf_cargo_timeout] = 0;
         WeaponsFactoryPlayer[playerid][wf_cargo_timer] = SetTimerEx("WFCargoTimeOut", SecondsToMs(30), false, "d", playerid);
         SetWeaponsFactoryCheckpoint(playerid);
     }
-    return 1;
+    return 0;
 }
 DialogResponse:WFCargoMissionStart(playerid, response, listitem, inputtext[]) {
     if (response) {
-        if (gettime() < WeaponsFactoryPlayer[playerid][wf_cargo_talked_to_roy_time] + 15) return ShowPlayerMessage(playerid, "Para hacer esta mision necesitas hablar con Roy primero.");
+        if (gettime() > WeaponsFactoryPlayer[playerid][wf_cargo_talked_to_roy_time] + 15) return 0;
         ShowPlayerTimeOut(WeaponsFactoryPlayer[playerid][wf_cargo_timeout], 30, playerid, "Debes esperar ~b~%s~w~ para volver a buscar otro cargamento.");
-        if (WeaponsFactoryPlayer[playerid][wf_player_cargo_state] != PLAYER_CARGO_STATE_SPAWN_TRUCK) return ShowPlayerMessage(playerid, "No puedes sacar otro camion hasta que termines tu viaje.");
-        if (PI[playerid][pi_WANTED_LEVEL] > 0) return ShowPlayerMessage(playerid, "No puedes estar siendo buscado por la policia.");
-        if (IsPlayerMission(playerid)) return ShowPlayerMessage(playerid, "Esta funcion no esta disponible actualmente.");
-        if (IsPlayerWork(playerid, WORK_POLICE)) return ShowPlayerMessage(playerid, "Esta funcion no esta disponible actualmente.");
-        if (IsPlayerNotWorking(playerid, WORK_NONE)) return ShowPlayerMessage(playerid, "Esta funcion no esta disponible actualmente.");
-        if (PI[playerid][pi_LEVEL] < 5) return ShowPlayerMessage(playerid, "Necesitas ser nivel 5 para poder hacer esta mision.");
-        if (!GetValidPlayerPhoneNumber(playerid)) return ShowPlayerMessage(playerid, "Necesitas tener un telefono para poder hacer esta mision.");        
+        if (WeaponsFactoryPlayer[playerid][wf_player_cargo_state] != PLAYER_CARGO_STATE_SPAWN_TRUCK) return 0;
+        if (PI[playerid][pi_WANTED_LEVEL] > 0) return 0;
+        if (IsPlayerMission(playerid)) return 0;
+        if (IsPlayerWork(playerid, WORK_POLICE)) return 0;
+        if (IsPlayerNotWorking(playerid, WORK_NONE)) return 0;
+        if (PI[playerid][pi_LEVEL] < 5) return 0;
+        if (!GetValidPlayerPhoneNumber(playerid)) return 0;
 
         new vehicle_id = INVALID_VEHICLE_ID;
         vehicle_id = CreateVehicle(578, wf_spawned_truck_pos[0], wf_spawned_truck_pos[1], wf_spawned_truck_pos[2], wf_spawned_truck_pos[3], 1, 1, -1, false);
-        if (!Vehicle_IsValid(vehicle_id)) return ShowPlayerMessage(playerid, "Error, intentalo de nuevo mas tarde.");
+        if (!Vehicle_IsValid(vehicle_id)) { ShowPlayerMessage(playerid, "Error, intentalo de nuevo mas tarde."); return 0; }
         GLOBAL_VEHICLES[vehicle_id][gb_vehicle_VALID] = true; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_TYPE] = VEHICLE_TYPE_NONE; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MODELID] = 578;
         format(GLOBAL_VEHICLES[vehicle_id][gb_vehicle_NUMBER_PLATE], 32, "%04d %c%c%c", vehicle_id, getRandomLetter(), getRandomLetter(), getRandomLetter());
         GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_X] = wf_spawned_truck_pos[0]; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Y] = wf_spawned_truck_pos[1]; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_Z] = wf_spawned_truck_pos[2]; GLOBAL_VEHICLES[vehicle_id][gb_vehicle_SPAWN_ANGLE] = wf_spawned_truck_pos[3];
@@ -497,5 +504,5 @@ DialogResponse:WFCargoMissionStart(playerid, response, listitem, inputtext[]) {
         KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][6]);
         PLAYER_TEMP[playerid][pt_TIMERS][6] = SetTimerEx("EstablishRoyCall", 8000, false, "dd", playerid, 1);
     }
-    return 1;
+    return 0;
 }

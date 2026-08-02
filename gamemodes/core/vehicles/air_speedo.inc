@@ -74,7 +74,14 @@ public OnAirSpeedoRequestUpdate(playerid, vehicleid) {
 	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][10], "%03d", floatround(vel));
 	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][9], "KTS");
 
-    updateSpeedoBars(playerid, vel, VEHICLE_INFO[GetVehicleModel(vehicleid) - 400][vehicle_info_MAX_VEL]);
+    for (new i = 0; i < 9; i++) {
+        PlayerTextDrawBoxColor(playerid, pSpeedoTd[playerid][i], 0xB02EFFFF);
+    }
+    
+    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][10], 0xC666FFFF);
+    PlayerTextDrawBoxColor(playerid, pSpeedoTd[playerid][11], -1);
+    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][13], -1);
+    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][14], -1);
 
     if(GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_ENGINE]) {
         GLOBAL_VEHICLES[vehicleid][gb_vehicle_GAS] -= floatmul(floatdiv(GLOBAL_VEHICLES[vehicleid][gb_vehicle_MAX_GAS], 200), vel * 0.0004);
@@ -98,7 +105,7 @@ CreatePlayerAirSpeedo(playerid, vehicleid) {
         PlayerTextDrawShow(playerid, pSpeedoTd[playerid][i]);
     }
 
-    pAirSpeedoTimer[playerid] = SetTimerEx("OnAirSpeedoRequestUpdate", 250, true, "ii", playerid, vehicleid);
+    pAirSpeedoTimer[playerid] = SetTimerEx("OnAirSpeedoRequestUpdate", 350, true, "ii", playerid, vehicleid);
     pAirSpeedo[playerid] = true;
 }
 

@@ -318,9 +318,9 @@ public _wfm_MissionUpdater(playerid) {
             FCNPC_ExitVehicle(p_wfm[playerid][wfm_cinematic_npc_player]);
             ShowPlayerMissionDialog(playerid, PI[playerid][pi_SKIN], PI[playerid][pi_NAME], "Siento que algun dia estos sujetos van a matarme, pero bueno ya vere como me las arreglo. A trabajar!!!");
             KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
-            PLAYER_TEMP[playerid][pt_TIMERS][22] = SetTimerEx("HidePlayerMissionDialog", 4000, false, "ib", playerid, false);
+            PLAYER_TEMP[playerid][pt_TIMERS][22] = SetTimerEx("HidePlayerMissionDialog", 5000, false, "ib", playerid, false);
             MissionUpdates(playerid) ++;
-            wfm_MissionUpdater(playerid, 900);
+            wfm_MissionUpdater(playerid, 1800);
         }
         case 8: {
             FCNPC_SetPosition(p_wfm[playerid][wfm_cinematic_npc_player], wfm_player_onfoot_path[0][0], wfm_player_onfoot_path[0][1], wfm_player_onfoot_path[0][2]);        
