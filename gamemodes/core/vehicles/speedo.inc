@@ -200,7 +200,6 @@ hook OnPlayerConnect(playerid) {
     PlayerTextDrawFont(playerid, pSpeedoTd[playerid][15], 4);
     PlayerTextDrawSetProportional(playerid, pSpeedoTd[playerid][15], 1);
 }
-
 hook OnPlayerDisconnect(playerid, reason) {
     for(new i = 0; i < sizeof pSpeedoTd[]; i ++) {
         PlayerTextDrawDestroy(playerid, pSpeedoTd[playerid][i]);
@@ -213,7 +212,6 @@ hook OnPlayerDisconnect(playerid, reason) {
         pSpeedoTimer[playerid] = -1;
     }
 }
-
 hook OnPlayerStateChange(playerid, newstate, oldstate) {
     if(newstate == PLAYER_STATE_DRIVER) {
         new vehicleid = GetPlayerVehicleID(playerid);
@@ -224,7 +222,8 @@ hook OnPlayerStateChange(playerid, newstate, oldstate) {
     }
 }
 
-ShowPlayerSpeedoMeter(playerid) {
+forward ShowPlayerSpeedoMeter(playerid);
+public ShowPlayerSpeedoMeter(playerid) {
 	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return 0;
 	new vehicleid = GetPlayerVehicleID(playerid), modelid = GetVehicleModel(vehicleid);
 	if(!VEHICLE_INFO[modelid - 400][vehicle_info_NORMAL_SPEEDO]) return 0;
@@ -235,6 +234,7 @@ ShowPlayerSpeedoMeter(playerid) {
 	
 	va_PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][14], "%.1f", GLOBAL_VEHICLES[vehicleid][gb_vehicle_GAS]);
 	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][10], "000");
+	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][9], "KM/H");
 	
 	for(new i = 0; i < sizeof pSpeedoTd[]; i ++) {
 		PlayerTextDrawShow(playerid, pSpeedoTd[playerid][i]);
@@ -259,6 +259,17 @@ HidePlayerSpeedoMeter(playerid) {
 	return 1;
 }
 
+temporarilyHidePlayerSpeedoMetr(playerid, time_ms) {
+    for(new i = 0; i < sizeof pSpeedoTd[]; i ++) {
+        PlayerTextDrawHide(playerid, pSpeedoTd[playerid][i]);
+    }
+    pSpeedoShown[playerid] = false;
+
+    KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][23]);
+    PLAYER_TEMP[playerid][pt_TIMERS][23] = SetTimerEx("ShowPlayerSpeedoMeter", time_ms, false, "i", playerid);
+    return 1;
+}
+
 updateSpeedoBars(const playerid, Float:current_vel, Float:max_vel) {
     new bars = floatround(((current_vel) / (max_vel / 9.0) * 1.10), floatround_floor);
 
@@ -274,9 +285,11 @@ updateSpeedoBars(const playerid, Float:current_vel, Float:max_vel) {
 
 forward UpdatePlayerSpeedo(playerid, vehicleid, Float:maxvel);
 public UpdatePlayerSpeedo(playerid, vehicleid, Float:maxvel) {
-	for(new i = 0; i < sizeof pSpeedoTd[]; i ++) {
-		PlayerTextDrawShow(playerid, pSpeedoTd[playerid][i]);
-	}
+    if (!pSpeedoShown[playerid]) {
+        for(new i = 0; i < sizeof pSpeedoTd[]; i ++) {
+            PlayerTextDrawShow(playerid, pSpeedoTd[playerid][i]);
+        }
+    }
 
 	if(vehicleid != GetPlayerVehicleID(playerid)) {
 		HidePlayerSpeedoMeter(playerid);

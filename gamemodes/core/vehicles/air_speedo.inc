@@ -70,8 +70,11 @@ hook OnPlayerLeaveDynArea(playerid, areaid) {
 
 public OnAirSpeedoRequestUpdate(playerid, vehicleid) {
     new Float:vel = GetVehicleAirSpeed(vehicleid);
-	va_PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][2], "%.1f", GLOBAL_VEHICLES[vehicleid][gb_vehicle_GAS]);
-	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][1], "%03d_KTS", floatround(vel));
+	va_PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][14], "%.1f", GLOBAL_VEHICLES[vehicleid][gb_vehicle_GAS]);
+	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][10], "%03d", floatround(vel));
+	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][9], "KTS");
+
+    updateSpeedoBars(playerid, vel, VEHICLE_INFO[GetVehicleModel(vehicleid) - 400][vehicle_info_MAX_VEL]);
 
     if(GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_ENGINE]) {
         GLOBAL_VEHICLES[vehicleid][gb_vehicle_GAS] -= floatmul(floatdiv(GLOBAL_VEHICLES[vehicleid][gb_vehicle_MAX_GAS], 200), vel * 0.0004);
