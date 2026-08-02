@@ -449,7 +449,7 @@ DialogResponse:ConfirmStartWFCargo(playerid, response, listitem, inputtext[]) {
     if (response) {
         ResetWeaponsFactoryData(playerid);
         WeaponsFactoryPlayer[playerid][wf_player_cargo_state] = PLAYER_CARGO_STATE_SPAWN_TRUCK;
-        WeaponsFactoryPlayer[playerid][wf_cargo_talked_to_roy_time] = gettime() + 15;
+        WeaponsFactoryPlayer[playerid][wf_cargo_talked_to_roy_time] = gettime();
         WeaponsFactoryPlayer[playerid][wf_cargo_timer] = SetTimerEx("WFCargoTimeOut", SecondsToMs(30), false, "d", playerid);
         SetWeaponsFactoryCheckpoint(playerid);
     }
@@ -457,7 +457,7 @@ DialogResponse:ConfirmStartWFCargo(playerid, response, listitem, inputtext[]) {
 }
 DialogResponse:WFCargoMissionStart(playerid, response, listitem, inputtext[]) {
     if (response) {
-        if (gettime() > WeaponsFactoryPlayer[playerid][wf_cargo_talked_to_roy_time]) return ShowPlayerMessage(playerid, "Para hacer esta mision necesitas hablar con Roy primero.");
+        if (gettime() < WeaponsFactoryPlayer[playerid][wf_cargo_talked_to_roy_time] + 15) return ShowPlayerMessage(playerid, "Para hacer esta mision necesitas hablar con Roy primero.");
         ShowPlayerTimeOut(WeaponsFactoryPlayer[playerid][wf_cargo_timeout], 30, playerid, "Debes esperar ~b~%s~w~ para volver a buscar otro cargamento.");
         if (WeaponsFactoryPlayer[playerid][wf_player_cargo_state] != PLAYER_CARGO_STATE_SPAWN_TRUCK) return ShowPlayerMessage(playerid, "No puedes sacar otro camion hasta que termines tu viaje.");
         if (PI[playerid][pi_WANTED_LEVEL] > 0) return ShowPlayerMessage(playerid, "No puedes estar siendo buscado por la policia.");
