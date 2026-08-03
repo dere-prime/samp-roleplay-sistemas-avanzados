@@ -249,7 +249,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid) {
 
 		Dialog_Show(playerid, Dialog:FarmerSeedList);
 
-		PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 8;
+		PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 10;
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
 }

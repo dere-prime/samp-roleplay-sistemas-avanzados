@@ -37,6 +37,19 @@ public SetPlayerActiveStaticPos(const playerid) {
     return p_ActiveStaticPos[playerid];
 }
 
+setGetPlayerStaticPos(const playerid) {
+    GetPlayerPos(playerid, p_StaticPos_Coords[playerid][0], p_StaticPos_Coords[playerid][1], p_StaticPos_Coords[playerid][2]);
+    GetPlayerFacingAngle(playerid, p_StaticPos_Coords[playerid][3]);
+    return p_ActiveStaticPos[playerid];
+}
+
+enablePlayerActiveStaticPos(const playerid) { 
+    p_ActiveStaticPos[playerid] = true;
+    UpdateSetPlayerEquippedWeapons(playerid);
+    KillTimer(p_StaticPos_Timer[playerid]);
+    return SetPlayerActiveStaticPos(playerid); 
+}
+
 DisablePlayerActiveStaticPos(const playerid) {
     p_ActiveStaticPos[playerid] = false;
     UpdateSetPlayerEquippedWeapons(playerid);

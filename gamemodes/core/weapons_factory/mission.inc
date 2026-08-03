@@ -226,7 +226,7 @@ Mission:factorySearchWp(playerid, index) {
     PlayerMissionId(playerid) = index;
     PlayerMissionStep(playerid) = MISSION_STEP_CINEMATIC;
     KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
-    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 15;
+    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 10;
 
     MissionUpdates(playerid) = 0;
     p_wfm[playerid][wfm_interruption_counter] = 0;

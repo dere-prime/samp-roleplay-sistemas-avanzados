@@ -57,7 +57,8 @@ DialogCreate:Supermarket_Products(playerid) {
 }
 DialogResponse:Supermarket_Products(playerid, response, listitem, inputtext[]) {
     if (response) {
-        PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 3;
+        PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 5;
+        Dialog_Show(playerid, Dialog:Supermarket_Products);
         if (PI[playerid][pi_CASH] >= Supermarket_Product_List[listitem][product_PRICE]) {
             new slot = GetPlayerInventorySlot(playerid);
             if (slot == -1) {

@@ -12136,7 +12136,6 @@ public OnPlayerEnterDynamicArea(playerid, areaid) {
 			}
 		}
 	}
-
 	return 1;
 }
 
@@ -14735,7 +14734,7 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
 		Streamer_GetFloatData(STREAMER_TYPE_PICKUP, PLAYER_TEMP[playerid][pt_LAST_PICKUP_ID], E_STREAMER_Y, pos[1]);
 		Streamer_GetFloatData(STREAMER_TYPE_PICKUP, PLAYER_TEMP[playerid][pt_LAST_PICKUP_ID], E_STREAMER_Z, pos[2]);
 		if (!IsPlayerInRangeOfPoint(playerid, 1.5, pos[0], pos[1], pos[2])) return 1;
-		PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 4;
+		PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 5;
 
 		switch(info[0]) {
 			case PICKUP_TYPE_ENTER_EXIT: {
@@ -21751,6 +21750,7 @@ public StandUp(medic, playerid) {
 	ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.1, 0, 0, 0, 0, 0, true);
 	ClearAnimations(playerid);
 	DisablePlayerInjuredMark(playerid);
+	DisablePlayerActiveStaticPos(playerid);
 	FreezePlayer(playerid, 500);
 	return 1;
 }
@@ -22365,6 +22365,7 @@ CMD:ls(playerid, params[]) {
 	PI[to_player][pi_POLICE_JAIL_TIME] = 0;
     SetPlayerPosEx(to_player, 1555.400390, -1675.611694, 16.195312, 0.0, 0, 0, false, true, 2.0);
     SetPlayerCityWeather(to_player);
+	DisablePlayerActiveStaticPos(to_player);
 	PLAYER_TEMP[to_player][pt_PICKUP_TIMEOUT] = gettime() + 5;
 	SendPlayerClientMessage(playerid, "Jugador '%s (%d)' fue llevado a LS.", PI[to_player][pi_NAME], to_player);
     return 1;

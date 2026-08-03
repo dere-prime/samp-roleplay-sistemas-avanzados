@@ -78,7 +78,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid) {
             Dialog_Show(playerid, Dialog:GasStationBuyCanister);
         }
 
-		PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 4;
+		PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 5;
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
 }
@@ -140,7 +140,7 @@ DialogCreate:GasStationBuyCanister(playerid) {
     return 1;
 }
 DialogResponse:GasStationBuyCanister(playerid, response, listitem, inputtext[]) {
-    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 4;
+    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 5;
     if (response) {
         new slot = GetPlayerInventorySlot(playerid);
         if (slot == -1) { SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}No tienes espacio en el inventario."); return 1; }
@@ -162,7 +162,7 @@ DialogCreate:GasStationRefuelVehicle(playerid) {
     return 1;
 }
 DialogResponse:GasStationRefuelVehicle(playerid, response, listitem, inputtext[]) {
-    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 4;
+    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 5;
     if (response) {
         switch (listitem) {
             case 0: {
@@ -206,7 +206,7 @@ DialogCreate:GasStationRefuelAmount(playerid) {
     return 1;
 }
 DialogResponse:GasStationRefuelAmount(playerid, response, listitem, inputtext[]) {
-    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 4;
+    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 5;
     if (response) {
         new vehicleid = GetPlayerVehicleID(playerid), modelid = GetVehicleModel(vehicleid);
         if (!Vehicle_IsValid(vehicleid)) return 0;

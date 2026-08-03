@@ -38,7 +38,7 @@ forward CleanTheBoat_fisher_dialog(const playerid);
 public CleanTheBoat_fisher_dialog(const playerid) {
     HidePlayerMissionDialog(playerid, true);
     Dialog_Open(playerid, Dialog:cleanTheBoat_Mission_Prompt, DIALOG_STYLE_MSGBOX, "{"#PRIMARY_COLOR"}·{ffffff}Limpiar el bote", "{ffffff}¿Te gustaria limpiar el bote de el pescador por una recompensa?", "Aceptar", "Rechazar");
-    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 8;
+    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 10;
     return 1;
 }
 
@@ -85,7 +85,7 @@ Mission:cleanTheBoat(playerid, index) {
     PlayerMissionId(playerid) = index;
     PlayerMissionStep(playerid) = MISSION_STEP_PLAYABLE;
     KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][22]);
-    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 15;
+    PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 10;
 
     ShowPlayerNotificationModel(playerid, 2844, 0.0, 0.0, 0.0, "~n~~g~+1~w~~h~ Trapo seco~n~");
 
@@ -322,7 +322,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid) {
             PLAYER_TEMP[playerid][pt_TIMERS][22] = SetTimerEx("CleanTheBoat_fisher_dialog", 4000, false, "ib", playerid, true);
         }
 
-        PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 8;
+        PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 10;
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
 }

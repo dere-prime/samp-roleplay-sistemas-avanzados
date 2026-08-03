@@ -17,7 +17,9 @@ public OnPlayerPrepareDeath(playerid, a_lib[32], a_name[32], &anim_lock, killeri
 	DropEquippedCurrentWeapon(playerid);
 	OnPlayerDeathAFK(playerid);
 
-	PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 5;
+    setGetPlayerStaticPos(playerid);
+
+	PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 10;
 	
 	KillTimer(PLAYER_TEMP[playerid][pt_TIMERS][16]);
 	PLAYER_AC_INFO[playerid][CHEAT_POS][p_ac_info_IMMUNITY] = gettime() + 3;
@@ -256,7 +258,7 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
 hook OnPlayerUpdate(playerid) {
     if(PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK && PLAYER_TEMP[playerid][pt_GAME_STATE] == GAME_STATE_NORMAL) {
         if(GetPlayerAnimationIndex(playerid) != PLAYER_TEMP[playerid][pt_DEATH_ANIMINDEX]) UpdatePlayerInjured(playerid);
-        if (!IsPlayerActiveStaticPos(playerid)) SetPlayerActiveStaticPos(playerid);
+        if (!IsPlayerActiveStaticPos(playerid)) enablePlayerActiveStaticPos(playerid);
     }
     return Y_HOOKS_CONTINUE_RETURN_1;
 }
