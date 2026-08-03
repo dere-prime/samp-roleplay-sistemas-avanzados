@@ -47,7 +47,7 @@ hook OnScriptInit() {
         {"#SECONDARY_COLOR"}•{FFFFFF} ColAndreas, Crashdetect, FCNPC, MySQL, PawnCMD, PawnPlus\n\
         {"#SECONDARY_COLOR"}•{FFFFFF} PawnRaknet, PawnRegex, SSCANF, streamer, YSF\n\
         \n\
-        {{"#SECONDARY_COLOR"}•{FFFFFF} YSI, pawn-easing-functions, mdialog, logger, TextureStudio, samp-textdraw-editor\n\
+        {"#SECONDARY_COLOR"}•{FFFFFF} YSI, pawn-easing-functions, mdialog, logger, TextureStudio, samp-textdraw-editor\n\
         \n\
         {"#PRIMARY_COLOR"}Mapeos: {FFFFFF}\n\
         {"#SECONDARY_COLOR"}•{FFFFFF} La mayoría fueron sacados de internet (foros, Discord, etc.), y algunos mapeos simples fueron propios.\n\

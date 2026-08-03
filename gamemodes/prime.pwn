@@ -22365,6 +22365,7 @@ CMD:ls(playerid, params[]) {
 	PI[to_player][pi_POLICE_JAIL_TIME] = 0;
     SetPlayerPosEx(to_player, 1555.400390, -1675.611694, 16.195312, 0.0, 0, 0, false, true, 2.0);
     SetPlayerCityWeather(to_player);
+	PLAYER_TEMP[to_player][pt_PICKUP_TIMEOUT] = gettime() + 5;
 	SendPlayerClientMessage(playerid, "Jugador '%s (%d)' fue llevado a LS.", PI[to_player][pi_NAME], to_player);
     return 1;
 }
