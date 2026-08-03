@@ -42,6 +42,8 @@ static const ambient_female_allowed_skins[] = {
     63, 64, 75, 85, 90, 91, 92, 93, 130, 131, 139, 140, 141, 150
 };
 
+static ambient_actor_correction_time = 0;
+
 
 /* Actores */
 enum enum_ambient_actors {
@@ -106,5 +108,18 @@ hook OnScriptInit() {
         }
     }
     return 1;
+}
+
+hook OnDynamicActorStreamIn(STREAMER_TAG_ACTOR:actorid, forplayerid) {
+    if (gettime() > ambient_actor_correction_time + 60) {
+        for (new i = 0; i != sizeof ambient_actors; i ++) {
+            if (ambient_actors[i][actorid] == actorid) {
+                SetDynamicActorPos(actorid, ambient_actors[i][pos_x], ambient_actors[i][pos_y], ambient_actors[i][pos_z]);
+                SetDynamicActorFacingAngle(actorid, ambient_actors[i][facing_angle]);
+                ambient_actor_correction_time = gettime();
+            }
+        }
+    }
+    return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
