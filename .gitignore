@@ -1,12 +1,44 @@
-logs/log-core.log
-logs/warnings.log
-logs/errors.log
-logs/plugins/mysql.log
+# Logs y dumps de runtime
+logs/
+*.log
 server_log.txt
-gamemodes/prime.amx
-filterscripts/maps.amx
 crashinfo.txt
-Misc/Utilidades/samp-textdraw-editor/scriptfiles/export
-Misc/Utilidades/samp-textdraw-editor/scriptfiles/import
-Misc/Utilidades/samp-textdraw-editor/scriptfiles/projects
+errorlog.txt
+
+# Compilados y artefactos de Pawn / SA-MP
+*.amx
+*.exe
+*.o
+*.bak
+*.tmp
+*.cache
+
+# Configuraciones locales y sensibles
+mysql.ini
+server.cfg
+server.cfg.*
+*.local.ini
+*.local.cfg
+
+# Datos temporales de scriptfiles
+scriptfiles/YSI/
+scriptfiles/SERVER/*
+!scriptfiles/SERVER/AC.txt
+!scriptfiles/SERVER/build.txt
+scriptfiles/ColAndreas/
+
+# Archivos de utilidades externas
+Misc/Utilidades/bot-plantilla/
+Misc/Utilidades/samp-textdraw-editor/scriptfiles/export/
+Misc/Utilidades/samp-textdraw-editor/scriptfiles/import/
+Misc/Utilidades/samp-textdraw-editor/scriptfiles/projects/
 Misc/Utilidades/samp-textdraw-editor/scriptfiles/projects.db
+Misc/prime*.png
+
+# Editor / sistema
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+desktop.ini
