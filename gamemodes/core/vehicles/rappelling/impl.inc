@@ -146,15 +146,17 @@ hook OnPlayerEnterDynamicCP(playerid, STREAMER_TAG_CP:checkpointid) {
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
     if (newkeys & KEY_HANDBRAKE) {
-        if (GetPlayerState(playerid) == PLAYER_STATE_PASSENGER) {
-            new vehicleid = GetPlayerVehicleID(playerid);
-            if (vehicleid != INVALID_VEHICLE_ID) {
-                if (Vehicle_IsHelicopter(vehicleid)) {
-                    new Float:p_altitude;
-                    GetPlayerAltitude(playerid, p_altitude);
-                    if (p_altitude >= 10.0 && p_altitude < 75.0) {
-                        start_player_rappeling(playerid, vehicleid);
-                        return Y_HOOKS_CONTINUE_RETURN_1;
+        if (PI[playerid][pi_STATE] == ROLEPLAY_STATE_NORMAL) {
+            if (GetPlayerState(playerid) == PLAYER_STATE_PASSENGER) {
+                new vehicleid = GetPlayerVehicleID(playerid);
+                if (vehicleid != INVALID_VEHICLE_ID) {
+                    if (Vehicle_IsHelicopter(vehicleid)) {
+                        new Float:p_altitude;
+                        GetPlayerAltitude(playerid, p_altitude);
+                        if (p_altitude >= 10.0 && p_altitude < 75.0) {
+                            start_player_rappeling(playerid, vehicleid);
+                            return Y_HOOKS_CONTINUE_RETURN_1;
+                        }
                     }
                 }
             }

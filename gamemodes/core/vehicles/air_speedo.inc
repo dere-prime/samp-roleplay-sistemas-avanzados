@@ -72,16 +72,6 @@ public OnAirSpeedoRequestUpdate(playerid, vehicleid) {
     new Float:vel = GetVehicleAirSpeed(vehicleid);
 	va_PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][14], "%.1f", GLOBAL_VEHICLES[vehicleid][gb_vehicle_GAS]);
 	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][10], "%03d", floatround(vel));
-	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][9], "KTS");
-
-    for (new i = 0; i < 9; i++) {
-        PlayerTextDrawBoxColor(playerid, pSpeedoTd[playerid][i], 0xB02EFFFF);
-    }
-    
-    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][10], 0xC666FFFF);
-    PlayerTextDrawBoxColor(playerid, pSpeedoTd[playerid][11], -1);
-    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][13], -1);
-    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][14], -1);
 
     if(GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_ENGINE]) {
         GLOBAL_VEHICLES[vehicleid][gb_vehicle_GAS] -= floatmul(floatdiv(GLOBAL_VEHICLES[vehicleid][gb_vehicle_MAX_GAS], 200), vel * 0.0004);
@@ -97,9 +87,17 @@ public OnAirSpeedoRequestUpdate(playerid, vehicleid) {
 
 CreatePlayerAirSpeedo(playerid, vehicleid) {
     DestroyPlayerAirSpeedo(playerid);
-
-    PlayerTextDrawBoxColor(playerid, pSpeedoTd[playerid][5], -1);
-    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][7], -1);
+    
+	PlayerTextDrawSetString(playerid, pSpeedoTd[playerid][9], "KTS");
+    
+    for (new i = 0; i < 9; i++) {
+        PlayerTextDrawBoxColor(playerid, pSpeedoTd[playerid][i], 0xB02EFFFF);
+    }
+    
+    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][10], 0xC666FFFF);
+    PlayerTextDrawBoxColor(playerid, pSpeedoTd[playerid][11], -1);
+    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][13], -1);
+    PlayerTextDrawColor(playerid, pSpeedoTd[playerid][14], -1);
 
     for(new i = 0; i < sizeof pSpeedoTd[]; i ++) {
         PlayerTextDrawShow(playerid, pSpeedoTd[playerid][i]);
