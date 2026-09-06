@@ -13,13 +13,6 @@ errorlog.txt
 *.tmp
 *.cache
 
-# Configuraciones locales y sensibles
-mysql.ini
-server.cfg
-server.cfg.*
-*.local.ini
-*.local.cfg
-
 # Datos temporales de scriptfiles
 scriptfiles/YSI/
 scriptfiles/SERVER/*
