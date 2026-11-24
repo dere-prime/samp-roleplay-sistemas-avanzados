@@ -27,13 +27,13 @@ static Float: supermarket_buy_pos[] = {2189.7678, -551.6679, 901.1849};
 static DIALOG_247_LIST_String[34 + 55 * sizeof Supermarket_Product_List];
 
 hook OnScriptInit() {
-    CreateDynamic3DTextLabel("{"#PRIMARY_COLOR"}Acercate{FFFFFF} para comprar productos", 0xFFFFFFFF, supermarket_buy_pos[0], supermarket_buy_pos[1], (supermarket_buy_pos[2]), 10.0, .testlos = true, .interiorid = 18);
+    CreateDynamic3DTextLabel("{"#PRIMARY_COLOR"}Acercate{f0f0f0} para comprar productos", 0xFFFFFFFF, supermarket_buy_pos[0], supermarket_buy_pos[1], (supermarket_buy_pos[2]), 10.0, .testlos = true, .interiorid = 18);
     new info[3], pickup_id = CreateDynamicPickup(19592, 1, supermarket_buy_pos[0], supermarket_buy_pos[1], (supermarket_buy_pos[2]), -1, 18);
     info[0] = PICKUP_TYPE_SUPERMARKET;
     Streamer_SetArrayData(STREAMER_TYPE_PICKUP, pickup_id, E_STREAMER_EXTRA_ID, info);
 
 	for(new i = 0; i != sizeof Supermarket_Product_List; i ++) {
-		strcatf(DIALOG_247_LIST_String, "{FFFFFF}%s {"#PRIMARY_COLOR"}[%d]\t{FFFFFF}%d{"#GREEN_COLOR"}$\n", InvObjName(Supermarket_Product_List[i][product_TYPE]), Supermarket_Product_List[i][product_AMOUNT], Supermarket_Product_List[i][product_PRICE]);
+		strcatf(DIALOG_247_LIST_String, "{f0f0f0}%s {"#PRIMARY_COLOR"}[%d]\t{f0f0f0}%d{"#GREEN_COLOR"}$\n", InvObjName(Supermarket_Product_List[i][product_TYPE]), Supermarket_Product_List[i][product_AMOUNT], Supermarket_Product_List[i][product_PRICE]);
 	}
 }
 
@@ -92,7 +92,7 @@ DialogResponse:Supermarket_Products(playerid, response, listitem, inputtext[]) {
                 else SetPlayerInventorySlotData(playerid, slot, Supermarket_Product_List[listitem][product_TYPE], Supermarket_Product_List[listitem][product_AMOUNT], 0, 0);
                 InsertPlayerInventorySlot(playerid, slot);
 
-                SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{FFFFFF}Has comprado {"#SECONDARY_COLOR"}%s {FFFFFF}por %d{27F587}${FFFFFF}.", InvObjName(Supermarket_Product_List[listitem][product_TYPE]), Supermarket_Product_List[listitem][product_PRICE]);
+                SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{f0f0f0}Has comprado {"#SECONDARY_COLOR"}%s {f0f0f0}por %d{27F587}${f0f0f0}.", InvObjName(Supermarket_Product_List[listitem][product_TYPE]), Supermarket_Product_List[listitem][product_PRICE]);
                 PlayerPlaySoundEx(playerid, 1058, 0.0, 0.0, 0.0);
             }
         }

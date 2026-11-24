@@ -3913,10 +3913,10 @@ public OnPlayerSpawn(playerid) {
 					if (PI[playerid][pi_VIP]) PI[playerid][pi_POLICE_JAIL_TIME] = 150 * PI[playerid][pi_WANTED_LEVEL];
 					else PI[playerid][pi_POLICE_JAIL_TIME] = 300 * PI[playerid][pi_WANTED_LEVEL];
 
-					SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido trasladado al {"#ERROR_COLOR"}centro medico{ffffff} mas cercano. Espera tu recuperacion.");
+					SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}Has sido trasladado al {"#ERROR_COLOR"}centro medico{f0f0f0} mas cercano. Espera tu recuperacion.");
 				}
 				else {
-					SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido trasladado al {"#ERROR_COLOR"}centro medico{ffffff} mas cercano. Espera tu recuperacion.");
+					SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}Has sido trasladado al {"#ERROR_COLOR"}centro medico{f0f0f0} mas cercano. Espera tu recuperacion.");
 				}
 				SendPlayerClientMessage(playerid, "==============================================================");
 
@@ -3937,7 +3937,7 @@ public OnPlayerSpawn(playerid) {
 					if (rows) {
 						new unreaded_messages;
 						cache_get_value_index_int(0, 0, unreaded_messages);
-						if (unreaded_messages > 0) SendClientMessageEx(playerid, -1, "·Tienes {f1f442}%d {FFFFFF}mensajes nuevos en tu telefono desde tu última conexión.", unreaded_messages);
+						if (unreaded_messages > 0) SendClientMessageEx(playerid, -1, "·Tienes {f1f442}%d {f0f0f0}mensajes nuevos en tu telefono desde tu última conexión.", unreaded_messages);
 					}
 				}
 				mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "UPDATE pmessages SET offline = 0 WHERE to_id = %d;", PI[playerid][pi_ID]);
@@ -4190,21 +4190,21 @@ FormatDialogStrings() {
 		/* PIZZA FOOD */
 	format(DIALOG_FOOD_PIZZA_String, sizeof DIALOG_FOOD_PIZZA_String, "Producto\tPrecio\n");
 	for(new i; i != sizeof PIZZA_FOOD; i ++) {
-		format(Dialog_Lines_String, sizeof Dialog_Lines_String, "{FFFFFF}%d. %s\t{"#BLUE_COLOR"}%d$\n", i + 1, PIZZA_FOOD[i][food_NAME], PIZZA_FOOD[i][food_PRICE]);
+		format(Dialog_Lines_String, sizeof Dialog_Lines_String, "{f0f0f0}%d. %s\t{"#BLUE_COLOR"}%d$\n", i + 1, PIZZA_FOOD[i][food_NAME], PIZZA_FOOD[i][food_PRICE]);
 		strcat(DIALOG_FOOD_PIZZA_String, Dialog_Lines_String);
 	}
 	
 		/* CLUCKIN FOOD */
 	format(DIALOG_FOOD_CLUCKIN_String, sizeof DIALOG_FOOD_CLUCKIN_String, "Producto\tPrecio\n");
 	for(new i; i != sizeof CLUCKIN_BELL_FOOD; i ++) {
-		format(Dialog_Lines_String, sizeof Dialog_Lines_String, "{FFFFFF}%d. %s\t{"#BLUE_COLOR"}%d$\n", i + 1, CLUCKIN_BELL_FOOD[i][food_NAME], CLUCKIN_BELL_FOOD[i][food_PRICE]);
+		format(Dialog_Lines_String, sizeof Dialog_Lines_String, "{f0f0f0}%d. %s\t{"#BLUE_COLOR"}%d$\n", i + 1, CLUCKIN_BELL_FOOD[i][food_NAME], CLUCKIN_BELL_FOOD[i][food_PRICE]);
 		strcat(DIALOG_FOOD_CLUCKIN_String, Dialog_Lines_String);
 	}
 	
 		/* BURGER_SHOT FOOD */
 	format(DIALOG_FOOD_BURGER_String, sizeof DIALOG_FOOD_BURGER_String, "Producto\tPrecio\n");
 	for(new i; i != sizeof BURGER_SHOT_FOOD; i ++) {
-		format(Dialog_Lines_String, sizeof Dialog_Lines_String, "{FFFFFF}%d. %s\t{"#BLUE_COLOR"}%d$\n", i + 1, BURGER_SHOT_FOOD[i][food_NAME], BURGER_SHOT_FOOD[i][food_PRICE]);
+		format(Dialog_Lines_String, sizeof Dialog_Lines_String, "{f0f0f0}%d. %s\t{"#BLUE_COLOR"}%d$\n", i + 1, BURGER_SHOT_FOOD[i][food_NAME], BURGER_SHOT_FOOD[i][food_PRICE]);
 		strcat(DIALOG_FOOD_BURGER_String, Dialog_Lines_String);
 	}
 	
@@ -4215,7 +4215,7 @@ FormatDialogStrings() {
 	format(DIALOG_PLAYER_GPS_SITE_7_String, sizeof DIALOG_PLAYER_GPS_SITE_7_String, "{d1d1d1}Lugar\t{"#BLUE_COLOR"}Zona\n");
 	for(new i = 0; i != sizeof(SELL_VEHICLES_SHOPS_SPAWN); i++ ) {
 		GetPointZone(SELL_VEHICLES_SHOPS_SPAWN[i][0], SELL_VEHICLES_SHOPS_SPAWN[i][1], city, zone);
-		format(Dialog_Lines_String, sizeof Dialog_Lines_String, "{FFFFFF}Concesionario %d\t{"#BLUE_COLOR"}%s, %s\n", i + 1, city, zone);
+		format(Dialog_Lines_String, sizeof Dialog_Lines_String, "{f0f0f0}Concesionario %d\t{"#BLUE_COLOR"}%s, %s\n", i + 1, city, zone);
 		strcat(DIALOG_PLAYER_GPS_SITE_7_String, Dialog_Lines_String);
 	}
 	
@@ -4270,25 +4270,25 @@ FormatDialogStrings() {
 SanAndreas() {
 	//Tuning
 	CreateDynamicMapIcon(263.592102, 22.960014, 2.170951, 63, -1, 0, 0);
-	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/tuning {FFFFFF}para tunear tu vehículo", 0xFFFFFFFF, 263.592102, 22.960014, 2.170951, 10.0, .testlos = true, .worldid = 0, .interiorid = 0);
+	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/tuning {f0f0f0}para tunear tu vehículo", 0xFFFFFFFF, 263.592102, 22.960014, 2.170951, 10.0, .testlos = true, .worldid = 0, .interiorid = 0);
 	
 	// 3D Texts Ropas
 	for(new i = 0; i < sizeof Clothing_Shop_Positions; i++) {
 		new label_str[256];
-		format(label_str, sizeof label_str, "{FF7373}%s\n{FFFFFF}Presiona {FF7373}[ H ] {FFFFFF}para ver las opciones disponibles", Clothing_Shop_Positions[i][clothing_shop_NAME]);
+		format(label_str, sizeof label_str, "{FF7373}%s\n{f0f0f0}Presiona {FF7373}[ H ] {f0f0f0}para ver las opciones disponibles", Clothing_Shop_Positions[i][clothing_shop_NAME]);
 		CreateDynamic3DTextLabel(label_str, 0xFFFFFFFF, Clothing_Shop_Positions[i][clothing_shop_X], Clothing_Shop_Positions[i][clothing_shop_Y], Clothing_Shop_Positions[i][clothing_shop_Z] + 0.25, 10.0, .testlos = true, .interiorid = Clothing_Shop_Positions[i][clothing_shop_INTERIOR]);
 	}
 	
 	// 3D Texts Pedir comida
 	for(new i = 0; i < sizeof Fast_Food_Positions; i++) {
 		new label_str[128];
-		format(label_str, sizeof label_str, "{FF7373}%s\n{FFFFFF}Presiona {FF7373}[ H ] {FFFFFF}para alimentarte", Fast_Food_Positions[i][fast_food_NAME]);
+		format(label_str, sizeof label_str, "{FF7373}%s\n{f0f0f0}Presiona {FF7373}[ H ] {f0f0f0}para alimentarte", Fast_Food_Positions[i][fast_food_NAME]);
 		CreateDynamic3DTextLabel(label_str, 0xFFFFFFFF, Fast_Food_Positions[i][fast_food_X], Fast_Food_Positions[i][fast_food_Y], Fast_Food_Positions[i][fast_food_Z] + 0.25, 10.0, .testlos = true, .interiorid = Fast_Food_Positions[i][fast_food_INTERIOR]);
 	}
 	
 	// 3D Texts Bank
-	for(new i = 0; i < sizeof Bank_Interior_Positions; i++) CreateDynamic3DTextLabel("Banco\nPresiona {FF7373} [ H ] {FFFFFF}para realizar una operación", 0xFFFFFFFF, Bank_Interior_Positions[i][bank_X], Bank_Interior_Positions[i][bank_Y], Bank_Interior_Positions[i][bank_Z] + 0.25, 10.0, .testlos = true, .worldid = Bank_Interior_Positions[i][bank_WORLD], .interiorid = Bank_Interior_Positions[i][bank_INTERIOR]);
-	for(new i = 0; i < sizeof BUY_PROPERTIES_SITES; i++) CreateDynamic3DTextLabel("Escribe {"#PRIMARY_COLOR"}/comprarcasa [ID] {FFFFFF}para comprar una propiedad", 0xFFFFFFFF, BUY_PROPERTIES_SITES[i][site_X], BUY_PROPERTIES_SITES[i][site_Y], BUY_PROPERTIES_SITES[i][site_Z] + 0.25, 10.0, .testlos = true, .worldid = BUY_PROPERTIES_SITES[i][site_WORLD], .interiorid = BUY_PROPERTIES_SITES[i][site_INTERIOR]);
+	for(new i = 0; i < sizeof Bank_Interior_Positions; i++) CreateDynamic3DTextLabel("Banco\nPresiona {FF7373} [ H ] {f0f0f0}para realizar una operación", 0xFFFFFFFF, Bank_Interior_Positions[i][bank_X], Bank_Interior_Positions[i][bank_Y], Bank_Interior_Positions[i][bank_Z] + 0.25, 10.0, .testlos = true, .worldid = Bank_Interior_Positions[i][bank_WORLD], .interiorid = Bank_Interior_Positions[i][bank_INTERIOR]);
+	for(new i = 0; i < sizeof BUY_PROPERTIES_SITES; i++) CreateDynamic3DTextLabel("Escribe {"#PRIMARY_COLOR"}/comprarcasa [ID] {f0f0f0}para comprar una propiedad", 0xFFFFFFFF, BUY_PROPERTIES_SITES[i][site_X], BUY_PROPERTIES_SITES[i][site_Y], BUY_PROPERTIES_SITES[i][site_Z] + 0.25, 10.0, .testlos = true, .worldid = BUY_PROPERTIES_SITES[i][site_WORLD], .interiorid = BUY_PROPERTIES_SITES[i][site_INTERIOR]);
 	
 	//Cajeros
 	for(new i = 0; i < sizeof ATM_BANK; i ++) {
@@ -4297,7 +4297,7 @@ SanAndreas() {
 		ATM_BANK[i][atm_X] += (-0.5 * floatsin(-(ATM_BANK[i][atm_RZ] - 90.0), degrees));
 		ATM_BANK[i][atm_Y] += (-0.5 * floatcos(-(ATM_BANK[i][atm_RZ] - 90.0), degrees));
 		CreateDynamicMapIcon(ATM_BANK[i][atm_X], ATM_BANK[i][atm_Y], ATM_BANK[i][atm_Z], 52, -1, 0, 0);
-		CreateDynamic3DTextLabel("Cajero automático\nPresiona {FF7373} [ H ] {FFFFFF}para realizar operaciones", 0xFFFFFFFF, ATM_BANK[i][atm_X], ATM_BANK[i][atm_Y], ATM_BANK[i][atm_Z] + 0.25, 10.0, .testlos = true, .worldid = 0, .interiorid = 0);
+		CreateDynamic3DTextLabel("Cajero automático\nPresiona {FF7373} [ H ] {f0f0f0}para realizar operaciones", 0xFFFFFFFF, ATM_BANK[i][atm_X], ATM_BANK[i][atm_Y], ATM_BANK[i][atm_Z] + 0.25, 10.0, .testlos = true, .worldid = 0, .interiorid = 0);
 	
 		new atm_pickup_id = CreateDynamicPickup(0, 1, ATM_BANK[i][atm_X], ATM_BANK[i][atm_Y], ATM_BANK[i][atm_Z] + 0.10, 0, 0), info[3];
 		info[0] = PICKUP_TYPE_ATM;
@@ -4364,8 +4364,8 @@ SanAndreas() {
 							{"#PRIMARY_COLOR"}Membresía VIP requerida\n\
 							\n\
 							{"#PRIMARY_COLOR"}%s\n\n\
-							{FFFFFF}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n\
-							{FFFFFF}Nivel: {"#PRIMARY_COLOR"}%d\
+							{f0f0f0}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n\
+							{f0f0f0}Nivel: {"#PRIMARY_COLOR"}%d\
 						", VEHICLE_INFO[GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MODELID] - 400][vehicle_info_NAME], SELL_VEHICLES[vehicle_id][sell_vehicle_EXTRA], SELL_VEHICLES[vehicle_id][sell_vehicle_LEVEL]
 				);
 			} else {
@@ -4377,8 +4377,8 @@ SanAndreas() {
 							{"#PRIMARY_COLOR"}Membresía VIP requerida\n\
 							\n\
 							{"#PRIMARY_COLOR"}%s\n\n\
-							{FFFFFF}Precio: {"#PRIMARY_COLOR"}%s$\n\
-							{FFFFFF}Nivel: {"#PRIMARY_COLOR"}%d\
+							{f0f0f0}Precio: {"#PRIMARY_COLOR"}%s$\n\
+							{f0f0f0}Nivel: {"#PRIMARY_COLOR"}%d\
 						", VEHICLE_INFO[GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MODELID] - 400][vehicle_info_NAME], number_format_thousand(SELL_VEHICLES[vehicle_id][sell_vehicle_PRICE]), SELL_VEHICLES[vehicle_id][sell_vehicle_LEVEL]
 				);
 			}
@@ -4390,8 +4390,8 @@ SanAndreas() {
 						sizeof label_str, 
 						"\
 							{"#PRIMARY_COLOR"}%s\n\n\
-							{FFFFFF}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n\
-							{FFFFFF}Nivel: {"#PRIMARY_COLOR"}%d\
+							{f0f0f0}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n\
+							{f0f0f0}Nivel: {"#PRIMARY_COLOR"}%d\
 						", VEHICLE_INFO[GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MODELID] - 400][vehicle_info_NAME], SELL_VEHICLES[vehicle_id][sell_vehicle_EXTRA], SELL_VEHICLES[vehicle_id][sell_vehicle_LEVEL]
 				);
 			} else {
@@ -4401,8 +4401,8 @@ SanAndreas() {
 						sizeof label_str, 
 						"\
 							{"#PRIMARY_COLOR"}%s\n\n\
-							{FFFFFF}Precio: {"#PRIMARY_COLOR"}%s$\n\
-							{FFFFFF}Nivel: {"#PRIMARY_COLOR"}%d\
+							{f0f0f0}Precio: {"#PRIMARY_COLOR"}%s$\n\
+							{f0f0f0}Nivel: {"#PRIMARY_COLOR"}%d\
 						", VEHICLE_INFO[GLOBAL_VEHICLES[vehicle_id][gb_vehicle_MODELID] - 400][vehicle_info_NAME], number_format_thousand(SELL_VEHICLES[vehicle_id][sell_vehicle_PRICE]), SELL_VEHICLES[vehicle_id][sell_vehicle_LEVEL]
 				);
 			}
@@ -4419,9 +4419,9 @@ SanAndreas() {
 	}
 	
 	//Notario
-	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {FFFFFF}para vender\nalguna propiedad o vehículo", 0xFFFFFFFF, -474.596282, 289.679107, 2004.584960, 10.0, .testlos = true, .interiorid = 20);
+	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {f0f0f0}para vender\nalguna propiedad o vehículo", 0xFFFFFFFF, -474.596282, 289.679107, 2004.584960, 10.0, .testlos = true, .interiorid = 20);
 	//Grua
-	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {FFFFFF}para solicitar\nel servicio de grúa a un vehículo", 0xFFFFFFFF, -508.645385, 322.147644, 2004.585937, 10.0, .testlos = true, .interiorid = 20);
+	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {f0f0f0}para solicitar\nel servicio de grúa a un vehículo", 0xFFFFFFFF, -508.645385, 322.147644, 2004.585937, 10.0, .testlos = true, .interiorid = 20);
 
 	//polciais
 	for(new i = 0; i != sizeof POLICE_GARAGE_DOORS; i ++) {
@@ -4429,15 +4429,15 @@ SanAndreas() {
 	}
 	for(new i = 0; i != sizeof POLICE_DOORS; i ++) {
 		POLICE_DOORS[i][police_door_OBJECT_ID] = CreateDynamicObject(POLICE_DOORS[i][police_door_MODELID], POLICE_DOORS[i][police_door_X], POLICE_DOORS[i][police_door_Y], POLICE_DOORS[i][police_door_Z], 0.0, 0.0, POLICE_DOORS[i][police_door_RZ], POLICE_DOORS[i][police_door_WORLD], POLICE_DOORS[i][police_door_INTERIOR]);
-		CreateDynamic3DTextLabel("Pulsa {FF7373} [ ENTER ] {FFFFFF}para abrir la puerta", 0xFFFFFFFF, POLICE_DOORS[i][police_door_X], POLICE_DOORS[i][police_door_Y], POLICE_DOORS[i][police_door_Z] + 1.25, 5.0, .testlos = false, .interiorid = POLICE_DOORS[i][police_door_INTERIOR], .worldid = POLICE_DOORS[i][police_door_WORLD]);
+		CreateDynamic3DTextLabel("Pulsa {FF7373} [ ENTER ] {f0f0f0}para abrir la puerta", 0xFFFFFFFF, POLICE_DOORS[i][police_door_X], POLICE_DOORS[i][police_door_Y], POLICE_DOORS[i][police_door_Z] + 1.25, 5.0, .testlos = false, .interiorid = POLICE_DOORS[i][police_door_INTERIOR], .worldid = POLICE_DOORS[i][police_door_WORLD]);
 	}
-	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {FFFFFF}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, 253.280288, 76.219017, 1003.640625, 5.0, .testlos = true, .interiorid = 6);
-	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {FFFFFF}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, 266.547180, 119.652816, 1004.617187, 5.0, .testlos = true, .interiorid = 10);
-	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {FFFFFF}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, 217.816406, 187.667922, 1003.031250, 5.0, .testlos = true, .interiorid = 3);
+	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {f0f0f0}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, 253.280288, 76.219017, 1003.640625, 5.0, .testlos = true, .interiorid = 6);
+	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {f0f0f0}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, 266.547180, 119.652816, 1004.617187, 5.0, .testlos = true, .interiorid = 10);
+	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {f0f0f0}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, 217.816406, 187.667922, 1003.031250, 5.0, .testlos = true, .interiorid = 3);
 
-	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {FFFFFF}para equiparte", 0xFFFFFFFF, 219.244018, 69.982215, 1005.039062, 5.0, .testlos = true, .interiorid = 6);
-	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {FFFFFF}para equiparte", 0xFFFFFFFF, 262.945587, 109.785270, 1004.617187, 5.0, .testlos = true, .interiorid = 10);
-	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {FFFFFF}para equiparte", 0xFFFFFFFF, 222.683914, 186.956054, 1003.031250, 5.0, .testlos = true, .interiorid = 3);
+	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {f0f0f0}para equiparte", 0xFFFFFFFF, 219.244018, 69.982215, 1005.039062, 5.0, .testlos = true, .interiorid = 6);
+	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {f0f0f0}para equiparte", 0xFFFFFFFF, 262.945587, 109.785270, 1004.617187, 5.0, .testlos = true, .interiorid = 10);
+	CreateDynamic3DTextLabel("Presiona {FF7373}[ H ] {f0f0f0}para equiparte", 0xFFFFFFFF, 222.683914, 186.956054, 1003.031250, 5.0, .testlos = true, .interiorid = 3);
 	
 	Jail_Areas[0] = CreateDynamicRectangle(258.236938, 72.319061, 273.117279, 95.841438, -1, 6);
 	Jail_Areas[1] = CreateDynamicRectangle(211.001739, 117.171920, 236.010986, 104.004219, -1, 10);
@@ -4457,31 +4457,31 @@ SanAndreas() {
 	Streamer_SetArrayData(STREAMER_TYPE_AREA, Mechanic_Areas[0], E_STREAMER_EXTRA_ID, { AREA_TYPE_MECHANIC });
 
 	for(new i; i != sizeof MechanicStartWorkingCoords; i++)
-		CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/mecanico {FFFFFF}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, MechanicStartWorkingCoords[i][0], MechanicStartWorkingCoords[i][1], MechanicStartWorkingCoords[i][2], 5.0, .testlos = true, .interiorid = 0);
+		CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/mecanico {f0f0f0}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, MechanicStartWorkingCoords[i][0], MechanicStartWorkingCoords[i][1], MechanicStartWorkingCoords[i][2], 5.0, .testlos = true, .interiorid = 0);
 
 	for(new i; i != sizeof MechanicBuyPiecesCoords; i++)
-		CreateDynamic3DTextLabel("Piezas de mecánico\nEscribe {"#PRIMARY_COLOR"}/piezas [cantidad] {FFFFFF}para comprar piezas\nPrecio de pieza: {"#PRIMARY_COLOR"}50$", 0xFFFFFFFF, MechanicBuyPiecesCoords[i][0], MechanicBuyPiecesCoords[i][1], MechanicBuyPiecesCoords[i][2], 5.0, .testlos = true, .interiorid = 0);
+		CreateDynamic3DTextLabel("Piezas de mecánico\nEscribe {"#PRIMARY_COLOR"}/piezas [cantidad] {f0f0f0}para comprar piezas\nPrecio de pieza: {"#PRIMARY_COLOR"}50$", 0xFFFFFFFF, MechanicBuyPiecesCoords[i][0], MechanicBuyPiecesCoords[i][1], MechanicBuyPiecesCoords[i][2], 5.0, .testlos = true, .interiorid = 0);
 
 	for(new i; i != sizeof MechanicBuyKitsCoords; i++)
-		CreateDynamic3DTextLabel("Kits de reparación\n\nEscribe {"#PRIMARY_COLOR"}/kit {FFFFFF}para comprar un kit de reparación\nPrecio del kit: {"#PRIMARY_COLOR"}1.000$", 0xFFFFFFFF, MechanicBuyKitsCoords[i][0], MechanicBuyKitsCoords[i][1], MechanicBuyKitsCoords[i][2], 5.0, .testlos = true, .interiorid = 0);
+		CreateDynamic3DTextLabel("Kits de reparación\n\nEscribe {"#PRIMARY_COLOR"}/kit {f0f0f0}para comprar un kit de reparación\nPrecio del kit: {"#PRIMARY_COLOR"}1.000$", 0xFFFFFFFF, MechanicBuyKitsCoords[i][0], MechanicBuyKitsCoords[i][1], MechanicBuyKitsCoords[i][2], 5.0, .testlos = true, .interiorid = 0);
 
 	//Leñador
 	CreateDynamicPickup(19793, 1, -527.670349, -97.338562, 63.176174, 0, 0);
-	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/talar {FFFFFF}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, -527.670349, -97.338562, 63.176174, 5.0, .testlos = true, .worldid = 0, .interiorid = 0);
+	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/talar {f0f0f0}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, -527.670349, -97.338562, 63.176174, 5.0, .testlos = true, .worldid = 0, .interiorid = 0);
 
 	//Pizzero
 	CreateDynamicPickup(1582, 1, 2097.355712, -1818.040771, 13.382812, 0, 0);
-	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/pizzero {FFFFFF}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, 2097.355712, -1818.040771, 13.382812, 5.0, .testlos = true, .worldid = 0, .interiorid = 0);
+	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/pizzero {f0f0f0}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, 2097.355712, -1818.040771, 13.382812, 5.0, .testlos = true, .worldid = 0, .interiorid = 0);
 
 	//Medico
 	CreateDynamicPickup(1275, 1, -2029.751342, -114.503044, 1035.171875, -1, 3);
-	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/medico {FFFFFF}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, -2029.751342, -114.503044, 1035.171875, 5.0, .testlos = true, .interiorid = 3);
+	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/medico {f0f0f0}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, -2029.751342, -114.503044, 1035.171875, 5.0, .testlos = true, .interiorid = 3);
 
 	for(new i; i != sizeof MedicalBuyKitsCoords; i++)
-		CreateDynamic3DTextLabel("Botiquines\n\nEscribe {"#PRIMARY_COLOR"}/botiquin {FFFFFF}para comprar un botiquín\nPrecio del botiquín: {"#PRIMARY_COLOR"}5.000$", 0xFFFFFFFF, MedicalBuyKitsCoords[i][0], MedicalBuyKitsCoords[i][1], MedicalBuyKitsCoords[i][2], 5.0, .testlos = true);
+		CreateDynamic3DTextLabel("Botiquines\n\nEscribe {"#PRIMARY_COLOR"}/botiquin {f0f0f0}para comprar un botiquín\nPrecio del botiquín: {"#PRIMARY_COLOR"}5.000$", 0xFFFFFFFF, MedicalBuyKitsCoords[i][0], MedicalBuyKitsCoords[i][1], MedicalBuyKitsCoords[i][2], 5.0, .testlos = true);
 
 	//Trash
-	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/basurero {FFFFFF}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, -1906.577514, -1756.457519, 22.079319, 5.0, .testlos = true, .worldid = 0, .interiorid = 0);
+	CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/basurero {f0f0f0}para empezar a trabajar\no para dejar de trabajar", 0xFFFFFFFF, -1906.577514, -1756.457519, 22.079319, 5.0, .testlos = true, .worldid = 0, .interiorid = 0);
 
 	//Ruta 0
 	CreateTrashCheckpoint(0, 1440, -1812.46228, -558.37744, 15.73948,   0.00000, 0.00000, 274.24359);
@@ -4519,7 +4519,7 @@ SanAndreas() {
 		LUMBER_TREES[i][lumber_tree_OBJECT_ID] = CreateDynamicObject(LUMBER_TREES[i][lumber_tree_MODELID], LUMBER_TREES[i][lumber_tree_X], LUMBER_TREES[i][lumber_tree_Y], LUMBER_TREES[i][lumber_tree_Z], LUMBER_TREES[i][lumber_tree_RX], LUMBER_TREES[i][lumber_tree_RY], LUMBER_TREES[i][lumber_tree_RZ], 0, 0);
 		
 		new label_str[256];
-		format(label_str, sizeof label_str, "{f46530}Árbol (%d)\n\n{FFFFFF}Pulsa {f9d834}N {FFFFFF}para talar el árbol.", i);
+		format(label_str, sizeof label_str, "{f46530}Árbol (%d)\n\n{f0f0f0}Pulsa {f9d834}N {f0f0f0}para talar el árbol.", i);
 		LUMBER_TREES[i][lumber_tree_LABEL] = CreateDynamic3DTextLabel(label_str, 0xFFFFFFFF, LUMBER_TREES[i][lumber_tree_X], LUMBER_TREES[i][lumber_tree_Y], LUMBER_TREES[i][lumber_tree_Z] + 1.5, 5.0, .testlos = false, .worldid = 0, .interiorid = 0);
 	}
 	
@@ -4837,7 +4837,7 @@ hook OnPlayerText(playerid, text[]) {
 		GetPlayerZones(playerid, city, zone);
 			
 		new message[145];
-		format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {FFFFFF}Reporte {d1d1d1}[%s (%d), gps: %s, %s]: {FFFFFF}%s", PLAYER_TEMP[playerid][pt_POLICE_CALL_NAME_STR], playerid, city, zone, text);
+		format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {f0f0f0}Reporte {d1d1d1}[%s (%d), gps: %s, %s]: {f0f0f0}%s", PLAYER_TEMP[playerid][pt_POLICE_CALL_NAME_STR], playerid, city, zone, text);
 		SendPoliceRadioMessage(-1, -1, message);
 
 		SendPlayerClientMessage(playerid, "Operadora: su petición fue enviada, en breve una patrulla acudirá.");
@@ -4849,7 +4849,7 @@ hook OnPlayerText(playerid, text[]) {
 	if (text[0] == '!') {
 		if (PLAYER_WORKS[playerid][WORK_POLICE][pwork_SET] && PLAYER_TEMP[playerid][pt_WORKING_IN] == WORK_POLICE) {
 			if (text[1] == '!') format(str_text, sizeof str_text, "** [Radio] (( %s: %s ))", PLAYER_TEMP[playerid][pt_NAME], text[2]);
-			else format(str_text, sizeof str_text, "{8D8DFF}** [Radio]{FF8C00} %s %s: {FFFFFF}%s", POLICE_RANKS[ PLAYER_WORKS[playerid][WORK_POLICE][pwork_LEVEL] ], PLAYER_TEMP[playerid][pt_NAME], text[1]);
+			else format(str_text, sizeof str_text, "{8D8DFF}** [Radio]{FF8C00} %s %s: {f0f0f0}%s", POLICE_RANKS[ PLAYER_WORKS[playerid][WORK_POLICE][pwork_LEVEL] ], PLAYER_TEMP[playerid][pt_NAME], text[1]);
 			
 			SendPoliceRadioMessage(PLAYER_TEMP[playerid][pt_POLICE_RADIO], 0xCCCCCCCC, str_text);
 			return 0;
@@ -5093,7 +5093,7 @@ CMD:gcp(playerid, params[]) {
 CMD:movil(playerid, params[]) {
 	if (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL || PI[playerid][pi_STATE] == ROLEPLAY_STATE_ARRESTED) return SendPlayerClientMessage(playerid, "Ahora no puedes usar este comando.");
 	if (!GetValidPlayerPhoneNumber(playerid)) {
-		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{FFFFFF}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {FFFFFF}para adquirir uno.");
+		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{f0f0f0}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {f0f0f0}para adquirir uno.");
 		return 1;
 	}
 	if (PLAYER_TEMP[playerid][pt_PLAYER_IN_CALL]) SendPlayerClientMessage(playerid, "Estás en una llamada.");
@@ -5107,7 +5107,7 @@ alias:movil("celular", "telefono", "tlf");
 CMD:gps(playerid, params[]) {
 	if (PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL || PI[playerid][pi_STATE] == ROLEPLAY_STATE_ARRESTED) return SendPlayerClientMessage(playerid, "Ahora no puedes usar este comando.");
 	if (!GetValidPlayerPhoneNumber(playerid)) {
-		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{FFFFFF}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {FFFFFF}para adquirir uno.");
+		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{f0f0f0}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {f0f0f0}para adquirir uno.");
 		return 1;
 	}
 	
@@ -5119,7 +5119,7 @@ CMD:gps(playerid, params[]) {
 CMD:guia(playerid, params[]) {
 	if (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL || PI[playerid][pi_STATE] == ROLEPLAY_STATE_ARRESTED) return SendPlayerClientMessage(playerid, "Ahora no puedes usar este comando.");
 	if (GetValidPlayerInventoryType(playerid, INVENTORY_PHONE_RESOLVER) == -1) {
-		SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{FFFFFF}No tienes una guía telefónica, puedes ir a cualquier {"#WARNING_COLOR"}24/7 {FFFFFF}para comprar una.");
+		SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}No tienes una guía telefónica, puedes ir a cualquier {"#WARNING_COLOR"}24/7 {f0f0f0}para comprar una.");
 		return 1;
 	}
 	
@@ -5130,7 +5130,7 @@ CMD:guia(playerid, params[]) {
 CMD:sms(playerid, params[]) {
 	if (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL || PI[playerid][pi_STATE] == ROLEPLAY_STATE_ARRESTED) return SendPlayerClientMessage(playerid, "Ahora no puedes usar este comando.");
 	if (!GetValidPlayerPhoneNumber(playerid)) {
-		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{FFFFFF}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {FFFFFF}para adquirir uno.");
+		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{f0f0f0}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {f0f0f0}para adquirir uno.");
 		return 1;
 	}
 	if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_OFF) return SendPlayerClientMessage(playerid, "{666666}Tu teléfono está apagado, para encenderlo usa /movil.");
@@ -5143,7 +5143,7 @@ CMD:sms(playerid, params[]) {
 CMD:agenda(playerid, params[]) {
 	if (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL || PI[playerid][pi_STATE] == ROLEPLAY_STATE_ARRESTED) return SendPlayerClientMessage(playerid, "Ahora no puedes usar este comando.");
 	if (!GetValidPlayerPhoneNumber(playerid)) {
-		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{FFFFFF}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {FFFFFF}para adquirir uno.");
+		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{f0f0f0}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {f0f0f0}para adquirir uno.");
 		return 1;
 	}
 	if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_OFF) return SendPlayerClientMessage(playerid, "Tu teléfono está apagado, para encenderlo usa /movil.");
@@ -5197,7 +5197,7 @@ HandleStaticPhoneNumbers(playerid, call_number) {
 CMD:llamar(playerid, params[]) {
 	if (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL || PI[playerid][pi_STATE] == ROLEPLAY_STATE_ARRESTED) return SendPlayerClientMessage(playerid, "Ahora no puedes usar este comando.");
 	if (!GetValidPlayerPhoneNumber(playerid)) {
-		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{FFFFFF}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {FFFFFF}para adquirir uno.");
+		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{f0f0f0}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {f0f0f0}para adquirir uno.");
 		return 1;
 	}
 	if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_OFF) return SendPlayerClientMessage(playerid, "{666666}Tu teléfono está apagado, para encenderlo usa /movil.");
@@ -5210,7 +5210,7 @@ CMD:llamar(playerid, params[]) {
 CMD:responder(playerid, params[]) {
 	if (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || PI[playerid][pi_STATE] == ROLEPLAY_STATE_JAIL || PI[playerid][pi_STATE] == ROLEPLAY_STATE_ARRESTED) return SendPlayerClientMessage(playerid, "Ahora no puedes usar este comando.");
 	if (!GetValidPlayerPhoneNumber(playerid)) {
-		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{FFFFFF}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {FFFFFF}para adquirir uno.");
+		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{f0f0f0}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {f0f0f0}para adquirir uno.");
 		return 1;
 	}
 	if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_OFF) return SendPlayerClientMessage(playerid, "{666666}Tu teléfono está apagado, para encenderlo usa /movil.");
@@ -5237,14 +5237,14 @@ CMD:responder(playerid, params[]) {
 	UpdatePlayerCallingCard(playerid, GetValidPlayerPhoneNumber(to_playerid));
 	UpdatePlayerCallingCard(to_playerid, GetValidPlayerPhoneNumber(playerid));
 	
-	SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}[Llamada]{FFFFFF} {"#PRIMARY_COLOR"}·{FFFFFF}La comunicación ha sido establecida, usa {"#WARNING_COLOR"}/colgar {FFFFFF}para finalizarla.");
-	SendPlayerClientMessage(to_playerid, "{"#PRIMARY_COLOR"}[Llamada]{FFFFFF} {"#PRIMARY_COLOR"}·{FFFFFF}La comunicación ha sido establecida, usa {"#WARNING_COLOR"}/colgar {FFFFFF}para finalizarla.");
+	SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}[Llamada]{f0f0f0} {"#PRIMARY_COLOR"}·{f0f0f0}La comunicación ha sido establecida, usa {"#WARNING_COLOR"}/colgar {f0f0f0}para finalizarla.");
+	SendPlayerClientMessage(to_playerid, "{"#PRIMARY_COLOR"}[Llamada]{f0f0f0} {"#PRIMARY_COLOR"}·{f0f0f0}La comunicación ha sido establecida, usa {"#WARNING_COLOR"}/colgar {f0f0f0}para finalizarla.");
 	return 1;
 }
 
 CMD:colgar(playerid, params[]) {
 	if (!GetValidPlayerPhoneNumber(playerid)) {
-		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{FFFFFF}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {FFFFFF}para adquirir uno.");
+		SendPlayerClientMessage(playerid, "{"ERROR_COLOR"}·{f0f0f0}No cuentas con un teléfono, acércate a cualquier {"WARNING_COLOR"}24/7 {f0f0f0}para adquirir uno.");
 		return 1;
 	}
 	if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_OFF) return SendPlayerClientMessage(playerid, "Tu teléfono está apagado, para encenderlo usa /movil.");
@@ -5255,7 +5255,7 @@ CMD:colgar(playerid, params[]) {
 		PLAYER_TEMP[playerid][pt_PLAYER_IN_CALL] = false;
 		PLAYER_TEMP[playerid][pt_POLICE_CALL_NAME] = false;
 		PLAYER_TEMP[playerid][pt_POLICE_CALL_DESCRIPTION] = false;
-		SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{ffffff}Llamada finalizada.");
+		SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{f0f0f0}Llamada finalizada.");
 		return 1;
 	}
 	
@@ -5264,11 +5264,11 @@ CMD:colgar(playerid, params[]) {
 	switch(PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_STATE]) {
 		case CALL_STATE_WAITING_RESPONSE: {
 			EndPhoneCall(playerid);
-			SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{ffffff}Colgaste.");
+			SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{f0f0f0}Colgaste.");
 		}
 		case CALL_STATE_INCOMING_CALL: {
 			EndPhoneCall(playerid);
-			SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{ffffff}No has respondido la llamada.");
+			SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{f0f0f0}No has respondido la llamada.");
 		}
 		case CALL_STATE_ESTABLISHED: {
 			switch (PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_NUMBER]) {
@@ -5276,7 +5276,7 @@ CMD:colgar(playerid, params[]) {
 			}
 
 			EndPhoneCall(playerid);
-			SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{ffffff}Llamada finalizada.");
+			SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{f0f0f0}Llamada finalizada.");
 		}
 		default: SendPlayerClientMessage(playerid, "No estás en ninguna llamada.");	
 	}
@@ -5693,7 +5693,7 @@ ShowDialog(playerid, dialogid) {
 			if (PI[playerid][pi_BANK_ACCOUNT] == 0) return SendPlayerClientMessage(playerid, "No tienes cuenta bancaria.");
 			
 			new caption[80];
-			format(caption, sizeof caption, "Mi cuenta bancaria: {"#BLUE_COLOR"}%s {FFFFFF}- Balance actual: {"#BLUE_COLOR"}%s$", number_format_thousand(PI[playerid][pi_BANK_ACCOUNT]), number_format_thousand(PI[playerid][pi_BANK_MONEY]));
+			format(caption, sizeof caption, "Mi cuenta bancaria: {"#BLUE_COLOR"}%s {f0f0f0}- Balance actual: {"#BLUE_COLOR"}%s$", number_format_thousand(PI[playerid][pi_BANK_ACCOUNT]), number_format_thousand(PI[playerid][pi_BANK_MONEY]));
 			
 			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, caption, 
 				"{d1d1d1}1. Retirar dinero\n{d1d1d1}2. Depositar dinero\n{d1d1d1}3. Transferir dinero\n{d1d1d1}4. Últimas transacciones", 
@@ -5805,8 +5805,8 @@ ShowDialog(playerid, dialogid) {
 			format(caption, sizeof caption, "Telefono · {"#PRIMARY_COLOR"}%d", GetValidPlayerPhoneNumber(playerid));
 			
 			new dialog[400];
-			if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_ON) format(dialog, sizeof dialog, "{"#PRIMARY_COLOR"}1.{FFFFFF} Contactos\n{"#PRIMARY_COLOR"}2.{FFFFFF} Realizar llamada\n{"#PRIMARY_COLOR"}3.{FFFFFF} Redactar SMS\n{"#PRIMARY_COLOR"}4.{FFFFFF} Bandeja de entrada\n{"#PRIMARY_COLOR"}5.{FFFFFF} Mensajes enviados\n{"#PRIMARY_COLOR"}6.{FFFFFF} Apagar telefono");
-			else format(dialog, sizeof dialog, "{"#PRIMARY_COLOR"}1.{FFFFFF} Encender teléfono\n{"#PRIMARY_COLOR"}2.{666666} Contactos\n{"#PRIMARY_COLOR"}3.{666666} Realizar llamada\n{"#PRIMARY_COLOR"}4.{666666} Redactar SMS\n{"#PRIMARY_COLOR"}5.{666666} Bandeja de entrada\n{"#PRIMARY_COLOR"}6.{666666} Mensajes enviados");
+			if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_ON) format(dialog, sizeof dialog, "{"#PRIMARY_COLOR"}1.{f0f0f0} Contactos\n{"#PRIMARY_COLOR"}2.{f0f0f0} Realizar llamada\n{"#PRIMARY_COLOR"}3.{f0f0f0} Redactar SMS\n{"#PRIMARY_COLOR"}4.{f0f0f0} Bandeja de entrada\n{"#PRIMARY_COLOR"}5.{f0f0f0} Mensajes enviados\n{"#PRIMARY_COLOR"}6.{f0f0f0} Apagar telefono");
+			else format(dialog, sizeof dialog, "{"#PRIMARY_COLOR"}1.{f0f0f0} Encender teléfono\n{"#PRIMARY_COLOR"}2.{666666} Contactos\n{"#PRIMARY_COLOR"}3.{666666} Realizar llamada\n{"#PRIMARY_COLOR"}4.{666666} Redactar SMS\n{"#PRIMARY_COLOR"}5.{666666} Bandeja de entrada\n{"#PRIMARY_COLOR"}6.{666666} Mensajes enviados");
 			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, caption, dialog, "Continuar", "Cerrar");
 			return 1;
 		}
@@ -5838,8 +5838,8 @@ ShowDialog(playerid, dialogid) {
 			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_TABLIST_HEADERS, "Telefono · {"#SECONDARY_COLOR"}Agenda", dialog, "Continuar", "Atrás");		
 			return 1;
 		}
-		case DIALOG_PHONE_BOOK_ADD_NUMBER: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Agenda · {"#SECONDARY_COLOR"}Añadir contacto", "{"#SECONDARY_COLOR"}·{ffffff}Está añadiendo un nuevo contacto en su agenda.\nIndique el número de teléfono del nuevo contacto.", "Continuar", "Atrás");
-		case DIALOG_PHONE_BOOK_ADD_NAME: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Agenda · {"#SECONDARY_COLOR"}Añadir contacto", "{"#SECONDARY_COLOR"}·{ffffff}Está añadiendo un nuevo contacto en su agenda.\nIndique el nombre del nuevo contacto.", "Continuar", "Atrás");
+		case DIALOG_PHONE_BOOK_ADD_NUMBER: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Agenda · {"#SECONDARY_COLOR"}Añadir contacto", "{"#SECONDARY_COLOR"}·{f0f0f0}Está añadiendo un nuevo contacto en su agenda.\nIndique el número de teléfono del nuevo contacto.", "Continuar", "Atrás");
+		case DIALOG_PHONE_BOOK_ADD_NAME: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Agenda · {"#SECONDARY_COLOR"}Añadir contacto", "{"#SECONDARY_COLOR"}·{f0f0f0}Está añadiendo un nuevo contacto en su agenda.\nIndique el nombre del nuevo contacto.", "Continuar", "Atrás");
 		case DIALOG_PHONE_BOOK_OPTIONS: {
 			new caption[40];
 			format(caption, sizeof caption, "Contacto · {"#SECONDARY_COLOR"}%s", PLAYER_PHONE_BOOK[playerid][ PLAYER_TEMP[playerid][pt_PLAYER_PHONE_BOOK_SELECTED] ][phone_book_contact_NAME]);
@@ -5885,7 +5885,7 @@ ShowDialog(playerid, dialogid) {
 			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_TABLIST, "Telefono · {"#SECONDARY_COLOR"}¿A quien llamaras?", dialog, "Llamar", "Atrás");
 			return 1;
 		}
-		case DIALOG_PHONE_CALL_NUMBER: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Telefono · {"#SECONDARY_COLOR"}Realizar una llamada", "{"#PRIMARY_COLOR"}·{FFFFFF}Introduce el número de destino para establecer la comunicación:", "Continuar", "Atrás");
+		case DIALOG_PHONE_CALL_NUMBER: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Telefono · {"#SECONDARY_COLOR"}Realizar una llamada", "{"#PRIMARY_COLOR"}·{f0f0f0}Introduce el número de destino para establecer la comunicación:", "Continuar", "Atrás");
 		case DIALOG_PHONE_SMS: {
 			for(new i = 0; i != MAX_LISTITEMS; i++ ) PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][i] = -1;
 			new listitem, dialog[80 * (MAX_PHONE_CONTACTS + 3)];
@@ -5903,9 +5903,9 @@ ShowDialog(playerid, dialogid) {
 			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_TABLIST, "Telefono · {"#SECONDARY_COLOR"}¿A quien le envias?", dialog, "Enviar", "Atrás");
 			return 1;
 		}
-		case DIALOG_PHONE_SMS_NUMBER: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Telefono · {"#SECONDARY_COLOR"}Enviar mensaje", "{"#PRIMARY_COLOR"}·{FFFFFF}¿A quién quieres enviarle el mensaje?\nIndique el número al que desea enviar el mensaje.", "Continuar", "Atrás");
-		case DIALOG_PHONE_SMS_MESSAGE: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Telefono · {"#SECONDARY_COLOR"}Enviar mensaje", "{"#PRIMARY_COLOR"}·{FFFFFF}Escribe el mensaje que quieres enviar\nCaracteres: 1-64.", "Continuar", "Atrás");
-		case DIALOG_PHONE_BOOK_SEND_MESSAGE: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Telefono · {"#SECONDARY_COLOR"}Enviar mensaje", "{"#PRIMARY_COLOR"}·{FFFFFF}Escribe el mensaje que quieres enviar\nCaracteres: 1-64.", "Continuar", "Atrás");
+		case DIALOG_PHONE_SMS_NUMBER: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Telefono · {"#SECONDARY_COLOR"}Enviar mensaje", "{"#PRIMARY_COLOR"}·{f0f0f0}¿A quién quieres enviarle el mensaje?\nIndique el número al que desea enviar el mensaje.", "Continuar", "Atrás");
+		case DIALOG_PHONE_SMS_MESSAGE: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Telefono · {"#SECONDARY_COLOR"}Enviar mensaje", "{"#PRIMARY_COLOR"}·{f0f0f0}Escribe el mensaje que quieres enviar\nCaracteres: 1-64.", "Continuar", "Atrás");
+		case DIALOG_PHONE_BOOK_SEND_MESSAGE: return ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "Telefono · {"#SECONDARY_COLOR"}Enviar mensaje", "{"#PRIMARY_COLOR"}·{f0f0f0}Escribe el mensaje que quieres enviar\nCaracteres: 1-64.", "Continuar", "Atrás");
 		case DIALOG_PHONE_SENT_MESSAGES: {
 			inline OnSentMessagesLoad() {
 				new rows;
@@ -5974,7 +5974,7 @@ ShowDialog(playerid, dialogid) {
 			return 1;
 		}
 		case DIALOG_PLAYER_GPS: {
-			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "Telefono · {"#PRIMARY_COLOR"}GPS",  "{"#PRIMARY_COLOR"}- {FFFFFF}Ubicaciones guardadas\n{"#PRIMARY_COLOR"}- {FFFFFF}Propiedades\n{"#PRIMARY_COLOR"}- {FFFFFF}Vehículos\n{"#PRIMARY_COLOR"}- {FFFFFF}Puntos de interés\n{"#PRIMARY_COLOR"}- {FFFFFF}Empleos", "Continuar", "Cerrar");
+			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "Telefono · {"#PRIMARY_COLOR"}GPS",  "{"#PRIMARY_COLOR"}- {f0f0f0}Ubicaciones guardadas\n{"#PRIMARY_COLOR"}- {f0f0f0}Propiedades\n{"#PRIMARY_COLOR"}- {f0f0f0}Vehículos\n{"#PRIMARY_COLOR"}- {f0f0f0}Puntos de interés\n{"#PRIMARY_COLOR"}- {f0f0f0}Empleos", "Continuar", "Cerrar");
 			return 1;
 		}
 		case DIALOG_PLAYER_GPS_PLAYER: {
@@ -6069,7 +6069,7 @@ ShowDialog(playerid, dialogid) {
 
 				new city[45], zone[45];
 				GetPointZone(Hospital_Spawn_Positions[i][hspi_X], Hospital_Spawn_Positions[i][hspi_Y], city, zone);
-				format(dialog, sizeof dialog, "%s\n{FFFFFF}Hospital %d\t{"#BLUE_COLOR"}%s, %s", dialog, listitem + 1, city, zone);
+				format(dialog, sizeof dialog, "%s\n{f0f0f0}Hospital %d\t{"#BLUE_COLOR"}%s, %s", dialog, listitem + 1, city, zone);
 
 				listitem++;
 			}
@@ -6088,7 +6088,7 @@ ShowDialog(playerid, dialogid) {
 				if (sites >= MAX_LISTITEMS) break;
 				if (ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_BINCO && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_SUBURBAN && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_PROLAPS && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_DIDIER_SACHS && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_VICTIM && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_ZIP) continue;
 
-				format(line_str, sizeof line_str, "{FFFFFF}%d. %s\t{d1d1d1}%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
+				format(line_str, sizeof line_str, "{f0f0f0}%d. %s\t{d1d1d1}%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
 				strcat(dialog, line_str);
 
 				PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][sites] = i;
@@ -6110,7 +6110,7 @@ ShowDialog(playerid, dialogid) {
 				if (sites >= MAX_LISTITEMS) break;
 				if (ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_247) continue;
 
-				format(line_str, sizeof line_str, "{FFFFFF}%d. %s\t{d1d1d1}%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
+				format(line_str, sizeof line_str, "{f0f0f0}%d. %s\t{d1d1d1}%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
 				strcat(dialog, line_str);
 
 				PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][sites] = i;
@@ -6132,7 +6132,7 @@ ShowDialog(playerid, dialogid) {
 				if (sites >= MAX_LISTITEMS) break;
 				if (ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_PIZZA && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_CLUCKIN_BELL && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_BURGER_SHOT) continue;
 
-				format(line_str, sizeof line_str, "{FFFFFF}%d. %s\t{d1d1d1}%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
+				format(line_str, sizeof line_str, "{f0f0f0}%d. %s\t{d1d1d1}%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
 				strcat(dialog, line_str);
 
 				PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][sites] = i;
@@ -6154,7 +6154,7 @@ ShowDialog(playerid, dialogid) {
 				if (sites >= MAX_LISTITEMS) break;
 				if (ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_BANK_LS && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_BANK_SF && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_BANK_LV) continue;
 
-				format(line_str, sizeof line_str, "{FFFFFF}%d. %s\t{d1d1d1}%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
+				format(line_str, sizeof line_str, "{f0f0f0}%d. %s\t{d1d1d1}%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
 				strcat(dialog, line_str);
 
 				PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][sites] = i;
@@ -6172,7 +6172,7 @@ ShowDialog(playerid, dialogid) {
 			new line_str[90], sites;
 			for(new i = 0; i != sizeof(ATM_BANK); i++ ) {
 
-				format(line_str, sizeof line_str, "{FFFFFF}Cajero %d\t{d1d1d1}%.2f Km\n", sites + 1, (GetPlayerDistanceFromPoint(playerid, ATM_BANK[i][atm_X], ATM_BANK[i][atm_Y], ATM_BANK[i][atm_Z]) * 0.01));
+				format(line_str, sizeof line_str, "{f0f0f0}Cajero %d\t{d1d1d1}%.2f Km\n", sites + 1, (GetPlayerDistanceFromPoint(playerid, ATM_BANK[i][atm_X], ATM_BANK[i][atm_Y], ATM_BANK[i][atm_Z]) * 0.01));
 				strcat(dialog, line_str);
 
 				sites ++;
@@ -6198,7 +6198,7 @@ ShowDialog(playerid, dialogid) {
 				if (sites >= MAX_LISTITEMS) break;
 				if (ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_POLICE_LS && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_POLICE_SF && ENTER_EXIT[i][ee_INTERIOR_TYPE] != INTERIOR_POLICE_LV) continue;
 
-				format(line_str, sizeof line_str, "{FFFFFF}%d. %s\t%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
+				format(line_str, sizeof line_str, "{f0f0f0}%d. %s\t%.2f Km\n", sites + 1, ENTER_EXIT[i][ee_NAME], (GetPlayerDistanceFromPoint(playerid, ENTER_EXIT[i][ee_EXT_X], ENTER_EXIT[i][ee_EXT_Y], ENTER_EXIT[i][ee_EXT_Z]) * 0.01));
 				strcat(dialog, line_str);
 
 				PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][sites] = i;
@@ -6225,7 +6225,7 @@ ShowDialog(playerid, dialogid) {
 							cache_get_value_name_float(i, "ext_x", pos[0]);
 							cache_get_value_name_float(i, "ext_y", pos[1]);
 							cache_get_value_name_float(i, "ext_z", pos[2]);
-							format(line_str, sizeof line_str, "{FFFFFF}%d. %s\t{d1d1d1}%.2f Km\n", i + 1, property_name, (GetPlayerDistanceFromPoint(playerid, pos[0], pos[1], pos[2]) * 0.01));
+							format(line_str, sizeof line_str, "{f0f0f0}%d. %s\t{d1d1d1}%.2f Km\n", i + 1, property_name, (GetPlayerDistanceFromPoint(playerid, pos[0], pos[1], pos[2]) * 0.01));
 							strcat(dialog, line_str);
 						}
 					}
@@ -6258,7 +6258,7 @@ ShowDialog(playerid, dialogid) {
 					if (!PLAYER_VEHICLES[i][player_vehicle_ACCESSIBLE])
 						format(line_str, sizeof line_str, "{666666}%d. %s (%d)\t{666666}%s\t{666666}-\n", total_vehicles + 1, VEHICLE_INFO[ GLOBAL_VEHICLES[i][gb_vehicle_MODELID] - 400 ][vehicle_info_NAME], i, GLOBAL_VEHICLES[i][gb_vehicle_NUMBER_PLATE]);
 					else
-						format(line_str, sizeof line_str, "{FFFFFF}%d. %s\t{FFFFFF}%s\t{d1d1d1}%.2f Km\n", total_vehicles + 1, VEHICLE_INFO[ GLOBAL_VEHICLES[i][gb_vehicle_MODELID] - 400 ][vehicle_info_NAME], GLOBAL_VEHICLES[i][gb_vehicle_NUMBER_PLATE], (GetPlayerDistanceFromPoint(playerid, pos[0], pos[1], pos[2]) * 0.01));
+						format(line_str, sizeof line_str, "{f0f0f0}%d. %s\t{f0f0f0}%s\t{d1d1d1}%.2f Km\n", total_vehicles + 1, VEHICLE_INFO[ GLOBAL_VEHICLES[i][gb_vehicle_MODELID] - 400 ][vehicle_info_NAME], GLOBAL_VEHICLES[i][gb_vehicle_NUMBER_PLATE], (GetPlayerDistanceFromPoint(playerid, pos[0], pos[1], pos[2]) * 0.01));
 
 					strcat(dialog, line_str);
 					total_vehicles ++;
@@ -7176,7 +7176,7 @@ ShowDialog(playerid, dialogid) {
 				}
 				else {
 					if (i < PI[playerid][pi_CREW_RANK]) format(line_str, sizeof line_str, "{666666}%d. Slot vacío\n", i + 1, CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][i][crew_rank_NAME]);
-					else format(line_str, sizeof line_str, "{FFFFFF}%d. Slot vacío\n", i + 1, CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][i][crew_rank_NAME]);
+					else format(line_str, sizeof line_str, "{f0f0f0}%d. Slot vacío\n", i + 1, CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][i][crew_rank_NAME]);
 				}
 				strcat(dialog, line_str);
 			}
@@ -7527,7 +7527,7 @@ ShowDialog(playerid, dialogid) {
 			
 			new dialog[45 * MAX_VEHICLE_OBJECTS_INDEXS], line_str[45];
 			for(new i = 0; i != MAX_VEHICLE_OBJECTS_INDEXS; i ++) {
-				if (!VEHICLE_OBJECTS[ PLAYER_TEMP[playerid][pt_TUNING_GARAGE_VEHICLEID] ][ PLAYER_TEMP[playerid][pt_TUNING_EDIT_SLOT] ][vobject_COLORS][i]) format(line_str, sizeof line_str, "{FFFFFF}Color #%d (original)\n", i + 1);
+				if (!VEHICLE_OBJECTS[ PLAYER_TEMP[playerid][pt_TUNING_GARAGE_VEHICLEID] ][ PLAYER_TEMP[playerid][pt_TUNING_EDIT_SLOT] ][vobject_COLORS][i]) format(line_str, sizeof line_str, "{f0f0f0}Color #%d (original)\n", i + 1);
 				else format(line_str, sizeof line_str, "{%06x}Color #%d\n", ARGBToRGBA(VEHICLE_OBJECTS[ PLAYER_TEMP[playerid][pt_TUNING_GARAGE_VEHICLEID] ][ PLAYER_TEMP[playerid][pt_TUNING_EDIT_SLOT] ][vobject_COLORS][i]) >>> 8, i + 1);
 				
 				strcat(dialog, line_str);
@@ -7546,7 +7546,7 @@ ShowDialog(playerid, dialogid) {
 						Color original\n\
 						{%06x}Veh Color 1\n\
 						{%06x}Veh Color 2\n\
-						{FFFFFF}Otro (ARGB)\n\
+						{f0f0f0}Otro (ARGB)\n\
 					",
 					VEHICLE_COLORS[ GLOBAL_VEHICLES[ PLAYER_TEMP[playerid][pt_TUNING_GARAGE_VEHICLEID] ][gb_vehicle_COLOR_1] ] >>> 8,
 					VEHICLE_COLORS[ GLOBAL_VEHICLES[ PLAYER_TEMP[playerid][pt_TUNING_GARAGE_VEHICLEID] ][gb_vehicle_COLOR_2] ] >>> 8
@@ -7644,23 +7644,23 @@ ShowDialog(playerid, dialogid) {
 		case DIALOG_PLAYER_CONFIG: {
 			new dialog[1024], listitem;
 			for(new i = 0; i != MAX_LISTITEMS; i++ ) PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][i] = -1;
-			strcatf(dialog, "{ffffff}Audios del servidor\t%s\n", (PI[playerid][pi_CONFIG_AUDIO] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
+			strcatf(dialog, "{f0f0f0}Audios del servidor\t%s\n", (PI[playerid][pi_CONFIG_AUDIO] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_AUDIO; listitem ++;
-			strcatf(dialog, "{ffffff}Sonidos del servidor\t%s\n", (PI[playerid][pi_CONFIG_SOUNDS] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
+			strcatf(dialog, "{f0f0f0}Sonidos del servidor\t%s\n", (PI[playerid][pi_CONFIG_SOUNDS] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_SOUNDS; listitem ++;
-			strcatf(dialog, "{ffffff}Hora del servidor\t%s\n", (PI[playerid][pi_CONFIG_TIME] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
+			strcatf(dialog, "{f0f0f0}Hora del servidor\t%s\n", (PI[playerid][pi_CONFIG_TIME] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_TIME; listitem ++;
-			strcatf(dialog, "{ffffff}Indicador de hambre y sed\t%s\n", (PI[playerid][pi_CONFIG_HUD] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
+			strcatf(dialog, "{f0f0f0}Indicador de hambre y sed\t%s\n", (PI[playerid][pi_CONFIG_HUD] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_HUD; listitem ++;
-			strcatf(dialog, "{ffffff}Número en guía telefónica\t%s\n", (PI[playerid][pi_PHONE_VISIBLE_NUMBER] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
+			strcatf(dialog, "{f0f0f0}Número en guía telefónica\t%s\n", (PI[playerid][pi_PHONE_VISIBLE_NUMBER] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_VISIBLE_NUMBER; listitem ++;
-			strcatf(dialog, "{ffffff}Sanciones administrativas en el chat\t%s\n", (PI[playerid][pi_CONFIG_ADMIN] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
+			strcatf(dialog, "{f0f0f0}Sanciones administrativas en el chat\t%s\n", (PI[playerid][pi_CONFIG_ADMIN] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_ADMIN; listitem ++;
-			strcatf(dialog, "{ffffff}Canal de dudas\t%s\n", (PI[playerid][pi_DOUBT_CHANNEL] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
+			strcatf(dialog, "{f0f0f0}Canal de dudas\t%s\n", (PI[playerid][pi_DOUBT_CHANNEL] ? "{"#GREEN_COLOR"}Sí" : "{"#ERROR_COLOR"}No"));
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_DOUBT_CHANNEL; listitem ++;
-			strcatf(dialog, "{ffffff}Editar barras del hud\t{666666}-\n");
+			strcatf(dialog, "{f0f0f0}Editar barras del hud\t{666666}-\n");
 			PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] = PLAYER_CONFIG_HEALTHY_BARS; listitem ++;
-			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_TABLIST, ""SERVER_NAME_FORMAT" {ffffff}· Configuracion", dialog, "Cambiar", "Cerrar");	
+			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_TABLIST, ""SERVER_NAME_FORMAT" {f0f0f0}· Configuracion", dialog, "Cambiar", "Cerrar");	
 			return 1;
 		}
 		case DIALOG_CHANGE_NAME: {
@@ -8157,7 +8157,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						RegisterPhoneMessage(0, PI[transfer_player_id][pi_ID], message);
 						if (PI[transfer_player_id][pi_PHONE_STATE] == PHONE_STATE_ON) {
 							if ((PLAYER_TEMP[transfer_player_id][pt_GAME_STATE] == GAME_STATE_NORMAL)) {
-								SendPlayerClientMessageEx(transfer_player_id, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(transfer_player_id, 6740), message);
+								SendPlayerClientMessageEx(transfer_player_id, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(transfer_player_id, 6740), message);
 							}
 						}
 					}	
@@ -8469,10 +8469,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 									else RegisterPhoneMessage(PI[playerid][pi_ID], id, params_message, 1);
 									if (connected) {
 										if (PI[pid][pi_PHONE_STATE] == PHONE_STATE_ON) {
-											SendPlayerClientMessageEx(pid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(pid, GetValidPlayerPhoneNumber(playerid)), params_message);
+											SendPlayerClientMessageEx(pid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(pid, GetValidPlayerPhoneNumber(playerid)), params_message);
 										}
 									}
-									SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}[Telefono] ·{FFFFFF}Mensaje enviado a {"#SECONDARY_COLOR"}%s{FFFFFF}.", convertPhoneNumber(playerid, selected_number));
+									SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}[Telefono] ·{f0f0f0}Mensaje enviado a {"#SECONDARY_COLOR"}%s{f0f0f0}.", convertPhoneNumber(playerid, selected_number));
 								}
 								else SendPlayerClientMessage(playerid, "{666666}El número destino no es válido.");
 							}
@@ -8508,10 +8508,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 									else RegisterPhoneMessage(PI[playerid][pi_ID], id, params_message, 1);
 									if (connected) {
 										if (PI[pid][pi_PHONE_STATE] == PHONE_STATE_ON) {
-											SendPlayerClientMessageEx(pid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(pid, GetValidPlayerPhoneNumber(playerid)), params_message);
+											SendPlayerClientMessageEx(pid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(pid, GetValidPlayerPhoneNumber(playerid)), params_message);
 										}
 									}
-									SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}[Telefono] ·{FFFFFF}Mensaje enviado a {"#SECONDARY_COLOR"}%s{FFFFFF}.", convertPhoneNumber(playerid, selected_number));
+									SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}[Telefono] ·{f0f0f0}Mensaje enviado a {"#SECONDARY_COLOR"}%s{f0f0f0}.", convertPhoneNumber(playerid, selected_number));
 								}
 								else SendPlayerClientMessage(playerid, "{666666}El número destino no es válido.");
 							}
@@ -8545,7 +8545,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						new message[64]; format(message, sizeof message, "PROPIEDAD COMPRADA: -%s$", number_format_thousand(PROPERTY_INFO[PLAYER_TEMP[playerid][pt_BUY_HOUSE_INDEX]][property_PRICE]));
 						RegisterPhoneMessage(0, PI[playerid][pi_ID], message);
 						if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_ON) {
-							SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
+							SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
 						}
 					}
 					
@@ -8873,7 +8873,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						new message[64]; format(message, sizeof message, "VEHICULO COMPRADO: -%s$", number_format_thousand(SELL_VEHICLES[ PLAYER_TEMP[playerid][pt_SELECTED_BUY_VEHICLE_ID] ][sell_vehicle_PRICE]));
 						RegisterPhoneMessage(0, PI[playerid][pi_ID], message);
 						if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_ON) {
-							SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
+							SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
 						}
 					}
 					
@@ -8970,7 +8970,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new message[64]; format(message, sizeof message, "PROPIEDAD VENDIDA: +%s$", number_format_thousand(payment));
 					RegisterPhoneMessage(0, PI[playerid][pi_ID], message);
 					if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_ON) {
-						SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
+						SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
 					}
 				}
 				
@@ -9063,8 +9063,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					sizeof label_str, 
 					"\
 						Propiedad {"#PRIMARY_COLOR"}#%d\n\n\
-						{FFFFFF}Propietario: {"#PRIMARY_COLOR"}%s\n\
-						{FFFFFF}Presiona {"#PRIMARY_COLOR"}Y {FFFFFF}para entrar.\
+						{f0f0f0}Propietario: {"#PRIMARY_COLOR"}%s\n\
+						{f0f0f0}Presiona {"#PRIMARY_COLOR"}Y {f0f0f0}para entrar.\
 					", PROPERTY_INFO[ PLAYER_TEMP[playerid][pt_PLAYER_PROPERTY_SELECTED] ][property_ID], PI[playerid][pi_NAME]
 				);
 				UpdateDynamic3DTextLabelText(PROPERTY_INFO[ PLAYER_TEMP[playerid][pt_PLAYER_PROPERTY_SELECTED] ][property_EXT_LABEL_ID], 0xFFFFFFFF, label_str);
@@ -9080,14 +9080,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new message[64]; format(message, sizeof message, "PROPIEDAD COMPRADA: -%s$", number_format_thousand(price));
 					RegisterPhoneMessage(0, PI[playerid][pi_ID], message);
 					if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_ON) {
-						SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
+						SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
 					}
 				}
 				if (GetValidPlayerPhoneNumber(seller)) {
 					new message[64]; format(message, sizeof message, "PROPIEDAD VENDIDA: +%s$", number_format_thousand(price));
 					RegisterPhoneMessage(0, PI[seller][pi_ID], message);
 					if (PI[seller][pi_PHONE_STATE] == PHONE_STATE_ON) {
-						SendPlayerClientMessageEx(seller, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(seller, 6740), message);
+						SendPlayerClientMessageEx(seller, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(seller, 6740), message);
 					}
 				}
 				
@@ -9147,7 +9147,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new message[64]; format(message, sizeof message, "VEHICULO VENDIDO: +%s$", number_format_thousand(payment));
 					RegisterPhoneMessage(0, PI[playerid][pi_ID], message);
 					if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_ON) {
-						SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
+						SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
 					}
 				}
 				PI[playerid][pi_BANK_MONEY] += payment;
@@ -9242,14 +9242,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					new message[64]; format(message, sizeof message, "VEHICULO COMPRADO: -%s$", number_format_thousand(price));
 					RegisterPhoneMessage(0, PI[playerid][pi_ID], message);
 					if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_ON) {
-						SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
+						SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 6740), message);
 					}
 				}
 				if (GetValidPlayerPhoneNumber(seller)) {
 					new message[64]; format(message, sizeof message, "VEHICULO VENDIDO: +%s$", number_format_thousand(price));
 					RegisterPhoneMessage(0, PI[seller][pi_ID], message);
 					if (PI[seller][pi_PHONE_STATE] == PHONE_STATE_ON) {
-						SendPlayerClientMessageEx(seller, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(seller, 6740), message);
+						SendPlayerClientMessageEx(seller, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(seller, 6740), message);
 					}
 				}
 				
@@ -10566,7 +10566,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				mysql_tquery(handle_db, QUERY_BUFFER);
 				
 				new message[145];
-				format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s (%s) cambió el nombre de la banda a '%s'.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_NAME]);
+				format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s (%s) cambió el nombre de la banda a '%s'.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_NAME]);
 				SendMessageToCrewMembers(PI[playerid][pi_CREW], -1, message);
 				
 				ShowDialog(playerid, DIALOG_CREW_MENU);
@@ -10691,7 +10691,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 											else
 											{
 												new message[145];
-												format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s (%s) ha echado a %s de la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], name);
+												format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s (%s) ha echado a %s de la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], name);
 												SendMessageToCrewMembers(PI[playerid][pi_CREW], -1, message);
 											
 												mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "UPDATE player SET crew = NULL, crew_rank = 0 WHERE id = %d;", PLAYER_TEMP[playerid][pt_SELECTED_DB_AC_ID]);
@@ -10722,7 +10722,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							else
 							{
 								new message[145];
-								format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s (%s) ha echado a %s de la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], name);
+								format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s (%s) ha echado a %s de la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], name);
 								SendMessageToCrewMembers(PI[playerid][pi_CREW], -1, message);
 							
 								mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "UPDATE player SET crew = NULL, crew_rank = 0 WHERE id = %d;", PLAYER_TEMP[playerid][pt_SELECTED_DB_AC_ID]);
@@ -10803,7 +10803,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				mysql_tquery(handle_db, QUERY_BUFFER);
 				
 				new message[145];
-				format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s se ha unido a la banda con el rango %s.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME]);
+				format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s se ha unido a la banda con el rango %s.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME]);
 				SendMessageToCrewMembers(PI[playerid][pi_CREW], -1, message);
 			}
 			return 1;
@@ -10984,7 +10984,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				SendPlayerClientMessage(playerid, "Has eliminado el rango '%s'.", CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PLAYER_TEMP[playerid][pt_CREW_SELECTED_RANK] ][crew_rank_NAME]);
 			
 				new message[145];
-				format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s (%s) cambió tu rango al rango '%s'.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PLAYER_TEMP[playerid][pt_CREW_SELECTED_NEW_RANK] ][crew_rank_NAME]);
+				format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s (%s) cambió tu rango al rango '%s'.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PLAYER_TEMP[playerid][pt_CREW_SELECTED_NEW_RANK] ][crew_rank_NAME]);
 				foreach (new i : Player) {
 					if (IsPlayerConnected(i)) {
 						if (PI[i][pi_CREW]) {
@@ -11049,7 +11049,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				if (CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_FIGHTING]) return SendPlayerClientMessage(playerid, "No se puede borrar la banda cuando está en combate.");
 				
 				new message[145];
-				format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s (%s) ha eliminado la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME]);
+				format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s (%s) ha eliminado la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME]);
 
 				new tmp_crew_id = PI[playerid][pi_CREW];
 				new tmp_CREW_INFO[enum_CREW_INFO], old_crew_id = PI[playerid][pi_CREW];
@@ -11112,7 +11112,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 								else
 								{
 									new message[145];
-									format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s (%s) ha abandonado la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME]);
+									format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s (%s) ha abandonado la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME]);
 									SendMessageToCrewMembers(PI[playerid][pi_CREW], -1, message);
 									
 									mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "UPDATE player SET crew = NULL, crew_rank = 0 WHERE id = %d;", PI[playerid][pi_ID]);
@@ -11133,7 +11133,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				}
 				else {
 					new message[145];
-					format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s (%s) ha abandonado la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME]);
+					format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s (%s) ha abandonado la banda.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME]);
 					SendMessageToCrewMembers(PI[playerid][pi_CREW], -1, message);
 					
 					mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "UPDATE player SET crew = NULL, crew_rank = 0 WHERE id = %d;", PI[playerid][pi_ID]);
@@ -11248,7 +11248,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 													if (connected)
 													{
 														PI[pid][pi_CREW_RANK] = PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem];
-														format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s (%s) cambió tu rango al rango '%s'.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] ][crew_rank_NAME]);
+														format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s (%s) cambió tu rango al rango '%s'.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] ][crew_rank_NAME]);
 														SendClientMessage(pid, -1, message);
 													}
 													format(message, sizeof message, "Has modificado el rango de '%s' al rango '%s'.", name, CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] ][crew_rank_NAME]);
@@ -11267,7 +11267,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 									if (connected)
 									{
 										PI[pid][pi_CREW_RANK] = PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem];
-										format(message, sizeof message, "{%06x}[Banda] {FFFFFF}%s (%s) cambió tu rango al rango '%s'.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] ][crew_rank_NAME]);
+										format(message, sizeof message, "{%06x}[Banda] {f0f0f0}%s (%s) cambió tu rango al rango '%s'.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PI[playerid][pi_CREW_RANK] ][crew_rank_NAME], CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] ][crew_rank_NAME]);
 										SendClientMessage(pid, -1, message);
 									}
 									format(message, sizeof message, "Has modificado el rango de '%s' al rango '%s'.", name, CREW_RANK_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][ PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] ][crew_rank_NAME]);
@@ -11305,7 +11305,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				CallLocalFunction("OnCrewLeftTerritory", "iiii", PI[playerid][pi_CREW], PLAYER_TEMP[playerid][pt_CREW_INDEX], TERRITORIES[ PLAYER_TEMP[playerid][pt_PLAYER_TERRITORY_PRO] ][territory_ID], PLAYER_TEMP[playerid][pt_PLAYER_TERRITORY_PRO]);
 
 				new message[145];
-				format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {FFFFFF}La banda '%s' ha abandonado un territorio en %s.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_NAME], TERRITORIES[ PLAYER_TEMP[playerid][pt_PLAYER_TERRITORY_PRO] ][territory_NAME]);
+				format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {f0f0f0}La banda '%s' ha abandonado un territorio en %s.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_NAME], TERRITORIES[ PLAYER_TEMP[playerid][pt_PLAYER_TERRITORY_PRO] ][territory_NAME]);
 				foreach (new i : Player) {
 					if (IsPlayerConnected(i)) {
 						if (PI[i][pi_CREW]) {
@@ -11373,8 +11373,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 						if (cache_get_row_count(rows)) {
 							if (rows) {
 								cache_get_value_index(0, 0, PI[playerid][pi_VIP_EXPIRE_DATE]);
-								SendClientMessageEx(playerid, -1, "{"#PRIMARY_COLOR"}¡Felicidades! {FFFFFF}Has renovado tu VIP (%d) por 30 días, fecha de caducidad: %s.", PI[playerid][pi_VIP], PI[playerid][pi_VIP_EXPIRE_DATE]);
-								SendClientMessage(playerid, -1, "Puedes utilizar {"#PRIMARY_COLOR"}/vip {FFFFFF}para ver el tiempo restante o renovar.");
+								SendClientMessageEx(playerid, -1, "{"#PRIMARY_COLOR"}¡Felicidades! {f0f0f0}Has renovado tu VIP (%d) por 30 días, fecha de caducidad: %s.", PI[playerid][pi_VIP], PI[playerid][pi_VIP_EXPIRE_DATE]);
+								SendClientMessage(playerid, -1, "Puedes utilizar {"#PRIMARY_COLOR"}/vip {f0f0f0}para ver el tiempo restante o renovar.");
 							}
 						}
 					}
@@ -11977,8 +11977,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 										sizeof label_str, 
 										"\
 											Propiedad {"#PRIMARY_COLOR"}#%d\n\n\
-											{FFFFFF}Propietario: {"#PRIMARY_COLOR"}%s\n\
-											{FFFFFF}Presiona {"#PRIMARY_COLOR"}Y {FFFFFF}para entrar.\
+											{f0f0f0}Propietario: {"#PRIMARY_COLOR"}%s\n\
+											{f0f0f0}Presiona {"#PRIMARY_COLOR"}Y {f0f0f0}para entrar.\
 										", PROPERTY_INFO[i][property_ID], PI[playerid][pi_NAME]
 									);
 									UpdateDynamic3DTextLabelText(PROPERTY_INFO[i][property_EXT_LABEL_ID], 0xFFFFFFFF, label_str);
@@ -14419,7 +14419,7 @@ LoadEnterExits() {
 	for(new i = 0; i != sizeof ENTER_EXIT; i ++) {
 		ENTER_EXIT[total_enterexits][ee_ID] = total_enterexits + 1;
 
-		format(label_str, sizeof label_str, "{"#SECONDARY_COLOR"}%s\n{"#PRIMARY_COLOR"}Acercate {FFFFFF}para entrar", ENTER_EXIT[total_enterexits][ee_NAME]);
+		format(label_str, sizeof label_str, "{"#SECONDARY_COLOR"}%s\n{"#PRIMARY_COLOR"}Acercate {f0f0f0}para entrar", ENTER_EXIT[total_enterexits][ee_NAME]);
 		ENTER_EXIT[total_enterexits][ee_EXT_LABEL_ID] = CreateDynamic3DTextLabel(label_str, 0xFFFFFFFF, ENTER_EXIT[total_enterexits][ee_EXT_X], ENTER_EXIT[total_enterexits][ee_EXT_Y], ENTER_EXIT[total_enterexits][ee_EXT_Z] + 0.80, 10.0, .testlos = true, .worldid = ENTER_EXIT[total_enterexits][ee_EXT_WORLD], .interiorid = ENTER_EXIT[total_enterexits][ee_EXT_INTERIOR]);
 		
 		if (ENTER_EXIT[total_enterexits][ee_INT_MAPICON] != -1) ENTER_EXIT[total_enterexits][ee_INT_MAPICON_ID] = CreateDynamicMapIcon(ENTER_EXIT[total_enterexits][ee_INT_X], ENTER_EXIT[total_enterexits][ee_INT_Y], ENTER_EXIT[total_enterexits][ee_INT_Z], ENTER_EXIT[total_enterexits][ee_INT_MAPICON], -1, ENTER_EXIT[total_enterexits][ee_INT_WORLD], ENTER_EXIT[total_enterexits][ee_INT_INTERIOR]);
@@ -14470,25 +14470,25 @@ CreatePropertyInfo(i, pid, pname[]) {
 		pickup_modelid = 0;
 		PROPERTY_INFO[i][property_SOLD] = true;
 		PROPERTY_INFO[i][property_OWNER_ID] = pid;
-		format(label_str, sizeof label_str, "Propiedad {"#PRIMARY_COLOR"}#%d\n\n{FFFFFF}Propietario: {"#PRIMARY_COLOR"}%s\n{FFFFFF}Presiona {"#PRIMARY_COLOR"}Y {FFFFFF}para entrar.", PROPERTY_INFO[i][property_ID], pname);
+		format(label_str, sizeof label_str, "Propiedad {"#PRIMARY_COLOR"}#%d\n\n{f0f0f0}Propietario: {"#PRIMARY_COLOR"}%s\n{f0f0f0}Presiona {"#PRIMARY_COLOR"}Y {f0f0f0}para entrar.", PROPERTY_INFO[i][property_ID], pname);
 	} else {
 		pickup_modelid = 1273;
 		PROPERTY_INFO[i][property_SOLD] = false;
 		PROPERTY_INFO[i][property_OWNER_ID] = 0;
 		format(PROPERTY_INFO[i][property_NAME], 24, "Propiedad %d", PROPERTY_INFO[i][property_ID]);
 		if (PROPERTY_INFO[i][property_VIP_LEVEL]) {
-			if (PROPERTY_INFO[i][property_EXTRA]) format(label_str, sizeof label_str, "{"#PRIMARY_COLOR"}Membresía VIP requerida\n\n{FFFFFF}Propiedad {"#PRIMARY_COLOR"}#%d {FFFFFF}está en venta\n\nInterior: {"#PRIMARY_COLOR"}%d\n{FFFFFF}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n{FFFFFF}Nivel necesario: {"#PRIMARY_COLOR"}%d\n{FFFFFF}Usa {"#PRIMARY_COLOR"}/ayuda {FFFFFF}para ver como adquirirla.", PROPERTY_INFO[i][property_ID], PROPERTY_INFO[i][property_ID_INTERIOR], PROPERTY_INFO[i][property_EXTRA], PROPERTY_INFO[i][property_LEVEL]);
-			else format(label_str, sizeof label_str, "{"#PRIMARY_COLOR"}Membresía VIP requerida\n\n{FFFFFF}Propiedad {"#PRIMARY_COLOR"}#%d {FFFFFF}está en venta\n\nInterior: {"#PRIMARY_COLOR"}%d\n{FFFFFF}Precio: {"#PRIMARY_COLOR"}%s$\n{FFFFFF}Nivel: {"#PRIMARY_COLOR"}%d\n{FFFFFF}Usa {"#PRIMARY_COLOR"}/ayuda {FFFFFF}para ver como adquirirla.", PROPERTY_INFO[i][property_ID], PROPERTY_INFO[i][property_ID_INTERIOR], number_format_thousand(PROPERTY_INFO[i][property_PRICE]), PROPERTY_INFO[i][property_LEVEL]);
+			if (PROPERTY_INFO[i][property_EXTRA]) format(label_str, sizeof label_str, "{"#PRIMARY_COLOR"}Membresía VIP requerida\n\n{f0f0f0}Propiedad {"#PRIMARY_COLOR"}#%d {f0f0f0}está en venta\n\nInterior: {"#PRIMARY_COLOR"}%d\n{f0f0f0}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n{f0f0f0}Nivel necesario: {"#PRIMARY_COLOR"}%d\n{f0f0f0}Usa {"#PRIMARY_COLOR"}/ayuda {f0f0f0}para ver como adquirirla.", PROPERTY_INFO[i][property_ID], PROPERTY_INFO[i][property_ID_INTERIOR], PROPERTY_INFO[i][property_EXTRA], PROPERTY_INFO[i][property_LEVEL]);
+			else format(label_str, sizeof label_str, "{"#PRIMARY_COLOR"}Membresía VIP requerida\n\n{f0f0f0}Propiedad {"#PRIMARY_COLOR"}#%d {f0f0f0}está en venta\n\nInterior: {"#PRIMARY_COLOR"}%d\n{f0f0f0}Precio: {"#PRIMARY_COLOR"}%s$\n{f0f0f0}Nivel: {"#PRIMARY_COLOR"}%d\n{f0f0f0}Usa {"#PRIMARY_COLOR"}/ayuda {f0f0f0}para ver como adquirirla.", PROPERTY_INFO[i][property_ID], PROPERTY_INFO[i][property_ID_INTERIOR], number_format_thousand(PROPERTY_INFO[i][property_PRICE]), PROPERTY_INFO[i][property_LEVEL]);
 		} else {
-			if (PROPERTY_INFO[i][property_EXTRA]) format(label_str, sizeof label_str, "{FFFFFF}Propiedad {"#PRIMARY_COLOR"}#%d {FFFFFF}está en venta\n\nInterior: {"#PRIMARY_COLOR"}%d\n{FFFFFF}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n{FFFFFF}Nivel necesario: {"#PRIMARY_COLOR"}%d\n{FFFFFF}Usa {"#PRIMARY_COLOR"}/ayuda {FFFFFF}para ver como adquirirla.", PROPERTY_INFO[i][property_ID], PROPERTY_INFO[i][property_ID_INTERIOR], PROPERTY_INFO[i][property_EXTRA], PROPERTY_INFO[i][property_LEVEL]);
-			else format(label_str, sizeof label_str, "{FFFFFF}Propiedad {"#PRIMARY_COLOR"}#%d {FFFFFF}está en venta\n\nInterior: {"#PRIMARY_COLOR"}%d\n{FFFFFF}Precio: {"#PRIMARY_COLOR"}%s$\n{FFFFFF}Nivel: {"#PRIMARY_COLOR"}%d\n{FFFFFF}Usa {"#PRIMARY_COLOR"}/ayuda {FFFFFF}para ver como adquirirla.", PROPERTY_INFO[i][property_ID], PROPERTY_INFO[i][property_ID_INTERIOR], number_format_thousand(PROPERTY_INFO[i][property_PRICE]), PROPERTY_INFO[i][property_LEVEL]);
+			if (PROPERTY_INFO[i][property_EXTRA]) format(label_str, sizeof label_str, "{f0f0f0}Propiedad {"#PRIMARY_COLOR"}#%d {f0f0f0}está en venta\n\nInterior: {"#PRIMARY_COLOR"}%d\n{f0f0f0}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n{f0f0f0}Nivel necesario: {"#PRIMARY_COLOR"}%d\n{f0f0f0}Usa {"#PRIMARY_COLOR"}/ayuda {f0f0f0}para ver como adquirirla.", PROPERTY_INFO[i][property_ID], PROPERTY_INFO[i][property_ID_INTERIOR], PROPERTY_INFO[i][property_EXTRA], PROPERTY_INFO[i][property_LEVEL]);
+			else format(label_str, sizeof label_str, "{f0f0f0}Propiedad {"#PRIMARY_COLOR"}#%d {f0f0f0}está en venta\n\nInterior: {"#PRIMARY_COLOR"}%d\n{f0f0f0}Precio: {"#PRIMARY_COLOR"}%s$\n{f0f0f0}Nivel: {"#PRIMARY_COLOR"}%d\n{f0f0f0}Usa {"#PRIMARY_COLOR"}/ayuda {f0f0f0}para ver como adquirirla.", PROPERTY_INFO[i][property_ID], PROPERTY_INFO[i][property_ID_INTERIOR], number_format_thousand(PROPERTY_INFO[i][property_PRICE]), PROPERTY_INFO[i][property_LEVEL]);
 		}
 	}
 	
 	PROPERTY_INFO[i][property_EXT_LABEL_ID] = CreateDynamic3DTextLabel(label_str, 0xFFFFFFFF, PROPERTY_INFO[i][property_EXT_X], PROPERTY_INFO[i][property_EXT_Y], PROPERTY_INFO[i][property_EXT_Z] + 0.25, 5.0, .testlos = true, .worldid = 0, .interiorid = PROPERTY_INFO[i][property_EXT_INTERIOR]);
 
 	new Float:z_pos = PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_Z];
-	PROPERTY_INFO[i][property_INT_LABEL_ID] = CreateDynamic3DTextLabel("Presiona {"#PRIMARY_COLOR"}Y {FFFFFF}para salir\n\nEscribe {"#PRIMARY_COLOR"}/casa {FFFFFF}para más opciones", 0xFFFFFFFF, PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_X], PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_Y], z_pos + 0.25, 3.0, .testlos = true, .worldid = PROPERTY_INFO[i][property_ID], .interiorid = PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_INTERIOR]);
+	PROPERTY_INFO[i][property_INT_LABEL_ID] = CreateDynamic3DTextLabel("Presiona {"#PRIMARY_COLOR"}Y {f0f0f0}para salir\n\nEscribe {"#PRIMARY_COLOR"}/casa {f0f0f0}para más opciones", 0xFFFFFFFF, PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_X], PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_Y], z_pos + 0.25, 3.0, .testlos = true, .worldid = PROPERTY_INFO[i][property_ID], .interiorid = PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_INTERIOR]);
 
 	PROPERTY_INFO[i][property_EXT_PICKUP_ID] = CreateDynamicPickup(pickup_modelid, 1, PROPERTY_INFO[i][property_EXT_X], PROPERTY_INFO[i][property_EXT_Y], PROPERTY_INFO[i][property_EXT_Z], 0, PROPERTY_INFO[i][property_EXT_INTERIOR]);
 	PROPERTY_INFO[i][property_INT_PICKUP_ID] = CreateDynamicPickup(0, 1, PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_X], PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_Y], z_pos, PROPERTY_INFO[i][property_ID], PROPERTY_INTERIORS[ PROPERTY_INFO[i][property_ID_INTERIOR] ][property_INT_INTERIOR]);
@@ -14948,7 +14948,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 									SetPlayerArmedWeapon(playerid, 0);
 									
 									new label_str[256];
-									format(label_str, sizeof label_str, "{f46530}Árbol (%d)\n\n{FFFFFF}Talando... {d1d1d1}(%.1f%%)", PLAYER_TEMP[playerid][pt_PLAYER_LUMBERJACK_TREE], 0.0);
+									format(label_str, sizeof label_str, "{f46530}Árbol (%d)\n\n{f0f0f0}Talando... {d1d1d1}(%.1f%%)", PLAYER_TEMP[playerid][pt_PLAYER_LUMBERJACK_TREE], 0.0);
 									UpdateDynamic3DTextLabelText(LUMBER_TREES[ PLAYER_TEMP[playerid][pt_PLAYER_LUMBERJACK_TREE] ][lumber_tree_LABEL], -1, label_str);
 									SetPlayerKeyPress(playerid, minrand(30, 50));
 								}
@@ -16084,8 +16084,8 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 			}
 		}
 
-		if(Vehicle_IsPlane(vehicleid)) SendPlayerClientMessage(playerid, "{"#SECONDARY_COLOR"}·{ffffff}Para ver las opciones de el vehiculo aereo, pulsa {"#PRIMARY_COLOR"}Y{ffffff}.");
-		else SendPlayerClientMessage(playerid, "{"#SECONDARY_COLOR"}·{ffffff}Para encender o apagar el vehiculo pulsa {"#PRIMARY_COLOR"}2{ffffff} y para las opciones pulsa {"#PRIMARY_COLOR"}Y{ffffff}.");
+		if(Vehicle_IsPlane(vehicleid)) SendPlayerClientMessage(playerid, "{"#SECONDARY_COLOR"}·{f0f0f0}Para ver las opciones de el vehiculo aereo, pulsa {"#PRIMARY_COLOR"}Y{f0f0f0}.");
+		else SendPlayerClientMessage(playerid, "{"#SECONDARY_COLOR"}·{f0f0f0}Para encender o apagar el vehiculo pulsa {"#PRIMARY_COLOR"}2{f0f0f0} y para las opciones pulsa {"#PRIMARY_COLOR"}Y{f0f0f0}.");
 		
 		SetPlayerArmedWeapon(playerid, 0);
 		PLAYER_AC_INFO[playerid][CHEAT_VEHICLE_HEALTH][p_ac_info_IMMUNITY] = gettime() + 3;
@@ -17216,7 +17216,7 @@ SetClampVehicleLabel(vehicleid) {
 
 		if (PLAYER_VEHICLES[vehicleid][player_vehicle_CLAMP] > 0) {
 			new string[256];
-			format(string, sizeof string, "Cepo\nUsa {"#PRIMARY_COLOR"}/pagar {FFFFFF}para pagar la multa por %s$", number_format_thousand(PLAYER_VEHICLES[vehicleid][player_vehicle_CLAMP]));
+			format(string, sizeof string, "Cepo\nUsa {"#PRIMARY_COLOR"}/pagar {f0f0f0}para pagar la multa por %s$", number_format_thousand(PLAYER_VEHICLES[vehicleid][player_vehicle_CLAMP]));
 
 			new Float:wX, Float:wY, Float:wZ;
 			GetVehicleModelInfo(GLOBAL_VEHICLES[vehicleid][gb_vehicle_MODELID], VEHICLE_MODEL_INFO_WHEELSREAR, wX, wY, wZ);
@@ -17306,7 +17306,7 @@ public OnVehicleDeath(vehicleid, killerid) {
 					RegisterPhoneMessage(0, PI[playerid][pi_ID], message);
 					if (PI[playerid][pi_PHONE_STATE] == PHONE_STATE_ON) {
 						if ((PLAYER_TEMP[playerid][pt_GAME_STATE] == GAME_STATE_NORMAL)) {
-							SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{FFFFFF}Remitente: {"#SECONDARY_COLOR"}%s {FFFFFF}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 38350), message);
+							SendPlayerClientMessageEx(playerid, 120, "{"#SECONDARY_COLOR"}{"#PRIMARY_COLOR"}[Nuevo mensaje] ·{f0f0f0}Remitente: {"#SECONDARY_COLOR"}%s {f0f0f0}| Mensaje: {"#SECONDARY_COLOR"}%s", convertPhoneNumber(playerid, 38350), message);
 						}
 					}
 				}
@@ -18348,7 +18348,7 @@ CancelLumberjackWork(playerid) {
 		LUMBER_TREES[ PLAYER_TEMP[playerid][pt_PLAYER_LUMBERJACK_TREE] ][lumber_tree_STATE] = LUMBER_TREE_STATE_NORMAL;
 		
 		new label_str[256];
-		format(label_str, sizeof label_str, "{f46530}Árbol (%d)\n\n{FFFFFF}Pulsa {f9d834}N {FFFFFF}para talar el árbol.", PLAYER_TEMP[playerid][pt_PLAYER_LUMBERJACK_TREE]);
+		format(label_str, sizeof label_str, "{f46530}Árbol (%d)\n\n{f0f0f0}Pulsa {f9d834}N {f0f0f0}para talar el árbol.", PLAYER_TEMP[playerid][pt_PLAYER_LUMBERJACK_TREE]);
 		UpdateDynamic3DTextLabelText(LUMBER_TREES[ PLAYER_TEMP[playerid][pt_PLAYER_LUMBERJACK_TREE] ][lumber_tree_LABEL], -1, label_str);
 	}
 	
@@ -18439,7 +18439,7 @@ public GrowTreeUp(tree) {
 	LUMBER_TREES[ tree ][lumber_tree_STATE] = LUMBER_TREE_STATE_NORMAL;
 
 	new label_str[256];
-	format(label_str, sizeof label_str, "{f46530}Árbol (%d)\n\n{FFFFFF}Pulsa {f9d834}N {FFFFFF}para talar el árbol.", tree);
+	format(label_str, sizeof label_str, "{f46530}Árbol (%d)\n\n{f0f0f0}Pulsa {f9d834}N {f0f0f0}para talar el árbol.", tree);
 	UpdateDynamic3DTextLabelText(LUMBER_TREES[ tree ][lumber_tree_LABEL], -1, label_str);
 	return 1;
 }
@@ -18625,7 +18625,7 @@ public OnPlayerDamage(&playerid, &Float:amount, &issuerid, &WEAPON:weapon, &body
 				if (!PI[issuerid][pi_WANTED_LEVEL]) SetPlayerWantedLevelEx(issuerid, 1);
 
 				new message[145];
-				format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {FFFFFF}%s está causando disturbios en {"#PRIMARY_COLOR"}%s, %s.", PLAYER_TEMP[issuerid][pt_NAME], city, zone);
+				format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {f0f0f0}%s está causando disturbios en {"#PRIMARY_COLOR"}%s, %s.", PLAYER_TEMP[issuerid][pt_NAME], city, zone);
 				SendPoliceRadioMessage(-1, -1, message);
 				
 				PLAYER_TEMP[issuerid][pt_LAST_SAFE_ZONE_WARNING] = gettime();
@@ -18708,16 +18708,16 @@ OnPlayerCheatDetected(playerid, cheat, Float:extra = 0.0) {
 		format(bad_history, sizeof bad_history, "ac, cheat (%02d)", cheat);
 		AddPlayerBadHistory(PI[playerid][pi_ID], -1, TYPE_KICK, bad_history);
 		
-		if (extra != 0.0) format(ac_message, sizeof ac_message, "{"#RED_COLOR"}[AC-KICK] {FFFFFF}%s (%d): %s (cd: %02d, ps: %02d, ping: %d, dec: %d:%d, extra: %.1f)", PI[playerid][pi_NAME], playerid, ac_Info[cheat][ac_Name], cheat, player_state, GetPlayerPing(playerid), PLAYER_AC_INFO[playerid][cheat][p_ac_info_DETECTIONS], ac_Info[cheat][ac_Interval], extra);
-		else format(ac_message, sizeof ac_message, "{"#RED_COLOR"}[AC-KICK] {FFFFFF}%s (%d): %s (cd: %02d, ps: %02d, ping: %d, dec: %d:%d)", PI[playerid][pi_NAME], playerid, ac_Info[cheat][ac_Name], cheat, player_state, GetPlayerPing(playerid), PLAYER_AC_INFO[playerid][cheat][p_ac_info_DETECTIONS], ac_Info[cheat][ac_Interval]);
+		if (extra != 0.0) format(ac_message, sizeof ac_message, "{"#RED_COLOR"}[AC-KICK] {f0f0f0}%s (%d): %s (cd: %02d, ps: %02d, ping: %d, dec: %d:%d, extra: %.1f)", PI[playerid][pi_NAME], playerid, ac_Info[cheat][ac_Name], cheat, player_state, GetPlayerPing(playerid), PLAYER_AC_INFO[playerid][cheat][p_ac_info_DETECTIONS], ac_Info[cheat][ac_Interval], extra);
+		else format(ac_message, sizeof ac_message, "{"#RED_COLOR"}[AC-KICK] {f0f0f0}%s (%d): %s (cd: %02d, ps: %02d, ping: %d, dec: %d:%d)", PI[playerid][pi_NAME], playerid, ac_Info[cheat][ac_Name], cheat, player_state, GetPlayerPing(playerid), PLAYER_AC_INFO[playerid][cheat][p_ac_info_DETECTIONS], ac_Info[cheat][ac_Interval]);
 		
 		KickEx(playerid);
 		
 		if (cheat == CHEAT_PLAYER_HEALTH) PI[playerid][pi_HEALTH] = 20.0;
 		if (cheat == CHEAT_PLAYER_ARMOUR) PI[playerid][pi_ARMOUR] = 0.0;
 	} else {
-		if (extra != 0.0) format(ac_message, sizeof ac_message, "{"#RED_COLOR"}[AC-AVISO] {FFFFFF}%s (%d): %s (cd: %02d, ps: %02d, ping: %d, dec: %d:%d, extra: %.1f)", PI[playerid][pi_NAME], playerid, ac_Info[cheat][ac_Name], cheat, player_state, GetPlayerPing(playerid), PLAYER_AC_INFO[playerid][cheat][p_ac_info_DETECTIONS], ac_Info[cheat][ac_Interval], extra);
-		else format(ac_message, sizeof ac_message, "{"#RED_COLOR"}[AC-AVISO] {FFFFFF}%s (%d): %s (cd: %02d, ps: %02d, ping: %d, dec: %d:%d)", PI[playerid][pi_NAME], playerid, ac_Info[cheat][ac_Name], cheat, player_state, GetPlayerPing(playerid), PLAYER_AC_INFO[playerid][cheat][p_ac_info_DETECTIONS], ac_Info[cheat][ac_Interval]);
+		if (extra != 0.0) format(ac_message, sizeof ac_message, "{"#RED_COLOR"}[AC-AVISO] {f0f0f0}%s (%d): %s (cd: %02d, ps: %02d, ping: %d, dec: %d:%d, extra: %.1f)", PI[playerid][pi_NAME], playerid, ac_Info[cheat][ac_Name], cheat, player_state, GetPlayerPing(playerid), PLAYER_AC_INFO[playerid][cheat][p_ac_info_DETECTIONS], ac_Info[cheat][ac_Interval], extra);
+		else format(ac_message, sizeof ac_message, "{"#RED_COLOR"}[AC-AVISO] {f0f0f0}%s (%d): %s (cd: %02d, ps: %02d, ping: %d, dec: %d:%d)", PI[playerid][pi_NAME], playerid, ac_Info[cheat][ac_Name], cheat, player_state, GetPlayerPing(playerid), PLAYER_AC_INFO[playerid][cheat][p_ac_info_DETECTIONS], ac_Info[cheat][ac_Interval]);
 	}
 	
 	SendMessageToAdminsAC(-1, ac_message);
@@ -19189,7 +19189,7 @@ CMD:nivel(playerid, params[]) {
 	if (params[1] == 0) {
 		format(action, sizeof action, "le quita el nivel de búsqueda a %s.", PLAYER_TEMP[params[0]][pt_NAME]);
 
-		format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {FFFFFF}%s reporta: {"#PRIMARY_COLOR"}%s {FFFFFF}ya no es sospechoso.", PLAYER_TEMP[playerid][pt_NAME], PLAYER_TEMP[params[0]][pt_NAME]);
+		format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {f0f0f0}%s reporta: {"#PRIMARY_COLOR"}%s {f0f0f0}ya no es sospechoso.", PLAYER_TEMP[playerid][pt_NAME], PLAYER_TEMP[params[0]][pt_NAME]);
 		SendPlayerClientMessage(playerid, "Le has removido el nivel de búsqueda a %s.", PLAYER_TEMP[params[0]][pt_NAME]);
 	} else {
 		new 
@@ -19201,7 +19201,7 @@ CMD:nivel(playerid, params[]) {
 		format(action, sizeof action, "le pone nivel de búsqueda a %s.", PLAYER_TEMP[params[0]][pt_NAME]);
 		
 		SendPlayerClientMessage(playerid, "Has asignado nivel de búsqueda %d a %s.", params[1], PLAYER_TEMP[params[0]][pt_NAME]);
-		format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {FFFFFF}%s reporta: {"#PRIMARY_COLOR"}%s (%d*) {FFFFFF}visto por última vez en {"#PRIMARY_COLOR"}%s, %s.", PLAYER_TEMP[playerid][pt_NAME], PLAYER_TEMP[params[0]][pt_NAME], params[1], city, zone);
+		format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {f0f0f0}%s reporta: {"#PRIMARY_COLOR"}%s (%d*) {f0f0f0}visto por última vez en {"#PRIMARY_COLOR"}%s, %s.", PLAYER_TEMP[playerid][pt_NAME], PLAYER_TEMP[params[0]][pt_NAME], params[1], city, zone);
 	}
 
 	Auto_SendPlayerAction(playerid, action);
@@ -19334,7 +19334,7 @@ CMD:ref(playerid, params[]) {
 	GetPlayerZones(playerid, city, zone);
 		
 	new message[145];
-	format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {FFFFFF}%s %s necesita refuerzos en {"#PRIMARY_COLOR"}%s, %s.", POLICE_RANKS[ PLAYER_WORKS[playerid][WORK_POLICE][pwork_LEVEL] ], PLAYER_TEMP[playerid][pt_NAME], city, zone);
+	format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {f0f0f0}%s %s necesita refuerzos en {"#PRIMARY_COLOR"}%s, %s.", POLICE_RANKS[ PLAYER_WORKS[playerid][WORK_POLICE][pwork_LEVEL] ], PLAYER_TEMP[playerid][pt_NAME], city, zone);
 	SendPoliceRadioMessage(-1, -1, message);
 	return 1;
 }
@@ -19620,7 +19620,7 @@ CMD:m(playerid, params[]) {
 	if (isnull(params)) return SendPlayerClientMessage(playerid, "Error: /m [Mensaje]");
 
 	new str_text[190];
-	format(str_text, 190, "(Megáfono) %s: {FFFFFF}%s", PLAYER_TEMP[playerid][pt_NAME], params);
+	format(str_text, 190, "(Megáfono) %s: {f0f0f0}%s", PLAYER_TEMP[playerid][pt_NAME], params);
 	ProxDetector(playerid, 40.0, str_text, 0xFF9B6AFF, 0xFF9B6AFF, 0xFF9B6AFF, 0xFF9B6AFF, 0xFF9B6AFF, 85);
 	return 1;
 }
@@ -19939,7 +19939,7 @@ Crew_RequestHelp(playerid, crew_id) {
 				}
 			}
 		}
-		format(crew_message, sizeof crew_message, "{%06x}[Banda] {FFFFFF}%s está pidiendo refuerzos en %s, %s.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], city, zone);
+		format(crew_message, sizeof crew_message, "{%06x}[Banda] {f0f0f0}%s está pidiendo refuerzos en %s, %s.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME], city, zone);
 		SendMessageToCrewMembers(crew_id, -1, crew_message);
 
 		PLAYER_TEMP[playerid][pt_CREW_HELP] = true;
@@ -19954,7 +19954,7 @@ Crew_RequestHelp(playerid, crew_id) {
 				}
 			}
 		}
-		format(crew_message, sizeof crew_message, "{%06x}[Banda] {FFFFFF}%s ya no necesita refuerzos.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME]);
+		format(crew_message, sizeof crew_message, "{%06x}[Banda] {f0f0f0}%s ya no necesita refuerzos.", CREW_INFO[ PLAYER_TEMP[playerid][pt_CREW_INDEX] ][crew_COLOR] >>> 8, PLAYER_TEMP[playerid][pt_NAME]);
 		SendMessageToCrewMembers(crew_id, -1, crew_message);
 
 		PLAYER_TEMP[playerid][pt_CREW_HELP] = false;
@@ -20028,7 +20028,7 @@ CMD:reportar(playerid, params[]) {
 	
 	SendPlayerClientMessage(playerid, "Tu reporte ha sido enviado a los administradores en línea.");
 	
-	new str[145]; format(str, 145, "{"#RED_COLOR"}[REPORTE] {FFFFFF}%s (%d) > %s (%d): %s", PI[playerid][pi_NAME], playerid, PI[params[0]][pi_NAME], params[0], reason);
+	new str[145]; format(str, 145, "{"#RED_COLOR"}[REPORTE] {f0f0f0}%s (%d) > %s (%d): %s", PI[playerid][pi_NAME], playerid, PI[params[0]][pi_NAME], params[0], reason);
 	SendMessageToAdmins(-1, str);
 	return 1;
 }
@@ -20138,7 +20138,7 @@ CMD:aka(playerid, params[]) {
 				new id, name[24];
 				cache_get_value_name_int(i, "id", id);
 				cache_get_value_name(i, "name", name);
-				SendClientMessageEx(playerid, -1, "Nombre: {f4f442}'%s' {FFFFFF}DB-ID: '%d'", name, id);
+				SendClientMessageEx(playerid, -1, "Nombre: {f4f442}'%s' {f0f0f0}DB-ID: '%d'", name, id);
 			}
 			SendClientMessageEx(playerid, -1, "Se encontraron %d coincidencias, el límite es 20.", rows);
 		}
@@ -20165,7 +20165,7 @@ CMD:adv(playerid, params[]) {
 	SendPlayerClientMessage(playerid, "Jugador (nick: '%s' dbid: '%d', pid: '%d') advertido.", PI[to_player][pi_NAME], PI[to_player][pi_ID], to_player);
 	
 
-	new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {FFFFFF}%s (%d) advirtió a %s (%d): %s", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
+	new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {f0f0f0}%s (%d) advirtió a %s (%d): %s", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
 	SendAdminAd(str);
 	return 1;
 }
@@ -20191,7 +20191,7 @@ CMD:kick(playerid, params[]) {
 	SendPlayerClientMessage(playerid, "Jugador (nick: '%s' dbid: '%d', pid: '%d') expulsado.", PI[to_player][pi_NAME], PI[to_player][pi_ID], to_player);
 	
 	
-	new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {FFFFFF}%s (%d) expulsó a %s (%d): %s", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
+	new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {f0f0f0}%s (%d) expulsó a %s (%d): %s", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
 	SendAdminAd(str);
 	return 1;
 }
@@ -20414,7 +20414,7 @@ CMD:unban(playerid, params[]) {
 				
 				SendPlayerClientMessage(playerid, "'%s' ha sido desbaneado.", name);
 				
-				new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {FFFFFF}%s (%d) ha desbaneado a '%s'.", PI[playerid][pi_NAME], playerid, name);
+				new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {f0f0f0}%s (%d) ha desbaneado a '%s'.", PI[playerid][pi_NAME], playerid, name);
 				SendMessageToAdmins(-1, str);
 
 				inline OnCountQueryLoad() {
@@ -20467,7 +20467,7 @@ CMD:jail(playerid, params[]) {
     SendClientMessageEx(to_player, -1, "{d1d1d1}Te quedan %s minutos de sanción, razón: %s.", TimeConvert(time * 60), reason);
     SetPlayerSpecialAction(to_player, SPECIAL_ACTION_NONE);
 
-    new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {FFFFFF}%s (%d) sancionó a %s (%d): %s.", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
+    new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {f0f0f0}%s (%d) sancionó a %s (%d): %s.", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
     SendAdminAd(str);
     return 1;
 }
@@ -20510,7 +20510,7 @@ CMD:banip(playerid, params[]) {
 	
 	SendPlayerClientMessage(playerid, "Jugador (nick: '%s' dbid: '%d', id: '%d') baneado de IP.", PI[to_player][pi_NAME], PI[to_player][pi_ID], to_player);
 	
-	new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {FFFFFF}%s (%d) baneó (IP) a %s (%d): %s.", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
+	new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {f0f0f0}%s (%d) baneó (IP) a %s (%d): %s.", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
 	SendAdminAd(str);
 	return 1;
 }
@@ -20542,7 +20542,7 @@ CMD:ban(playerid, params[]) {
 	SendPlayerClientMessage(playerid, "Jugador (nick: '%s' dbid: '%d', pid: '%d') baneado.", PI[to_player][pi_NAME], PI[to_player][pi_ID], to_player);
 	
 	
-	new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {FFFFFF}%s (%d) baneó a %s (%d): %s", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
+	new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {f0f0f0}%s (%d) baneó a %s (%d): %s", PI[playerid][pi_NAME], playerid, PI[to_player][pi_NAME], to_player, reason);
 	SendAdminAd(str);
 	return 1;
 }
@@ -20596,7 +20596,7 @@ CMD:dban(playerid, params[]) {
 									AddPlayerBan(id, name, "0", PI[playerid][pi_ID], TYPE_BAN, reason);
 									SendPlayerClientMessage(playerid, "Jugador (nick: '%s' db_id: '%d') baneado.", name, id);
 									
-									new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {FFFFFF}%s (%d) baneó a %s (offline, db_id: %d): %s", PI[playerid][pi_NAME], playerid, name, id, reason);
+									new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {f0f0f0}%s (%d) baneó a %s (offline, db_id: %d): %s", PI[playerid][pi_NAME], playerid, name, id, reason);
 									SendMessageToAdmins(-1, str);
 								}
 							}
@@ -20643,7 +20643,7 @@ CMD:dbanip(playerid, params[]) {
 									AddPlayerBan(id, name, ip, PI[playerid][pi_ID], TYPE_IP_BAN, reason);
 									SendPlayerClientMessage(playerid, "Jugador (nick: '%s' dbid: '%d') baneado de IP.", name, id);
 					
-									new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {FFFFFF}%s (%d) baneó (IP) a %s (offline, db_id: %d): %s", PI[playerid][pi_NAME], playerid, name, id, reason);
+									new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {f0f0f0}%s (%d) baneó (IP) a %s (offline, db_id: %d): %s", PI[playerid][pi_NAME], playerid, name, id, reason);
 									SendMessageToAdmins(-1, str);
 								}
 							}
@@ -20697,7 +20697,7 @@ CMD:pm(playerid, params[]) {
 	PLAYER_TEMP[to_player][pt_ADMIN_PM_PID] = playerid;
 	PLAYER_TEMP[to_player][pt_ADMIN_PM_AID] = PI[playerid][pi_ID];
 	PLAYER_TEMP[to_player][pt_ADMIN_PM_TIME] = gettime();
-	SendClientMessageEx(to_player, -1, "{d1d1d1}Mensaje de un administrador (/r para responder): {FFFFFF}%s", message);
+	SendClientMessageEx(to_player, -1, "{d1d1d1}Mensaje de un administrador (/r para responder): {f0f0f0}%s", message);
 	
 	SendCmdLogToAdmins(playerid, "pm", params);
 	return 1;
@@ -21012,8 +21012,8 @@ CMD:setname(playerid, params[]) {
 						sizeof label_str, 
 						"\
 							Propiedad {"#PRIMARY_COLOR"}#%d\n\n\
-							{FFFFFF}Propietario: {"#PRIMARY_COLOR"}%s\n\
-							{FFFFFF}Presiona {"#PRIMARY_COLOR"}Y {FFFFFF}para entrar.\
+							{f0f0f0}Propietario: {"#PRIMARY_COLOR"}%s\n\
+							{f0f0f0}Presiona {"#PRIMARY_COLOR"}Y {f0f0f0}para entrar.\
 						", PROPERTY_INFO[i][property_ID], PI[to_player][pi_NAME]
 					);
 					UpdateDynamic3DTextLabelText(PROPERTY_INFO[i][property_EXT_LABEL_ID], 0xFFFFFFFF, label_str);
@@ -21164,7 +21164,7 @@ CMD:delete(playerid, params[]) {
 						SendPlayerClientMessage(playerid, "CUENTA (Nombre '%s' DB-ID: '%d') ha sido eliminada.", name, id);
 						if (ex_properties > 0) SendPlayerClientMessage(playerid, "Se han expropiado '%d' propiedades del jugador eliminado.", ex_properties);
 						
-						new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {FFFFFF}%s (%d) ha eliminado el usuario '%s'", PI[playerid][pi_NAME], playerid, name);
+						new str[145]; format(str, 145, "{"#RED_COLOR"}[ADMIN] {f0f0f0}%s (%d) ha eliminado el usuario '%s'", PI[playerid][pi_NAME], playerid, name);
 						SendMessageToAdmins(-1, str);
 					}
 				}
@@ -21307,7 +21307,7 @@ CMD:kill(playerid, params[]) {
 		if (gettime() > PLAYER_TEMP[playerid][pt_DEATH_TIME] + 30) {
 			Dialog_Show(playerid, Dialog:DeathConfirmation);
 		} else {
-			SendPlayerClientMessage(playerid, "{"#WARNING_COLOR"}·{ffffff}Espera un poco antes de volver a morir.");
+			SendPlayerClientMessage(playerid, "{"#WARNING_COLOR"}·{f0f0f0}Espera un poco antes de volver a morir.");
 		}
 	}
 
@@ -22020,13 +22020,13 @@ StartTerritoryAttack(crew_index, territory_index, time) {
 	
 	if (TERRITORIES[territory_index][territory_OCCUPIED]) {
 		CREW_INFO[ TERRITORIES[territory_index][territory_CREW_INDEX] ][crew_FIGHTING] = true;
-		format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {FFFFFF}La banda '%s' está atacando un territorio de la banda '%s' en %s.", CREW_INFO[crew_index][crew_NAME], CREW_INFO[ TERRITORIES[territory_index][territory_CREW_INDEX] ][crew_NAME], TERRITORIES[territory_index][territory_NAME]);
+		format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {f0f0f0}La banda '%s' está atacando un territorio de la banda '%s' en %s.", CREW_INFO[crew_index][crew_NAME], CREW_INFO[ TERRITORIES[territory_index][territory_CREW_INDEX] ][crew_NAME], TERRITORIES[territory_index][territory_NAME]);
 	} else {
-		format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {FFFFFF}La banda '%s' está atacando un territorio en %s.", CREW_INFO[crew_index][crew_NAME], TERRITORIES[territory_index][territory_NAME]);
+		format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {f0f0f0}La banda '%s' está atacando un territorio en %s.", CREW_INFO[crew_index][crew_NAME], TERRITORIES[territory_index][territory_NAME]);
 	}
 
 	new message_police[145];
-	format(message_police, sizeof message_police, "{"#PRIMARY_COLOR"}[Central policía] {FFFFFF}La banda '%s' está atacando un territorio en %s.", CREW_INFO[crew_index][crew_NAME], TERRITORIES[territory_index][territory_NAME]);
+	format(message_police, sizeof message_police, "{"#PRIMARY_COLOR"}[Central policía] {f0f0f0}La banda '%s' está atacando un territorio en %s.", CREW_INFO[crew_index][crew_NAME], TERRITORIES[territory_index][territory_NAME]);
 	
 	foreach (new i : Player) {
 		if (IsPlayerConnected(i)) {
@@ -22066,7 +22066,7 @@ public UpdateTerritoryAttack(territory_index) {
 		TERRITORIES[territory_index][territory_COLOR] = RGBAToHex(r, g, b, 135);
 		
 		new message[145];
-		format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {FFFFFF}La banda '%s' ha conquistado un nuevo territorio.", CREW_INFO[ TERRITORIES[territory_index][territory_ATTACKER_CREW_INDEX] ][crew_NAME]);
+		format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {f0f0f0}La banda '%s' ha conquistado un nuevo territorio.", CREW_INFO[ TERRITORIES[territory_index][territory_ATTACKER_CREW_INDEX] ][crew_NAME]);
 		
 		mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "UPDATE territories SET id_crew = %d WHERE id = %d;", CREW_INFO[ TERRITORIES[territory_index][territory_ATTACKER_CREW_INDEX] ][crew_ID], TERRITORIES[territory_index][territory_ID]);
 		mysql_tquery(handle_db, QUERY_BUFFER);
@@ -22114,7 +22114,7 @@ public UpdateTerritoryAttack(territory_index) {
 	
 	new attackers_in_area = CountCrewPlayersInTerritory(TERRITORIES[territory_index][territory_ATTACKER_CREW_INDEX], territory_index);
 	if (attackers_in_area <= 0) {
-		format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {FFFFFF}La banda '%s' no ha podido conquistar el territorio que estaba atacando.", CREW_INFO[ TERRITORIES[territory_index][territory_ATTACKER_CREW_INDEX] ][crew_NAME]);
+		format(message, sizeof message, "{"#PRIMARY_COLOR"}[BANDAS] {f0f0f0}La banda '%s' no ha podido conquistar el territorio que estaba atacando.", CREW_INFO[ TERRITORIES[territory_index][territory_ATTACKER_CREW_INDEX] ][crew_NAME]);
 
 		CREW_INFO[ TERRITORIES[territory_index][territory_ATTACKER_CREW_INDEX] ][crew_LAST_ATTACK] = gettime();
 		CREW_INFO[ TERRITORIES[territory_index][territory_ATTACKER_CREW_INDEX] ][crew_FIGHTING] = false;
@@ -22730,7 +22730,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 1: // Argentina
 		{
-			text_flag		= "{1FBEF2}ggg\n{ffffff}ggg\n{1FBEF2}ggg";
+			text_flag		= "{1FBEF2}ggg\n{f0f0f0}ggg\n{1FBEF2}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22738,7 +22738,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 2: // Austria
 		{
-			text_flag		= "{d81e05}ggg\n{ffffff}ggg\n{d81e05}ggg";
+			text_flag		= "{d81e05}ggg\n{f0f0f0}ggg\n{d81e05}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22762,7 +22762,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 5: // Bulgaria
 		{
-			text_flag		= "{ffffff}ggg\n{00966e}ggg\n{d62612}ggg";
+			text_flag		= "{f0f0f0}ggg\n{00966e}ggg\n{d62612}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22770,7 +22770,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 6: // Chile
 		{
-			text_flag		= "{04019a}g{ffffff}gg\n{fe0002}ggg";
+			text_flag		= "{04019a}g{f0f0f0}gg\n{fe0002}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22786,7 +22786,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 8: // El Salvador
 		{
-			text_flag		= "{0f47af}ggg\n{ffffff}ggg\n{0f47af}ggg";
+			text_flag		= "{0f47af}ggg\n{f0f0f0}ggg\n{0f47af}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22802,7 +22802,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 10: // Estonia
 		{
-			text_flag		= "{3a75c4}ggg\n{000000}ggg\n{ffffff}ggg";
+			text_flag		= "{3a75c4}ggg\n{000000}ggg\n{f0f0f0}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22810,7 +22810,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 11: // Francia
 		{
-			text_flag		= "{00209f}g{ffffff}g{f42a41}g\n{00209f}g{ffffff}g{f42a41}g\n{00209f}g{ffffff}g{f42a41}g";
+			text_flag		= "{00209f}g{f0f0f0}g{f42a41}g\n{00209f}g{f0f0f0}g{f42a41}g\n{00209f}g{f0f0f0}g{f42a41}g";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22818,7 +22818,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 12: // Guatemala
 		{
-			text_flag		= "{4997d0}g{ffffff}g{4997d0}g\n{4997d0}g{ffffff}g{4997d0}g\n{4997d0}g{ffffff}g{4997d0}g";
+			text_flag		= "{4997d0}g{f0f0f0}g{4997d0}g\n{4997d0}g{f0f0f0}g{4997d0}g\n{4997d0}g{f0f0f0}g{4997d0}g";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22834,7 +22834,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 14: // Hungria
 		{
-			text_flag		= "{d2232c}ggg\n{ffffff}ggg\n{008d46}ggg";
+			text_flag		= "{d2232c}ggg\n{f0f0f0}ggg\n{008d46}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22842,7 +22842,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 15: // India
 		{
-			text_flag		= "{ff9933}ggg\n{ffffff}ggg\n{138808}ggg";
+			text_flag		= "{ff9933}ggg\n{f0f0f0}ggg\n{138808}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22850,7 +22850,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 16: // Indonesia
 		{
-			text_flag		= "{ce1126}ggg\n{ffffff}ggg";
+			text_flag		= "{ce1126}ggg\n{f0f0f0}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 60;
@@ -22858,7 +22858,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 17: // Irlanda
 		{
-			text_flag		= "{009e60}g{ffffff}g{f77f00}g\n{009e60}g{ffffff}g{f77f00}g\n{009e60}g{ffffff}g{f77f00}g";
+			text_flag		= "{009e60}g{f0f0f0}g{f77f00}g\n{009e60}g{f0f0f0}g{f77f00}g\n{009e60}g{f0f0f0}g{f77f00}g";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22866,7 +22866,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 18: // Italia
 		{
-			text_flag		= "{009246}g{ffffff}g{ce2b37}g\n{009246}g{ffffff}g{ce2b37}g\n{009246}g{ffffff}g{ce2b37}g";
+			text_flag		= "{009246}g{f0f0f0}g{ce2b37}g\n{009246}g{f0f0f0}g{ce2b37}g\n{009246}g{f0f0f0}g{ce2b37}g";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22882,7 +22882,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 20: // Luxemburgo
 		{
-			text_flag		= "{ef2b2d}ggg\n{ffffff}ggg\n{00a3dd}ggg";
+			text_flag		= "{ef2b2d}ggg\n{f0f0f0}ggg\n{00a3dd}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22890,7 +22890,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 21: // Madagascar
 		{
-			text_flag		= "{ffffff}g{d11f33}gg\n{ffffff}g{00a651}gg";
+			text_flag		= "{f0f0f0}g{d11f33}gg\n{f0f0f0}g{00a651}gg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 60;
@@ -22898,7 +22898,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 22: // Malta
 		{
-			text_flag		= "{ffffff}g{d11f33}g\n{ffffff}g{d11f33}g\n{ffffff}g{d11f33}g";
+			text_flag		= "{f0f0f0}g{d11f33}g\n{f0f0f0}g{d11f33}g\n{f0f0f0}g{d11f33}g";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 60;
@@ -22914,7 +22914,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 24: // México
 		{
-			text_flag		= "{006847}g{ffffff}g{ce1126}g\n{006847}g{ffffff}g{ce1126}g\n{006847}g{ffffff}g{ce1126}g";
+			text_flag		= "{006847}g{f0f0f0}g{ce1126}g\n{006847}g{f0f0f0}g{ce1126}g\n{006847}g{f0f0f0}g{ce1126}g";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22922,7 +22922,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 25: // Nigeria
 		{
-			text_flag		= "{008751}g{ffffff}g{008751}g\n{008751}g{ffffff}g{008751}g\n{008751}g{ffffff}g{008751}g";
+			text_flag		= "{008751}g{f0f0f0}g{008751}g\n{008751}g{f0f0f0}g{008751}g\n{008751}g{f0f0f0}g{008751}g";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22930,7 +22930,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 26: // Panamá
 		{
-			text_flag		= "{ffffff}g{d21034}g\n{0067c6}g{ffffff}g";
+			text_flag		= "{f0f0f0}g{d21034}g\n{0067c6}g{f0f0f0}g";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 60;
@@ -22938,7 +22938,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 27: // Paraguay
 		{
-			text_flag		= "{d52b1e}ggg\n{ffffff}ggg\n{0038a8}ggg";
+			text_flag		= "{d52b1e}ggg\n{f0f0f0}ggg\n{0038a8}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22946,7 +22946,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 28: // Perú
 		{
-			text_flag		= "{e30000}g{ffffff}g{e30000}g\n{e30000}g{ffffff}g{e30000}g\n{e30000}g{ffffff}g{e30000}g";
+			text_flag		= "{e30000}g{f0f0f0}g{e30000}g\n{e30000}g{f0f0f0}g{e30000}g\n{e30000}g{f0f0f0}g{e30000}g";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -22954,7 +22954,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 29: // Polonia
 		{
-			text_flag		= "{ffffff}ggg\n{dc143c}ggg";
+			text_flag		= "{f0f0f0}ggg\n{dc143c}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 60;
@@ -22970,7 +22970,7 @@ TextureCountryFlag(objectid, index, country) {
 		}
 		case 31: // Rusia
 		{
-			text_flag		= "{ffffff}ggg\n{054da2}ggg\n{e01f26}ggg";
+			text_flag		= "{f0f0f0}ggg\n{054da2}ggg\n{e01f26}ggg";
 			material_size	= 60;
 			font			= "Webdings";
 			font_size		= 55;
@@ -23292,8 +23292,8 @@ SetPlayerVip(playerid, vip_level, price_coin = 0, days = 30) {
 			if (cache_get_row_count(rows)) {
 				if (rows) {
 					cache_get_value_index(0, 0, PI[playerid][pi_VIP_EXPIRE_DATE]);
-					SendClientMessageEx(playerid, -1, "{"#PRIMARY_COLOR"}¡Felicidades! {FFFFFF}Has comprado VIP (%d) por %d días, fecha de caducidad: %s.", PI[playerid][pi_VIP], days, PI[playerid][pi_VIP_EXPIRE_DATE]);
-					SendClientMessage(playerid, -1, "Puedes utilizar {"#PRIMARY_COLOR"}/vip {FFFFFF}para ver el tiempo restante o renovar.");
+					SendClientMessageEx(playerid, -1, "{"#PRIMARY_COLOR"}¡Felicidades! {f0f0f0}Has comprado VIP (%d) por %d días, fecha de caducidad: %s.", PI[playerid][pi_VIP], days, PI[playerid][pi_VIP_EXPIRE_DATE]);
+					SendClientMessage(playerid, -1, "Puedes utilizar {"#PRIMARY_COLOR"}/vip {f0f0f0}para ver el tiempo restante o renovar.");
 					UnlockPlayerVehicles(playerid);
 					if (GetPlayerSkin(playerid) == PI[playerid][pi_SKIN]) SetPlayerToys(playerid);
 				}
@@ -23321,11 +23321,11 @@ UpdateUnnocupiedPropertyLabel(index) {
 				"\
 					{"#PRIMARY_COLOR"}Membresía VIP requerida\n\
 					\n\
-					{FFFFFF}Propiedad {"#PRIMARY_COLOR"}#%d {FFFFFF}está en venta\n\n\
+					{f0f0f0}Propiedad {"#PRIMARY_COLOR"}#%d {f0f0f0}está en venta\n\n\
 					Interior: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n\
-					{FFFFFF}Nivel necesario: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Usa {"#PRIMARY_COLOR"}/ayuda {FFFFFF}para ver como adquirirla.\
+					{f0f0f0}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n\
+					{f0f0f0}Nivel necesario: {"#PRIMARY_COLOR"}%d\n\
+					{f0f0f0}Usa {"#PRIMARY_COLOR"}/ayuda {f0f0f0}para ver como adquirirla.\
 				", PROPERTY_INFO[index][property_ID], PROPERTY_INFO[index][property_ID_INTERIOR], PROPERTY_INFO[index][property_EXTRA], PROPERTY_INFO[index][property_LEVEL]
 			);
 		} else {
@@ -23336,11 +23336,11 @@ UpdateUnnocupiedPropertyLabel(index) {
 				"\
 					{"#PRIMARY_COLOR"}Membresía VIP requerida\n\
 					\n\
-					{FFFFFF}Propiedad {"#PRIMARY_COLOR"}#%d {FFFFFF}está en venta\n\n\
+					{f0f0f0}Propiedad {"#PRIMARY_COLOR"}#%d {f0f0f0}está en venta\n\n\
 					Interior: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Precio: {"#PRIMARY_COLOR"}%s$\n\
-					{FFFFFF}Nivel: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Usa {"#PRIMARY_COLOR"}/ayuda {FFFFFF}para ver como adquirirla.\
+					{f0f0f0}Precio: {"#PRIMARY_COLOR"}%s$\n\
+					{f0f0f0}Nivel: {"#PRIMARY_COLOR"}%d\n\
+					{f0f0f0}Usa {"#PRIMARY_COLOR"}/ayuda {f0f0f0}para ver como adquirirla.\
 				", PROPERTY_INFO[index][property_ID], PROPERTY_INFO[index][property_ID_INTERIOR], number_format_thousand(PROPERTY_INFO[index][property_PRICE]), PROPERTY_INFO[index][property_LEVEL]
 			);
 		}
@@ -23351,11 +23351,11 @@ UpdateUnnocupiedPropertyLabel(index) {
 				label_str, 
 				sizeof label_str, 
 				"\
-					{FFFFFF}Propiedad {"#PRIMARY_COLOR"}#%d {FFFFFF}está en venta\n\n\
+					{f0f0f0}Propiedad {"#PRIMARY_COLOR"}#%d {f0f0f0}está en venta\n\n\
 					Interior: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n\
-					{FFFFFF}Nivel necesario: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Usa {"#PRIMARY_COLOR"}/ayuda {FFFFFF}para ver como adquirirla.\
+					{f0f0f0}Coste: {"#PRIMARY_COLOR"}%d "SERVER_COIN"\n\
+					{f0f0f0}Nivel necesario: {"#PRIMARY_COLOR"}%d\n\
+					{f0f0f0}Usa {"#PRIMARY_COLOR"}/ayuda {f0f0f0}para ver como adquirirla.\
 				", PROPERTY_INFO[index][property_ID], PROPERTY_INFO[index][property_ID_INTERIOR], PROPERTY_INFO[index][property_EXTRA], PROPERTY_INFO[index][property_LEVEL]
 			);
 		} else {
@@ -23364,11 +23364,11 @@ UpdateUnnocupiedPropertyLabel(index) {
 				label_str, 
 				sizeof label_str, 
 				"\
-					{FFFFFF}Propiedad {"#PRIMARY_COLOR"}#%d {FFFFFF}está en venta\n\n\
+					{f0f0f0}Propiedad {"#PRIMARY_COLOR"}#%d {f0f0f0}está en venta\n\n\
 					Interior: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Precio: {"#PRIMARY_COLOR"}%s$\n\
-					{FFFFFF}Nivel: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Usa {"#PRIMARY_COLOR"}/ayuda {FFFFFF}para ver como adquirirla.\
+					{f0f0f0}Precio: {"#PRIMARY_COLOR"}%s$\n\
+					{f0f0f0}Nivel: {"#PRIMARY_COLOR"}%d\n\
+					{f0f0f0}Usa {"#PRIMARY_COLOR"}/ayuda {f0f0f0}para ver como adquirirla.\
 				", PROPERTY_INFO[index][property_ID], PROPERTY_INFO[index][property_ID_INTERIOR], number_format_thousand(PROPERTY_INFO[index][property_PRICE]), PROPERTY_INFO[index][property_LEVEL]
 			);
 		}
@@ -23510,11 +23510,11 @@ CMD:cleanproperties(playerid, params[]) {
 				label_str, 
 				sizeof label_str, 
 				"\
-					Propiedad {"#PRIMARY_COLOR"}#%d {FFFFFF}está en venta\n\n\
+					Propiedad {"#PRIMARY_COLOR"}#%d {f0f0f0}está en venta\n\n\
 					Interior: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Precio: {"#PRIMARY_COLOR"}%s$\n\
-					{FFFFFF}Nivel necesario: {"#PRIMARY_COLOR"}%d\n\
-					{FFFFFF}Usa {"#PRIMARY_COLOR"}/ayuda {FFFFFF}para ver como adquirirla.\
+					{f0f0f0}Precio: {"#PRIMARY_COLOR"}%s$\n\
+					{f0f0f0}Nivel necesario: {"#PRIMARY_COLOR"}%d\n\
+					{f0f0f0}Usa {"#PRIMARY_COLOR"}/ayuda {f0f0f0}para ver como adquirirla.\
 				", PROPERTY_INFO[i][property_ID], PROPERTY_INFO[i][property_ID_INTERIOR], number_format_thousand(PROPERTY_INFO[i][property_PRICE]), PROPERTY_INFO[i][property_LEVEL]
 			);
 			UpdateDynamic3DTextLabelText(PROPERTY_INFO[i][property_EXT_LABEL_ID], 0xFFFFFFFF, label_str);
@@ -23641,8 +23641,8 @@ CMD:osetname(playerid, params[]) {
 											sizeof label_str, 
 											"\
 												Propiedad {"#PRIMARY_COLOR"}#%d\n\n\
-												{FFFFFF}Propietario: {"#PRIMARY_COLOR"}%s\n\
-												{FFFFFF}Presiona {"#PRIMARY_COLOR"}Y {FFFFFF}para entrar.\
+												{f0f0f0}Propietario: {"#PRIMARY_COLOR"}%s\n\
+												{f0f0f0}Presiona {"#PRIMARY_COLOR"}Y {f0f0f0}para entrar.\
 											", PROPERTY_INFO[i][property_ID], new_name
 										);
 										UpdateDynamic3DTextLabelText(PROPERTY_INFO[i][property_EXT_LABEL_ID], 0xFFFFFFFF, label_str);
@@ -23871,7 +23871,7 @@ CMD:vehicles(playerid, params[]) {
 			GetVehiclePos(i, pos[0], pos[1], pos[2]);
 			
 			new line_str[115];
-			format(line_str, sizeof line_str, "{FFFFFF}%d. %s\t{FFFFFF}%s\t{d1d1d1}/gotoveh %d\n", total_vehicles + 1, VEHICLE_INFO[ GLOBAL_VEHICLES[i][gb_vehicle_MODELID] - 400 ][vehicle_info_NAME], GLOBAL_VEHICLES[i][gb_vehicle_NUMBER_PLATE], i);
+			format(line_str, sizeof line_str, "{f0f0f0}%d. %s\t{f0f0f0}%s\t{d1d1d1}/gotoveh %d\n", total_vehicles + 1, VEHICLE_INFO[ GLOBAL_VEHICLES[i][gb_vehicle_MODELID] - 400 ][vehicle_info_NAME], GLOBAL_VEHICLES[i][gb_vehicle_NUMBER_PLATE], i);
 			strcat(dialog, line_str);
 			total_vehicles ++;
 		}
@@ -24495,8 +24495,8 @@ StartPlayerCallUsingPhoneNumber(const playerid, const selected_number) {
 						if (PI[pid][pi_PHONE_STATE] == PHONE_STATE_OFF) return SendPlayerClientMessage(playerid, "{666666}El número al que intentas llamar está apagado o fuera de cobertura.");
 						if (PLAYER_TEMP[pid][pt_PLAYER_IN_CALL]) return SendPlayerClientMessage(playerid, "{666666}El número al que intentas llamar está en otra llamada.");
 						
-						SendPlayerClientMessage(pid, "{00BFFF}[Llamada entrante]{FFFFFF} » {00BFFF}·{FFFFFF}%s te esta llamando.", convertPhoneNumber(pid, GetValidPlayerPhoneNumber(playerid)));
-						SendPlayerClientMessage(pid, "{00BFFF}·{FFFFFF}Usa {00FF00}/responder {FFFFFF}para atender o {FF4444}/colgar {FFFFFF}para rechazar.");
+						SendPlayerClientMessage(pid, "{00BFFF}[Llamada entrante]{f0f0f0} » {00BFFF}·{f0f0f0}%s te esta llamando.", convertPhoneNumber(pid, GetValidPlayerPhoneNumber(playerid)));
+						SendPlayerClientMessage(pid, "{00BFFF}·{f0f0f0}Usa {00FF00}/responder {f0f0f0}para atender o {FF4444}/colgar {f0f0f0}para rechazar.");
 						
 						PLAYER_TEMP[pid][pt_PLAYER_IN_CALL] = true;
 						PLAYER_TEMP[pid][pt_PLAYER_PHONE_CALL_STATE] = CALL_STATE_INCOMING_CALL;
@@ -24509,7 +24509,7 @@ StartPlayerCallUsingPhoneNumber(const playerid, const selected_number) {
 						ProxDetector(pid, 15.0, str_text, 0xADFF2FAA, 0xADFF2FAA, 0xADFF2FAA, 0xADFF2FAA, 0xADFF2FAA, 85);
 						PlayerPlaySoundEx(pid, 20804);
 						
-						SendPlayerClientMessage(playerid, "{00BFFF}·{FFFFFF}Llamando a {00BFFF}%s{FFFFFF}...", convertPhoneNumber(playerid, selected_number));
+						SendPlayerClientMessage(playerid, "{00BFFF}·{f0f0f0}Llamando a {00BFFF}%s{f0f0f0}...", convertPhoneNumber(playerid, selected_number));
 						PLAYER_TEMP[playerid][pt_TIMERS][6] = SetTimerEx("NoCallResponse", 15000, false, "i", playerid);
 						PLAYER_TEMP[playerid][pt_PLAYER_IN_CALL] = true;
 						PLAYER_TEMP[playerid][pt_PLAYER_PHONE_CALL_STATE] = CALL_STATE_WAITING_RESPONSE;

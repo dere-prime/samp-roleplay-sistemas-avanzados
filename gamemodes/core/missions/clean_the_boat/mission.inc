@@ -37,7 +37,7 @@ forward UpdatePlayerCleaningTheBoat(const playerid);
 forward CleanTheBoat_fisher_dialog(const playerid);
 public CleanTheBoat_fisher_dialog(const playerid) {
     HidePlayerMissionDialog(playerid, true);
-    Dialog_Open(playerid, Dialog:cleanTheBoat_Mission_Prompt, DIALOG_STYLE_MSGBOX, "{"#PRIMARY_COLOR"}·{ffffff}Limpiar el bote", "{ffffff}¿Te gustaria limpiar el bote de el pescador por una recompensa?", "Aceptar", "Rechazar");
+    Dialog_Open(playerid, Dialog:cleanTheBoat_Mission_Prompt, DIALOG_STYLE_MSGBOX, "{"#PRIMARY_COLOR"}·{f0f0f0}Limpiar el bote", "{f0f0f0}¿Te gustaria limpiar el bote de el pescador por una recompensa?", "Aceptar", "Rechazar");
     PLAYER_TEMP[playerid][pt_PICKUP_TIMEOUT] = gettime() + 10;
     return 1;
 }

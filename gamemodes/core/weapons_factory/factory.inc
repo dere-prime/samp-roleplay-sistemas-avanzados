@@ -77,7 +77,7 @@ SetWeaponsFactoryCheckpoint(const playerid) {
     new info[1];
     switch (WeaponsFactoryPlayer[playerid][wf_player_cargo_state]) {
         case PLAYER_CARGO_STATE_SPAWN_TRUCK: {
-            SendPlayerClientMessageEx(playerid, 120, "{"#PRIMARY_COLOR"}·{ffffff}Saca un camion del almacen para ir a buscar un {"#YELLOW_COLOR"}cargamento de piezas{ffffff}. Recuerda que la {"#SECONDARY_COLOR"}policia{ffffff} no puede saber lo que estas haciendo.");
+            SendPlayerClientMessageEx(playerid, 120, "{"#PRIMARY_COLOR"}·{f0f0f0}Saca un camion del almacen para ir a buscar un {"#YELLOW_COLOR"}cargamento de piezas{f0f0f0}. Recuerda que la {"#SECONDARY_COLOR"}policia{f0f0f0} no puede saber lo que estas haciendo.");
             ShowPlayerNotification(playerid, "Ve al punto rojo marcado en el mapa para sacar un camion, si tardas 30 segundos vas a perder el viaje.");
 
             WeaponsFactoryPlayer[playerid][wf_player_cargo_checkpoint] = CreateDynamicCP(wf_spawn_truck_pos[0], wf_spawn_truck_pos[1], wf_spawn_truck_pos[2], 5.0, 0, 0, playerid, 9999999999.0);
@@ -103,7 +103,7 @@ SetWeaponsFactoryCheckpoint(const playerid) {
 
 stock updateWeaponsFactoryParts3DTxt() {
     new label_str[256];
-    format(label_str, 256, "{"#PRIMARY_COLOR"}·{ffffff}Acercate si quieres buscar un cargamento de piezas\nPiezas disponibles: {"#SECONDARY_COLOR"}%s", number_format_thousand(wf_current_wp_parts));
+    format(label_str, 256, "{"#PRIMARY_COLOR"}·{f0f0f0}Acercate si quieres buscar un cargamento de piezas\nPiezas disponibles: {"#SECONDARY_COLOR"}%s", number_format_thousand(wf_current_wp_parts));
     UpdateDynamic3DTextLabelText(wf_cargo_info_3dtextlabel, -1, label_str);
 }
 
@@ -212,7 +212,7 @@ public EndRoyPhoneCall(playerid) {
 
 hook OnScriptInit() {
     new label_str[256], info[2], areaid;
-    format(label_str, 256, "{"#PRIMARY_COLOR"}·{ffffff}Acercate si quieres buscar un cargamento de piezas\nPiezas disponibles: {"#SECONDARY_COLOR"}%s", number_format_thousand(wf_current_wp_parts));
+    format(label_str, 256, "{"#PRIMARY_COLOR"}·{f0f0f0}Acercate si quieres buscar un cargamento de piezas\nPiezas disponibles: {"#SECONDARY_COLOR"}%s", number_format_thousand(wf_current_wp_parts));
     wf_cargo_info_3dtextlabel = CreateDynamic3DTextLabel(label_str, -1, wf_search_cargo_pos[0], wf_search_cargo_pos[1], wf_search_cargo_pos[2], 15.0, .testlos = true, .worldid = 0, .interiorid = 0);
     CreateDynamicPickup(1314, 1, wf_search_cargo_pos[0], wf_search_cargo_pos[1], wf_search_cargo_pos[2], 0, 0);
     areaid = CreateDynamicSphere(wf_search_cargo_pos[0], wf_search_cargo_pos[1], wf_search_cargo_pos[2], 1.5, 0, 0);
@@ -221,7 +221,7 @@ hook OnScriptInit() {
     cargo_job_actor = CreateDynamicActor(30, -2146.1792, -242.1016, 36.5156, 87.2972, .worldid = 0, .interiorid = 0);
     CreateDynamic3DTextLabel("Roy", 0xCCCCCCCC, -2146.1792, -242.1016, 36.5156 + 1.1, 10.0, .testlos = true, .worldid = 0, .interiorid = 0);
 
-    CreateDynamic3DTextLabel("{"#PRIMARY_COLOR"}·{ffffff}Mision Busqueda de Cargamento\nAcercate para ver mas informacion", -1, wf_spawn_truck_pos[0], wf_spawn_truck_pos[1], wf_spawn_truck_pos[2], 15.0, .testlos = true, .worldid = 0, .interiorid = 0);
+    CreateDynamic3DTextLabel("{"#PRIMARY_COLOR"}·{f0f0f0}Mision Busqueda de Cargamento\nAcercate para ver mas informacion", -1, wf_spawn_truck_pos[0], wf_spawn_truck_pos[1], wf_spawn_truck_pos[2], 15.0, .testlos = true, .worldid = 0, .interiorid = 0);
     areaid = CreateDynamicSphere(wf_spawn_truck_pos[0], wf_spawn_truck_pos[1], wf_spawn_truck_pos[2], 1.5, 0, 0);
     info[0] = AREA_TYPE_WF_SPAWN_TRUCK;
     Streamer_SetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
@@ -254,9 +254,9 @@ hook OnPlayerEnterDynamicArea(playerid, areaid) {
             } else {
                 Dialog_Open(
                     playerid, Dialog:ConfirmStartWFCargo, DIALOG_STYLE_MSGBOX, 
-                    "{"#PRIMARY_COLOR"}·{ffffff}Cargamento de piezas", 
-                    "{ffffff}¿Estas segur@ que quieres buscar un {"#YELLOW_COLOR"}cargamento de piezas{ffffff}?\n\n\
-                    Si necesitas informacion, ve a la seccion de {"#SECONDARY_COLOR"}Fabrica de piezas{ffffff} en el {"#PRIMARY_COLOR"}menu de ayuda{ffffff}.", 
+                    "{"#PRIMARY_COLOR"}·{f0f0f0}Cargamento de piezas", 
+                    "{f0f0f0}¿Estas segur@ que quieres buscar un {"#YELLOW_COLOR"}cargamento de piezas{f0f0f0}?\n\n\
+                    Si necesitas informacion, ve a la seccion de {"#SECONDARY_COLOR"}Fabrica de piezas{f0f0f0} en el {"#PRIMARY_COLOR"}menu de ayuda{f0f0f0}.", 
                     "Confirmar", "Cancelar"
                 );
                 WeaponsFactoryPlayer[playerid][wf_cargo_confirm_timeout] = 0;
@@ -278,22 +278,22 @@ hook OnPlayerEnterDynamicArea(playerid, areaid) {
 
             Dialog_Open(
                 playerid, Dialog:WFCargoMissionStart, DIALOG_STYLE_MSGBOX, 
-                "{"#PRIMARY_COLOR"}·{ffffff}Cargamento de piezas", 
+                "{"#PRIMARY_COLOR"}·{f0f0f0}Cargamento de piezas", 
                 "\
-                    {"#PRIMARY_COLOR"}Misión: {FFFFFF}Búsqueda de cargamento de piezas\n\
+                    {"#PRIMARY_COLOR"}Misión: {f0f0f0}Búsqueda de cargamento de piezas\n\
                     \n\
-                    {"#YELLOW_COLOR"}· Nivel requerido: {FFFFFF}5\n\
-                    {"#YELLOW_COLOR"}· Objetos necesarios: {FFFFFF}Teléfono\n\
+                    {"#YELLOW_COLOR"}· Nivel requerido: {f0f0f0}5\n\
+                    {"#YELLOW_COLOR"}· Objetos necesarios: {f0f0f0}Teléfono\n\
                     \n\
-                    {"#PRIMARY_COLOR"}Detalles:{FFFFFF}\n\
+                    {"#PRIMARY_COLOR"}Detalles:{f0f0f0}\n\
                     · Roy cerró un trato con unos mafiosos por un cargamento de piezas.\n\
                     · Tu trabajo será recoger la mercancía y cargarla en el camión.\n\
                     · Evita hablar con ellos y no llames la atención.\n\
                     · Cuando termines, abandona la zona lo más rápido posible.\n\
                     \n\
                     {"#PRIMARY_COLOR"}Recompensa:\n\
-                    {"#GREEN_COLOR"}· ${FFFFFF}4,800 a {"#GREEN_COLOR"}${FFFFFF}6,300\n\
-                    {"#BLUE_COLOR"}· {FFFFFF}50 a 100 de experiencia\n\
+                    {"#GREEN_COLOR"}· ${f0f0f0}4,800 a {"#GREEN_COLOR"}${f0f0f0}6,300\n\
+                    {"#BLUE_COLOR"}· {f0f0f0}50 a 100 de experiencia\n\
                     \n\
                     ¿Aceptas el encargo?\n\
                 ", 

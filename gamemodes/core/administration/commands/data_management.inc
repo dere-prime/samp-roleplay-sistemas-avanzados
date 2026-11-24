@@ -42,18 +42,18 @@ CMD:giveobj(playerid, params[]) {
 	if (sscanf(params, "udddd", to_playerid, objid, amnt, data, extra)) return ShowPlayerMessage(playerid, "Parametros incorrectos, usa ~y~/giveobj <playerid> <objid> <amnt> <data> <extra>");
 
 	if (objid <= 0 || objid >= sizeof(g_inventory_data)) {
-		return SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Error ·{ffffff}El ID de objeto '%d' no es válido.", objid);
+		return SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Error ·{f0f0f0}El ID de objeto '%d' no es válido.", objid);
 	}
 
 	new slot = GetPlayerInventorySlot(to_playerid);
 	if (slot == -1) {
-		return SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Error ·{ffffff}No tienes espacio en tu inventario.");
+		return SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Error ·{f0f0f0}No tienes espacio en tu inventario.");
 	}
 
 	SetPlayerInventorySlotData(to_playerid, slot, objid, amnt, data, extra);
 	InsertPlayerInventorySlot(to_playerid, slot);
-	SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Inv ·{ffffff}Has dado el objeto '%s' (ID: %d) a %s (%d).", g_inventory_data[objid][g_info_name], objid, PLAYER_TEMP[to_playerid][pt_NAME], to_playerid);
-	SendPlayerClientMessage(to_playerid, "{"#ADMIN_COLOR"}Inv ·{ffffff}Has recibido el objeto '%s' (ID: %d) de un administrador.", g_inventory_data[objid][g_info_name], objid);
+	SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Inv ·{f0f0f0}Has dado el objeto '%s' (ID: %d) a %s (%d).", g_inventory_data[objid][g_info_name], objid, PLAYER_TEMP[to_playerid][pt_NAME], to_playerid);
+	SendPlayerClientMessage(to_playerid, "{"#ADMIN_COLOR"}Inv ·{f0f0f0}Has recibido el objeto '%s' (ID: %d) de un administrador.", g_inventory_data[objid][g_info_name], objid);
 	CmdLog("giveobj");
 	return 1;
 }
@@ -64,8 +64,8 @@ CMD:addrep(playerid, params[]) {
 	if (sscanf(params, "ud", to_playerid, rep)) return ShowPlayerMessage(playerid, "Parametros incorrectos, usa ~y~/addrep <usuario> <cantidad>");
 
 	AddPlayerReputation(to_playerid, rep);
-	SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Inv ·{ffffff}Has dado +%d de experiencia a %s (%d).", rep, PLAYER_TEMP[to_playerid][pt_NAME], to_playerid);
-	SendPlayerClientMessage(to_playerid, "{"#ADMIN_COLOR"}Inv ·{ffffff}Has recibido +%d de experiencia de un administrador.", rep);
+	SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Inv ·{f0f0f0}Has dado +%d de experiencia a %s (%d).", rep, PLAYER_TEMP[to_playerid][pt_NAME], to_playerid);
+	SendPlayerClientMessage(to_playerid, "{"#ADMIN_COLOR"}Inv ·{f0f0f0}Has recibido +%d de experiencia de un administrador.", rep);
 	CmdLog("addrep");
 	return 1;
 }
@@ -113,7 +113,7 @@ CMD:setwork(playerid, params[]) {
 			mysql_tquery(handle_db, QUERY_BUFFER);
 		}
 		PLAYER_WORKS[to_player][work][pwork_SET] = 1;
-		SendClientMessageEx(to_player, -1, "{"#ADMIN_COLOR"}Aviso·{ffffff} Ahora eres {"#ADMIN_COLOR"}%s{ffffff}.", work_info[work][work_info_NAME]);
+		SendClientMessageEx(to_player, -1, "{"#ADMIN_COLOR"}Aviso·{f0f0f0} Ahora eres {"#ADMIN_COLOR"}%s{f0f0f0}.", work_info[work][work_info_NAME]);
 	} else {
 		if (work == WORK_POLICE) {
 			mysql_format(handle_db, QUERY_BUFFER, sizeof QUERY_BUFFER, "UPDATE pworks SET `set` = 0, level = 0 WHERE id_player = %d AND id_work = %d;", PI[to_player][pi_ID], work);
@@ -128,9 +128,9 @@ CMD:setwork(playerid, params[]) {
 		}
 
 		PLAYER_WORKS[to_player][work][pwork_SET] = 0;
-		SendClientMessageEx(to_player, -1, "{"#ADMIN_COLOR"}Aviso·{ffffff} Se te ha removido el trabajo de {"#ADMIN_COLOR"}%s{ffffff}.", work_info[work][work_info_NAME]);
+		SendClientMessageEx(to_player, -1, "{"#ADMIN_COLOR"}Aviso·{f0f0f0} Se te ha removido el trabajo de {"#ADMIN_COLOR"}%s{f0f0f0}.", work_info[work][work_info_NAME]);
 	}
-	SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Aviso·{ffffff} El trabajo %s de %s (%d) es: '%d'.", work_info[ work ][work_info_NAME], PI[to_player][pi_NAME], to_player, set);
+	SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Aviso·{f0f0f0} El trabajo %s de %s (%d) es: '%d'.", work_info[ work ][work_info_NAME], PI[to_player][pi_NAME], to_player, set);
 	SendCmdLogToAdmins(playerid, "setwork", params);
 	return 1;
 }
@@ -148,7 +148,7 @@ CMD:setworkexp(playerid, params[]) {
 		mysql_tquery(handle_db, QUERY_BUFFER);
 
 		PLAYER_WORKS[to_player][ work ][pwork_LEVEL] = exp;
-		SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Aviso·{ffffff} La experiencia de {"#ADMIN_COLOR"}%s (%d){ffffff} en el trabajo '%s' ahora es %d.", PI[to_player][pi_NAME], to_player, work_info[ work ][work_info_NAME], exp);
+		SendPlayerClientMessage(playerid, "{"#ADMIN_COLOR"}Aviso·{f0f0f0} La experiencia de {"#ADMIN_COLOR"}%s (%d){f0f0f0} en el trabajo '%s' ahora es %d.", PI[to_player][pi_NAME], to_player, work_info[ work ][work_info_NAME], exp);
 		SendCmdLogToAdmins(playerid, "setworkexp", params);
 	}
 	else SendPlayerClientMessage(playerid, "El jugador no tiene el trabajo");

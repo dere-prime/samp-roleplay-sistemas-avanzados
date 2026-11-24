@@ -83,7 +83,7 @@ LoadFarmerInfo() {
 
 	new info[3] = 0;
 	for (new i = 0; i != sizeof(farmer_buy_seeds_pos); i ++) {
-		CreateDynamic3DTextLabel("{"#GREEN_COLOR"}·Agricultor{ffffff}\nPuesto de venta de semillas", 0xFFFFFFFF, farmer_buy_seeds_pos[i][0], farmer_buy_seeds_pos[i][1], farmer_buy_seeds_pos[i][2], 5.0, .testlos = true, .worldid = 0, .interiorid = 0);
+		CreateDynamic3DTextLabel("{"#GREEN_COLOR"}·Agricultor{f0f0f0}\nPuesto de venta de semillas", 0xFFFFFFFF, farmer_buy_seeds_pos[i][0], farmer_buy_seeds_pos[i][1], farmer_buy_seeds_pos[i][2], 5.0, .testlos = true, .worldid = 0, .interiorid = 0);
 		new Farmer_Pickup = CreateDynamicPickup(0, 1, farmer_buy_seeds_pos[i][0], farmer_buy_seeds_pos[i][1], farmer_buy_seeds_pos[i][2]);
 		info[0] = PICKUP_TYPE_FARMER_BUY_SEEDS;
 		Streamer_SetArrayData(STREAMER_TYPE_PICKUP, Farmer_Pickup, E_STREAMER_EXTRA_ID, info);
@@ -164,11 +164,11 @@ public UpdatePlantInfo(index) {
 	if (f_plant[index][plant_STATE] == 1) {
 		f_plant[index][plant_GROW_PROGRESS] += 3.2;
 		if (f_plant[index][plant_GROW_PROGRESS] >= 100.0) f_plant[index][plant_GROW_PROGRESS] = 100.0;
-		format(label_str, sizeof(label_str), "%s\n{ffffff}Creciendo... %.1f", plant_info[ f_plant[index][plant_TYPE] ][plant_info_NAME], f_plant[index][plant_GROW_PROGRESS]);
+		format(label_str, sizeof(label_str), "%s\n{f0f0f0}Creciendo... %.1f", plant_info[ f_plant[index][plant_TYPE] ][plant_info_NAME], f_plant[index][plant_GROW_PROGRESS]);
 		UpdateDynamic3DTextLabelText(f_plant[index][plant_TEXT], -1, label_str);
 	} else if (f_plant[index][plant_STATE] == 2) {
 		new time = (900-(gettime()-f_plant[index][plant_TIMER]));
-		format(label_str, sizeof(label_str), "%s\n{ffffff}Planta de {"#GREEN_COLOR"}%s\n{ffffff}Tiempo restante {"#PRIMARY_COLOR"}%s\n\n{ffffff}Pulsa {"#SECONDARY_COLOR"}Y{ffffff} para recoger", plant_info[ f_plant[index][plant_TYPE] ][plant_info_NAME], f_plant[index][plant_OWNER_NAME], TimeConvertAsText(time));
+		format(label_str, sizeof(label_str), "%s\n{f0f0f0}Planta de {"#GREEN_COLOR"}%s\n{f0f0f0}Tiempo restante {"#PRIMARY_COLOR"}%s\n\n{f0f0f0}Pulsa {"#SECONDARY_COLOR"}Y{f0f0f0} para recoger", plant_info[ f_plant[index][plant_TYPE] ][plant_info_NAME], f_plant[index][plant_OWNER_NAME], TimeConvertAsText(time));
 		UpdateDynamic3DTextLabelText(f_plant[index][plant_TEXT], -1, label_str);
 	}
 
@@ -329,7 +329,7 @@ DialogCreate:FarmerSeedList(playerid) {
         else strcatf(dialog, "{666666}%s\n", g_inventory_data[ seed_info[i][seed_info_INVENTORY_TYPE] ][g_info_name]);
     }
     
-    Dialog_Open(playerid, Dialog:FarmerSeedList, DIALOG_STYLE_TABLIST, "{"#GREEN_COLOR"}Agricultor · {ffffff}Semillas", dialog, "Continuar", "Cerrar");
+    Dialog_Open(playerid, Dialog:FarmerSeedList, DIALOG_STYLE_TABLIST, "{"#GREEN_COLOR"}Agricultor · {f0f0f0}Semillas", dialog, "Continuar", "Cerrar");
     return 1;
 }
 DialogResponse:FarmerSeedList(playerid, response, listitem) {
@@ -344,8 +344,8 @@ DialogResponse:FarmerSeedList(playerid, response, listitem) {
 
 DialogCreate:FarmerSeedQuantity(playerid) {
 	new dialog[256];
-	format(dialog, sizeof dialog, "{"#GREEN_COLOR"}·{ffffff}¿Cuántas semillas de {"#GREEN_COLOR"}%s{ffffff} quieres comprar? (Precio: %d{"#GREEN_COLOR"}${ffffff} cada una):", g_inventory_data[ seed_info[PLAYER_TEMP[playerid][pt_SELECTED_BUY_SEED_ID]][seed_info_INVENTORY_TYPE] ][g_info_name], seed_info[PLAYER_TEMP[playerid][pt_SELECTED_BUY_SEED_ID]][seed_info_PRICE_PER_SEED]);
-	Dialog_Open(playerid, Dialog:FarmerSeedQuantity, DIALOG_STYLE_INPUT, "{"#GREEN_COLOR"}Agricultor · {ffffff}Cantidad", dialog, "Comprar", "Cancelar");
+	format(dialog, sizeof dialog, "{"#GREEN_COLOR"}·{f0f0f0}¿Cuántas semillas de {"#GREEN_COLOR"}%s{f0f0f0} quieres comprar? (Precio: %d{"#GREEN_COLOR"}${f0f0f0} cada una):", g_inventory_data[ seed_info[PLAYER_TEMP[playerid][pt_SELECTED_BUY_SEED_ID]][seed_info_INVENTORY_TYPE] ][g_info_name], seed_info[PLAYER_TEMP[playerid][pt_SELECTED_BUY_SEED_ID]][seed_info_PRICE_PER_SEED]);
+	Dialog_Open(playerid, Dialog:FarmerSeedQuantity, DIALOG_STYLE_INPUT, "{"#GREEN_COLOR"}Agricultor · {f0f0f0}Cantidad", dialog, "Comprar", "Cancelar");
 	return 1;
 }
 DialogResponse:FarmerSeedQuantity(playerid, response, listitem, inputtext[]) {
@@ -418,11 +418,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 DialogCreate:FarmerSelectSeedForPlant(playerid) {
 	new dialog[400];
-	strcat(dialog, "{"#PRIMARY_COLOR"}·{ffffff}Abrir menu de interaccion\n");
+	strcat(dialog, "{"#PRIMARY_COLOR"}·{f0f0f0}Abrir menu de interaccion\n");
 	for (new i = 0; i != sizeof(plant_info); i ++) {
-		strcatf(dialog, "%s\t{ffffff}%d Semillas requeridas *\n", plant_info[i][plant_info_NAME], plant_info[i][plant_info_SEEDS]);
+		strcatf(dialog, "%s\t{f0f0f0}%d Semillas requeridas *\n", plant_info[i][plant_info_NAME], plant_info[i][plant_info_SEEDS]);
 	}
-	Dialog_Open(playerid, Dialog:FarmerSelectSeedForPlant, DIALOG_STYLE_TABLIST, "{"#GREEN_COLOR"}Agricultor · {ffffff}Seleccionar Tipo", dialog, "Continuar", "Cerrar");
+	Dialog_Open(playerid, Dialog:FarmerSelectSeedForPlant, DIALOG_STYLE_TABLIST, "{"#GREEN_COLOR"}Agricultor · {f0f0f0}Seleccionar Tipo", dialog, "Continuar", "Cerrar");
 	return 1;
 }
 DialogResponse:FarmerSelectSeedForPlant(playerid, response, listitem, inputtext[]) {
@@ -449,7 +449,7 @@ DialogCreate:FarmerSelectSeedFromInv(playerid) {
 		results ++;
 	}
 	if (!results) { dialog = "{666666}No tienes semillas de este tipo en tu inventario."; PLAYER_TEMP[playerid][pt_SELECTED_PLANT_ID] = -1; }
-	Dialog_Open(playerid, Dialog:FarmerSelectSeedFromInv, DIALOG_STYLE_TABLIST, "{"#GREEN_COLOR"}Agricultor · {ffffff}Seleccionar Semilla", dialog, "Continuar", "Cerrar");
+	Dialog_Open(playerid, Dialog:FarmerSelectSeedFromInv, DIALOG_STYLE_TABLIST, "{"#GREEN_COLOR"}Agricultor · {f0f0f0}Seleccionar Semilla", dialog, "Continuar", "Cerrar");
 }
 DialogResponse:FarmerSelectSeedFromInv(playerid, response, listitem) {
 	if (response) {

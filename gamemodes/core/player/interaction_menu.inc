@@ -34,11 +34,11 @@ DialogCreate:InteractionMenu(playerid) {
     for (new i = 0; i != MAX_LISTITEMS; i++) PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][i] = -1;
 
     for (new i = 0; i != sizeof(g_interaction_menu_options); i ++) {
-        strcatf(dialog, "{"#SECONDARY_COLOR"}·{ffffff}%s\n", g_interaction_menu_options[i]);
+        strcatf(dialog, "{"#SECONDARY_COLOR"}·{f0f0f0}%s\n", g_interaction_menu_options[i]);
         PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][listitem] ++;
         listitem ++;
     }
-    Dialog_Open(playerid, Dialog:InteractionMenu, DIALOG_STYLE_TABLIST, "{"#PRIMARY_COLOR"}·{ffffff}Menu de interaccion", dialog, "Continuar", "Cerrar");
+    Dialog_Open(playerid, Dialog:InteractionMenu, DIALOG_STYLE_TABLIST, "{"#PRIMARY_COLOR"}·{f0f0f0}Menu de interaccion", dialog, "Continuar", "Cerrar");
     return 1;
 }
 DialogResponse:InteractionMenu(playerid, response, listitem, inputtext[]) {
@@ -67,23 +67,23 @@ DialogResponse:InteractionMenu(playerid, response, listitem, inputtext[]) {
 
 /* PHONE_BOOK */
 DialogCreate:PlayerPhoneBookFind(playerid) {
-    Dialog_Open(playerid, Dialog:PlayerPhoneBookFind, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{ffffff}Guia telefonica", "{"#SECONDARY_COLOR"}·{ffffff}Introduce la id o parte de el nombre para buscar el numero telefonico de la persona:", "Buscar", "Cancelar");
+    Dialog_Open(playerid, Dialog:PlayerPhoneBookFind, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{f0f0f0}Guia telefonica", "{"#SECONDARY_COLOR"}·{f0f0f0}Introduce la id o parte de el nombre para buscar el numero telefonico de la persona:", "Buscar", "Cancelar");
 }
 DialogResponse:PlayerPhoneBookFind(playerid, response, listitem, inputtext[]) {
     if (response) {
         PLAYER_TEMP[playerid][pt_PLAYER_PHONE_NUMBER_SELECTED] = 0;
 
-        if (sscanf(inputtext, "u", inputtext[0])) return Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{ffffff}Guia telefonica", "{"#SECONDARY_COLOR"}·{ffffff}Parametros incorrectos, introduce el id o el nombre de la persona.", "Volver", "Cancelar");
-        if (!IsPlayerConnected(inputtext[0])) return Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{ffffff}Guia telefonica", "{"#SECONDARY_COLOR"}·{ffffff}El jugador proporcionado se encuentra desconectado.", "Volver", "Cancelar");
+        if (sscanf(inputtext, "u", inputtext[0])) return Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{f0f0f0}Guia telefonica", "{"#SECONDARY_COLOR"}·{f0f0f0}Parametros incorrectos, introduce el id o el nombre de la persona.", "Volver", "Cancelar");
+        if (!IsPlayerConnected(inputtext[0])) return Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{f0f0f0}Guia telefonica", "{"#SECONDARY_COLOR"}·{f0f0f0}El jugador proporcionado se encuentra desconectado.", "Volver", "Cancelar");
 
-        if (!GetValidPlayerPhoneNumber(inputtext[0])) return Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{ffffff}Guia telefonica", "{"#SECONDARY_COLOR"}·{ffffff}No pudimos encontrar el numero telefonico de la persona.", "Volver", "Cancelar");
-        if (!PI[inputtext[0]][pi_PHONE_VISIBLE_NUMBER]) return Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{ffffff}Guia telefonica", "{"#SECONDARY_COLOR"}·{ffffff}Este jugador ha decidido no mostrar su número en la guía.", "Volver", "Cancelar");
+        if (!GetValidPlayerPhoneNumber(inputtext[0])) return Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{f0f0f0}Guia telefonica", "{"#SECONDARY_COLOR"}·{f0f0f0}No pudimos encontrar el numero telefonico de la persona.", "Volver", "Cancelar");
+        if (!PI[inputtext[0]][pi_PHONE_VISIBLE_NUMBER]) return Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{f0f0f0}Guia telefonica", "{"#SECONDARY_COLOR"}·{f0f0f0}Este jugador ha decidido no mostrar su número en la guía.", "Volver", "Cancelar");
 
         PLAYER_TEMP[playerid][pt_PLAYER_PHONE_NUMBER_SELECTED] = GetValidPlayerPhoneNumber(inputtext[0]);
 
         new dialog_result[128 + 48 + 3];
-        format(dialog_result, sizeof(dialog_result), "{"#PRIMARY_COLOR"}[Guía] ·{FFFFFF}Persona encontrada | Nombre: {"#SECONDARY_COLOR"}%s {FFFFFF}| Teléfono: {"#SECONDARY_COLOR"}%d", PLAYER_TEMP[inputtext[0]][pt_NAME], GetValidPlayerPhoneNumber(inputtext[0]));
-        Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_MSGBOX, "{"#PRIMARY_COLOR"}·{ffffff}Guia telefonica", dialog_result, "LLamar", "Cerrar");
+        format(dialog_result, sizeof(dialog_result), "{"#PRIMARY_COLOR"}[Guía] ·{f0f0f0}Persona encontrada | Nombre: {"#SECONDARY_COLOR"}%s {f0f0f0}| Teléfono: {"#SECONDARY_COLOR"}%d", PLAYER_TEMP[inputtext[0]][pt_NAME], GetValidPlayerPhoneNumber(inputtext[0]));
+        Dialog_Open(playerid, Dialog:PlayerPhoneBookResult, DIALOG_STYLE_MSGBOX, "{"#PRIMARY_COLOR"}·{f0f0f0}Guia telefonica", dialog_result, "LLamar", "Cerrar");
     }
     return 1;
 }
@@ -225,7 +225,7 @@ DialogResponse:PlayerGiveCashSelectPlayer(playerid, response, listitem, inputtex
 }
 
 DialogCreate:PlayerGiveCashAmount(playerid) {
-    Dialog_Open(playerid, Dialog:PlayerGiveCashAmount, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{ffffff}Dar dinero", "{"#SECONDARY_COLOR"}·{ffffff}Introduce la cantidad de dinero que quieres darle al jugador:", "Dar", "Cancelar");
+    Dialog_Open(playerid, Dialog:PlayerGiveCashAmount, DIALOG_STYLE_INPUT, "{"#PRIMARY_COLOR"}·{f0f0f0}Dar dinero", "{"#SECONDARY_COLOR"}·{f0f0f0}Introduce la cantidad de dinero que quieres darle al jugador:", "Dar", "Cancelar");
 }
 DialogResponse:PlayerGiveCashAmount(playerid, response, listitem, inputtext[]) {
     if (response) {

@@ -15,7 +15,7 @@ new
 
 hook OnScriptInit() {
     for(new i = 0; i < sizeof AirVehsFuelStations; i ++) {
-        CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/avion {FFFFFF}para ver opciones.", 0xFFFFFFFF, AirVehsFuelStations[i][0], AirVehsFuelStations[i][1], AirVehsFuelStations[i][2], 100.0, .testlos = false, .interiorid = 0, .worldid = 0);
+        CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/avion {f0f0f0}para ver opciones.", 0xFFFFFFFF, AirVehsFuelStations[i][0], AirVehsFuelStations[i][1], AirVehsFuelStations[i][2], 100.0, .testlos = false, .interiorid = 0, .worldid = 0);
         new areaId = CreateDynamicCylinder(AirVehsFuelStations[i][0], AirVehsFuelStations[i][1], AirVehsFuelStations[i][2] - 10.0, AirVehsFuelStations[i][2] + 10.0, 30.0, 0, 0);
         Streamer_SetArrayData(STREAMER_TYPE_AREA, areaId, E_STREAMER_EXTRA_ID, { AREA_TYPE_AIRVEH_FUEL });
     }

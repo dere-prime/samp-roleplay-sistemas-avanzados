@@ -7,7 +7,7 @@
 #include <YSI_Coding\y_hooks>
 
 #define MAX_CAMS 100 //Edit this in case you want less/more cameras
-#define white_col "{FFFFFF}"
+#define white_col "{f0f0f0}"
 
 //Variables down bellow
 enum c_Info {

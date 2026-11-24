@@ -75,8 +75,8 @@ hook OnScriptInit() {
 		San_Andreas_Barriers[i][barrier_OBJECT_ID] = CreateDynamicObject(968, San_Andreas_Barriers[i][barrier_X], San_Andreas_Barriers[i][barrier_Y], San_Andreas_Barriers[i][barrier_Z] + 0.72967, 0.0, -90.0, San_Andreas_Barriers[i][barrier_ROTATION], San_Andreas_Barriers[i][barrier_WORLD], San_Andreas_Barriers[i][barrier_INTERIOR], .streamdistance = 600.0, .drawdistance = 600.0);
 
         new label_str[180];
-        if (San_Andreas_Barriers[i][barrier_VEHICLE_TYPE]) format(label_str, sizeof label_str, "{%s}%c%s\n\n{FFFFFF}Pulsa {"#PRIMARY_COLOR"}H{FFFFFF} o toca la {"#SECONDARY_COLOR"}Bocina{FFFFFF} para abrir", work_info[ San_Andreas_Barriers[i][barrier_VEHICLE_TYPE_IN] ][work_info_COLOR], toupper(work_info[ San_Andreas_Barriers[i][barrier_VEHICLE_TYPE_IN] ][work_info_NAME][0]), work_info[ San_Andreas_Barriers[i][barrier_VEHICLE_TYPE_IN] ][work_info_NAME][1]);
-        else format(label_str, sizeof label_str, "{FFFFFF}Pulsa {"#PRIMARY_COLOR"}H{FFFFFF} o toca la {"#SECONDARY_COLOR"}Bocina{FFFFFF} para abrir");
+        if (San_Andreas_Barriers[i][barrier_VEHICLE_TYPE]) format(label_str, sizeof label_str, "{%s}%c%s\n\n{f0f0f0}Pulsa {"#PRIMARY_COLOR"}H{f0f0f0} o toca la {"#SECONDARY_COLOR"}Bocina{f0f0f0} para abrir", work_info[ San_Andreas_Barriers[i][barrier_VEHICLE_TYPE_IN] ][work_info_COLOR], toupper(work_info[ San_Andreas_Barriers[i][barrier_VEHICLE_TYPE_IN] ][work_info_NAME][0]), work_info[ San_Andreas_Barriers[i][barrier_VEHICLE_TYPE_IN] ][work_info_NAME][1]);
+        else format(label_str, sizeof label_str, "{f0f0f0}Pulsa {"#PRIMARY_COLOR"}H{f0f0f0} o toca la {"#SECONDARY_COLOR"}Bocina{f0f0f0} para abrir");
 		CreateDynamic3DTextLabel(label_str, 0xFFFFFFFF, San_Andreas_Barriers[i][barrier_X], San_Andreas_Barriers[i][barrier_Y], San_Andreas_Barriers[i][barrier_Z] + 1.5, 15.0, .worldid = San_Andreas_Barriers[i][barrier_WORLD], .interiorid = San_Andreas_Barriers[i][barrier_INTERIOR], .testlos = true);
 
 		San_Andreas_Barriers[i][barrier_PLAYER_X] = San_Andreas_Barriers[i][barrier_X] + (3.4 * floatsin(-(San_Andreas_Barriers[i][barrier_ROTATION] + 90.0), degrees));

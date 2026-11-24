@@ -67,7 +67,7 @@ public OnPlayerPrepareDeath(playerid, a_lib[32], a_name[32], &anim_lock, killeri
 				GetPlayerZones(killerid, city, zone);
 
 				new message[145];
-				format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {FFFFFF}%s ha causado un asesinato en {"#PRIMARY_COLOR"}%s, %s.", PLAYER_TEMP[killerid][pt_NAME], city, zone);
+				format(message, sizeof message, "{"#PRIMARY_COLOR"}[Central policía] {f0f0f0}%s ha causado un asesinato en {"#PRIMARY_COLOR"}%s, %s.", PLAYER_TEMP[killerid][pt_NAME], city, zone);
 				SendPoliceRadioMessage(-1, -1, message);
 				
 				PLAYER_TEMP[killerid][pt_LAST_SAFE_ZONE_WARNING] = gettime();
@@ -136,10 +136,10 @@ public OnPlayerPrepareDeath(playerid, a_lib[32], a_name[32], &anim_lock, killeri
     }
     pInjuredTimer[playerid] = SetTimerEx("UpdatePlayerInjured", 3000, false, "i", playerid);
     
-    if(PI[playerid][pi_WANTED_LEVEL] > 0) SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido abatido, no podras hacer nada hasta que la {"#ERROR_COLOR"}policia te arreste{ffffff}.");
+    if(PI[playerid][pi_WANTED_LEVEL] > 0) SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}Has sido abatido, no podras hacer nada hasta que la {"#ERROR_COLOR"}policia te arreste{f0f0f0}.");
     else {
-        SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Estas abatido. Espera a un {"#ERROR_COLOR"}medico{ffffff} para recibir atencion.");
-        SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Pulsa {"#ERROR_COLOR"}Y{ffffff} para morir pagando 5000{"#ERROR_COLOR"}${ffffff} si no quieres esperar.");
+        SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}Estas abatido. Espera a un {"#ERROR_COLOR"}medico{f0f0f0} para recibir atencion.");
+        SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}Pulsa {"#ERROR_COLOR"}Y{f0f0f0} para morir pagando 5000{"#ERROR_COLOR"}${f0f0f0} si no quieres esperar.");
     }
 
 	UpdatePlayerRoleplayNameInfo(playerid);
@@ -159,10 +159,10 @@ hook OnPlayerSpawn(playerid) {
         }
         pInjuredTimer[playerid] = SetTimerEx("UpdatePlayerInjured", 3000, false, "i", playerid);
         
-        if(PI[playerid][pi_WANTED_LEVEL] > 0) SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido abatido, no podras hacer nada hasta que la {"#ERROR_COLOR"}policia te arreste{ffffff}.");
+        if(PI[playerid][pi_WANTED_LEVEL] > 0) SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}Has sido abatido, no podras hacer nada hasta que la {"#ERROR_COLOR"}policia te arreste{f0f0f0}.");
         else {
-            SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Estas abatido. Espera a un {"#ERROR_COLOR"}medico{ffffff} para recibir atencion.");
-            SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Pulsa {"#ERROR_COLOR"}Y{ffffff} para morir pagando 5000{"#ERROR_COLOR"}${ffffff} si no quieres esperar.");
+            SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}Estas abatido. Espera a un {"#ERROR_COLOR"}medico{f0f0f0} para recibir atencion.");
+            SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}Pulsa {"#ERROR_COLOR"}Y{f0f0f0} para morir pagando 5000{"#ERROR_COLOR"}${f0f0f0} si no quieres esperar.");
         }
 
         FreezePlayer(playerid, 500);
@@ -184,14 +184,14 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 }
 
 DialogCreate:DeathConfirmation(playerid) {
-    Dialog_Open(playerid, Dialog:DeathConfirmation, DIALOG_STYLE_MSGBOX, "{"#WARNING_COLOR"}·{ffffff}Confirmacion de muerte", "{"#WARNING_COLOR"}·{ffffff}¿Estas seguro que quieres morir?\n\nSe te cobrara 5000{"#ERROR_COLOR"}${ffffff}\nPerderas todas tus {"#ERROR_COLOR"}pertenencias ilegales{ffffff}.", "Morir", "Esperar");
+    Dialog_Open(playerid, Dialog:DeathConfirmation, DIALOG_STYLE_MSGBOX, "{"#WARNING_COLOR"}·{f0f0f0}Confirmacion de muerte", "{"#WARNING_COLOR"}·{f0f0f0}¿Estas seguro que quieres morir?\n\nSe te cobrara 5000{"#ERROR_COLOR"}${f0f0f0}\nPerderas todas tus {"#ERROR_COLOR"}pertenencias ilegales{f0f0f0}.", "Morir", "Esperar");
 }
 DialogResponse:DeathConfirmation(playerid, response, listitem, inputtext[]) {
     if(response) {
         if(GivePlayerCash(playerid, -5000, true, true)) {
             Auto_SendPlayerAction(playerid, "ha aceptado su muerte.");
             PLAYER_TEMP[playerid][pt_ALLOW_DEATH] = true;
-            SendPlayerClientMessage(playerid, "{"#GREEN_COLOR"}·{ffffff}Has decidido morir y pagar 5000{"#GREEN_COLOR"}${ffffff}.");
+            SendPlayerClientMessage(playerid, "{"#GREEN_COLOR"}·{f0f0f0}Has decidido morir y pagar 5000{"#GREEN_COLOR"}${f0f0f0}.");
 
             if (PLAYER_TEMP[playerid][pt_ALLOW_DEATH] && PI[playerid][pi_WANTED_LEVEL] <= 0 && (PI[playerid][pi_STATE] == ROLEPLAY_STATE_CRACK || GetPlayerInterior(playerid) != 0 || GetPlayerVirtualWorld(playerid) != 0)) {
                 PLAYER_TEMP[playerid][pt_HOSPITAL] = GetNearestHospitalForPlayer(playerid);
@@ -231,13 +231,13 @@ DialogResponse:DeathConfirmation(playerid, response, listitem, inputtext[]) {
                 PlayerTextDrawShow(playerid, PlayerTextdraws[playerid][ptextdraw_HOSPITAL][2]);
                 
                 ClearPlayerChat(playerid);
-                SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}Has sido trasladado al {"#ERROR_COLOR"}centro medico{ffffff} mas cercano. Espera tu recuperacion.");
+                SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}Has sido trasladado al {"#ERROR_COLOR"}centro medico{f0f0f0} mas cercano. Espera tu recuperacion.");
                 
                 InterpolateCameraPos(playerid, Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][0], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][1], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][2], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][0], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][1], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][2], 1000, CAMERA_CUT);
                 InterpolateCameraLookAt(playerid, Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][3], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][4], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][5], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][3], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][4], Hospital_Cameras_Positions[PLAYER_TEMP[playerid][pt_HOSPITAL]][5], 1000, CAMERA_CUT);
             }
         } else {
-            SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{ffffff}No tienes suficiente dinero para morir. Necesitas 5000{"#ERROR_COLOR"}${ffffff}.");
+            SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}·{f0f0f0}No tienes suficiente dinero para morir. Necesitas 5000{"#ERROR_COLOR"}${f0f0f0}.");
         }
     }
     return 1;

@@ -33,7 +33,7 @@ PlayerPayday(playerid) {
 	SendPlayerClientMessage(playerid, "------------------------------------");
 	SendPlayerClientMessage(playerid, "Pago diario (%s)", date);
 	SendPlayerClientMessage(playerid, "");
-	SendPlayerClientMessage(playerid, "{FFFFFF}Paga del gobierno: %s{"#GREEN_COLOR"}$", number_format_thousand(money));
+	SendPlayerClientMessage(playerid, "{f0f0f0}Paga del gobierno: %s{"#GREEN_COLOR"}$", number_format_thousand(money));
 	SendPlayerClientMessage(playerid, "");
 	if (!PI[playerid][pi_VIP]) {
 		for(new i = 0, j = GetVehiclePoolSize(); i <= j; i ++) {
@@ -41,17 +41,17 @@ PlayerPayday(playerid) {
 			if (PLAYER_VEHICLES[i][player_vehicle_OWNER_ID] != PI[playerid][pi_ID]) continue;
 			new veh_money = VEHICLE_INFO[GLOBAL_VEHICLES[i][gb_vehicle_MODELID] - 400][vehicle_info_PRICE] / 100;
 			money -= veh_money;
-			SendPlayerClientMessage(playerid, "{FFFFFF}Seguro del vehículo %s: -%s{"#WARNING_COLOR"}$", VEHICLE_INFO[GLOBAL_VEHICLES[i][gb_vehicle_MODELID] - 400][vehicle_info_NAME], number_format_thousand(veh_money));
+			SendPlayerClientMessage(playerid, "{f0f0f0}Seguro del vehículo %s: -%s{"#WARNING_COLOR"}$", VEHICLE_INFO[GLOBAL_VEHICLES[i][gb_vehicle_MODELID] - 400][vehicle_info_NAME], number_format_thousand(veh_money));
 		}
 		for(new i = 0; i != MAX_PROPERTIES; i ++) {
 			if (!PROPERTY_INFO[i][property_VALID]) continue;
 			if (PROPERTY_INFO[i][property_OWNER_ID] != PI[playerid][pi_ID]) continue;
 		
-			if (PROPERTY_INFO[i][property_VIP_LEVEL]) SendPlayerClientMessage(playerid, "{FFFFFF}Seguro de la propiedad %s: 0{"#GREEN_COLOR"}$", PROPERTY_INFO[i][property_NAME]);
+			if (PROPERTY_INFO[i][property_VIP_LEVEL]) SendPlayerClientMessage(playerid, "{f0f0f0}Seguro de la propiedad %s: 0{"#GREEN_COLOR"}$", PROPERTY_INFO[i][property_NAME]);
 			else {
 				new property_money = PROPERTY_INFO[i][property_PRICE] / 200;
 				money -= property_money;
-				SendPlayerClientMessage(playerid, "{FFFFFF}Seguro de la propiedad %s: -%s{"#WARNING_COLOR"}$", PROPERTY_INFO[i][property_NAME], number_format_thousand(property_money));
+				SendPlayerClientMessage(playerid, "{f0f0f0}Seguro de la propiedad %s: -%s{"#WARNING_COLOR"}$", PROPERTY_INFO[i][property_NAME], number_format_thousand(property_money));
 			}
 		}
 	}
@@ -59,7 +59,7 @@ PlayerPayday(playerid) {
 		new work_payment = (POLICE_PAYMENT_MULTIPLIER * PLAYER_WORKS[playerid][WORK_POLICE][pwork_LEVEL]);
 		money += work_payment;
 		SendPlayerClientMessage(playerid, "");
-		SendPlayerClientMessage(playerid, "{FFFFFF}Paga por ser policía: %s{"#GREEN_COLOR"}$\n", number_format_thousand(work_payment));
+		SendPlayerClientMessage(playerid, "{f0f0f0}Paga por ser policía: %s{"#GREEN_COLOR"}$\n", number_format_thousand(work_payment));
 		SendPlayerClientMessage(playerid, "");
 	}
 	if (PI[playerid][pi_CREW]) {
@@ -67,7 +67,7 @@ PlayerPayday(playerid) {
 		if (territories > 0) {
 			SendPlayerClientMessage(playerid, "");
 			money += territories * 70;
-			if (territories > 0) SendPlayerClientMessage(playerid, "{FFFFFF}Paga por territorios de la banda (%d): %s{"#GREEN_COLOR"}$\n", territories, territories * 70);
+			if (territories > 0) SendPlayerClientMessage(playerid, "{f0f0f0}Paga por territorios de la banda (%d): %s{"#GREEN_COLOR"}$\n", territories, territories * 70);
 			SendPlayerClientMessage(playerid, "");
 		}
 	}
@@ -75,8 +75,8 @@ PlayerPayday(playerid) {
 		money = 0;
 		PI[playerid][pi_CASH] = 0;
 	}
-	if (money > 0) SendPlayerClientMessage(playerid, "{FFFFFF}Has ganado: %s{"#GREEN_COLOR"}$", number_format_thousand(money));
-	else SendPlayerClientMessage(playerid, "{FFFFFF}Has perdido: -%s{"#ERROR_COLOR"}$", number_format_thousand(money));
+	if (money > 0) SendPlayerClientMessage(playerid, "{f0f0f0}Has ganado: %s{"#GREEN_COLOR"}$", number_format_thousand(money));
+	else SendPlayerClientMessage(playerid, "{f0f0f0}Has perdido: -%s{"#ERROR_COLOR"}$", number_format_thousand(money));
 	SendPlayerClientMessage(playerid, "------------------------------------");
 	GivePlayerCash(playerid, money, true, money < 0 ? true : false);
 	return 1;

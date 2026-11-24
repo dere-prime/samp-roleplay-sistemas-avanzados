@@ -143,7 +143,7 @@ SetPlayerHealthyBarsConfig(const playerid) {
 
 DialogCreate:HealthyBarsEditor(playerid) {
     Dialog_Open(
-        playerid, Dialog:HealthyBarsEditor, DIALOG_STYLE_TABLIST, "{"#PRIMARY_COLOR"}·{ffffff}Hud Barra de vida", 
+        playerid, Dialog:HealthyBarsEditor, DIALOG_STYLE_TABLIST, "{"#PRIMARY_COLOR"}·{f0f0f0}Hud Barra de vida", 
         "Restablecer valores predeterminados\nEditar barra de vida\nEditar barra de chaleco\nCambiar color barra de vida\nCambiar color barra de chaleco", 
         "Continuar", "Cerrar"
     );
@@ -183,8 +183,8 @@ DialogResponse:HealthyBarsEditor(playerid, response, listitem, inputtext[]) {
     return 1;
 }
 
-DialogCreate:ArmourBarColorSelect(playerid) { Dialog_Open(playerid, Dialog:ArmourBarColorSelect, DIALOG_STYLE_TABLIST, "{"#PRIMARY_COLOR"}·{ffffff}Color barra chaleco", DIALOG_CREATE_CREW_COLOR_String, "Seleccionar", "Cancelar"); }
-DialogCreate:HealthBarColorSelect(playerid) { Dialog_Open(playerid, Dialog:HealthBarColorSelect, DIALOG_STYLE_TABLIST, "{"#PRIMARY_COLOR"}·{ffffff}Color barra vida", DIALOG_CREATE_CREW_COLOR_String, "Seleccionar", "Cancelar"); }
+DialogCreate:ArmourBarColorSelect(playerid) { Dialog_Open(playerid, Dialog:ArmourBarColorSelect, DIALOG_STYLE_TABLIST, "{"#PRIMARY_COLOR"}·{f0f0f0}Color barra chaleco", DIALOG_CREATE_CREW_COLOR_String, "Seleccionar", "Cancelar"); }
+DialogCreate:HealthBarColorSelect(playerid) { Dialog_Open(playerid, Dialog:HealthBarColorSelect, DIALOG_STYLE_TABLIST, "{"#PRIMARY_COLOR"}·{f0f0f0}Color barra vida", DIALOG_CREATE_CREW_COLOR_String, "Seleccionar", "Cancelar"); }
 
 DialogResponse:ArmourBarColorSelect(playerid, response, listitem, inputtext[]) { 
     if (response) { PI[playerid][pi_ARMOUR_BAR_COLOUR] = listitem; UpdateShowPlayerHealthyBars(playerid); } 

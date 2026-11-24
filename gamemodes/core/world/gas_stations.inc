@@ -43,7 +43,7 @@ new
 hook OnScriptInit() {
     for (new i = 0; i != sizeof(g_fuel_stations); i++) {
         new info[3], onfoot_pickup = CreateDynamicPickup(1650, 1, g_fuel_stations[i][fuel_station_pos_x], g_fuel_stations[i][fuel_station_pos_y], g_fuel_stations[i][fuel_station_pos_z], 0, 0), vehicle_pickup = CreateDynamicPickup(0, 14, g_fuel_stations[i][fuel_station_pos_x], g_fuel_stations[i][fuel_station_pos_y], g_fuel_stations[i][fuel_station_pos_z], 0, 0);
-        CreateDynamic3DTextLabel("Estacion de combustible\n{ffffff}Acercate para repostar {"#GAS_STATION_COLOR"}gasolina{ffffff} o comprar un bidon\nPrecio: "#FUEL_PRICE_PER_LITER"{"#GREEN_COLOR"}${ffffff}/Litro", 0xED1C24FF, g_fuel_stations[i][fuel_station_pos_x], g_fuel_stations[i][fuel_station_pos_y], g_fuel_stations[i][fuel_station_pos_z] + 1.0, 10.0, .testlos = true);
+        CreateDynamic3DTextLabel("Estacion de combustible\n{f0f0f0}Acercate para repostar {"#GAS_STATION_COLOR"}gasolina{f0f0f0} o comprar un bidon\nPrecio: "#FUEL_PRICE_PER_LITER"{"#GREEN_COLOR"}${f0f0f0}/Litro", 0xED1C24FF, g_fuel_stations[i][fuel_station_pos_x], g_fuel_stations[i][fuel_station_pos_y], g_fuel_stations[i][fuel_station_pos_z] + 1.0, 10.0, .testlos = true);
         info[0] = PICKUP_TYPE_GAS_STATION;
         info[1] = i; // Index
         info[2] = 0;
@@ -135,7 +135,7 @@ public RefuelVehicleTimer(playerid, vehicleid, Float:target_fuel) {
 
 DialogCreate:GasStationBuyCanister(playerid) {
     new dialog[180], gas_canister_price = FUEL_PRICE_PER_LITER * GAS_CANISTER_MAX_LITERS;
-    format(dialog, sizeof(dialog), "{"#GAS_STATION_COLOR"}·{ffffff}Deseas comprar un {"#GAS_STATION_COLOR"}bidon de gasolina{ffffff} de "#GAS_CANISTER_MAX_LITERS" Litros por %d{"#GREEN_COLOR"}${ffffff}?", gas_canister_price);
+    format(dialog, sizeof(dialog), "{"#GAS_STATION_COLOR"}·{f0f0f0}Deseas comprar un {"#GAS_STATION_COLOR"}bidon de gasolina{f0f0f0} de "#GAS_CANISTER_MAX_LITERS" Litros por %d{"#GREEN_COLOR"}${f0f0f0}?", gas_canister_price);
     Dialog_Open(playerid, Dialog:GasStationBuyCanister, DIALOG_STYLE_MSGBOX, "{"#GAS_STATION_COLOR"}Estacion de Combustible", dialog, "Comprar", "Cancelar");
     return 1;
 }
@@ -149,7 +149,7 @@ DialogResponse:GasStationBuyCanister(playerid, response, listitem, inputtext[]) 
         if (GivePlayerCash(playerid, -gas_canister_price, true, true)) {
 			SetPlayerInventorySlotData(playerid, slot, INVENTORY_GAS_CANISTER, GAS_CANISTER_MAX_LITERS, 0, 0);
             InsertPlayerInventorySlot(playerid, slot);
-            SendPlayerClientMessage(playerid, "{"#GAS_STATION_COLOR"}·{ffffff}Has comprado un {"#GAS_STATION_COLOR"}bidon de gasolina{ffffff} por {"#GREEN_COLOR"}%d${ffffff}.", gas_canister_price);
+            SendPlayerClientMessage(playerid, "{"#GAS_STATION_COLOR"}·{f0f0f0}Has comprado un {"#GAS_STATION_COLOR"}bidon de gasolina{f0f0f0} por {"#GREEN_COLOR"}%d${f0f0f0}.", gas_canister_price);
         } else {
             SendPlayerClientMessage(playerid, "{"#ERROR_COLOR"}No tienes suficiente dinero para comprar el bidon de gasolina.");
         }
@@ -202,7 +202,7 @@ DialogResponse:GasStationRefuelVehicle(playerid, response, listitem, inputtext[]
 }
 
 DialogCreate:GasStationRefuelAmount(playerid) {
-    Dialog_Open(playerid, Dialog:GasStationRefuelAmount, DIALOG_STYLE_INPUT, "{"#GAS_STATION_COLOR"}Estacion de Combustible", "{"#GAS_STATION_COLOR"}·{ffffff}¿Cuantos litros deseas repostar? (Ingresa un valor numérico):", "Repostar", "Cancelar");
+    Dialog_Open(playerid, Dialog:GasStationRefuelAmount, DIALOG_STYLE_INPUT, "{"#GAS_STATION_COLOR"}Estacion de Combustible", "{"#GAS_STATION_COLOR"}·{f0f0f0}¿Cuantos litros deseas repostar? (Ingresa un valor numérico):", "Repostar", "Cancelar");
     return 1;
 }
 DialogResponse:GasStationRefuelAmount(playerid, response, listitem, inputtext[]) {
@@ -228,7 +228,7 @@ DialogResponse:GasStationRefuelAmount(playerid, response, listitem, inputtext[])
 
 //Sistema de bidones
 DialogCreate:GasCanisterSelectVehicle(playerid) {
-    new dialog_body[2000] = "{ffffff}Selecciona el vehiculo al que quieres repostar gasolina desde el bidon\n\n{cccccc}Vehiculos Cercanos:\n", counter = 0;
+    new dialog_body[2000] = "{f0f0f0}Selecciona el vehiculo al que quieres repostar gasolina desde el bidon\n\n{cccccc}Vehiculos Cercanos:\n", counter = 0;
     for(new i = 0; i != MAX_VEHICLES; i++) {
         if (Vehicle_IsValid(i)) {
             new Float:pos[3];
@@ -236,8 +236,8 @@ DialogCreate:GasCanisterSelectVehicle(playerid) {
             if(IsPlayerInRangeOfPoint(playerid, 4.0, pos[0], pos[1], pos[2])) {
                 new vehicle_modelid = GetVehicleModel(i);
                 if (!VEHICLE_INFO[ GLOBAL_VEHICLES[i][gb_vehicle_MODELID] - 400 ][vehicle_info_NORMAL_SPEEDO] || GLOBAL_VEHICLES[i][gb_vehicle_MAX_GAS] <= 0.0) continue;
-                if (PLAYER_VEHICLES[i][player_vehicle_OWNER_ID] != PI[playerid][pi_ID]) strcatf(dialog_body, "- {%06x}[{ffffff}ID: %d{%06x}] %s\n", (VEHICLE_COLORS[ GLOBAL_VEHICLES[i][gb_vehicle_COLOR_1] ]  >>> 8), i, (VEHICLE_COLORS[ GLOBAL_VEHICLES[i][gb_vehicle_COLOR_1] ]  >>> 8), VEHICLE_INFO[vehicle_modelid - 400][vehicle_info_NAME]);
-                else strcatf(dialog_body, "- {%06x}[{ffffff}ID: %d{%06x}] %s {"#WARNING_COLOR"}(Personal)\n", (VEHICLE_COLORS[ GLOBAL_VEHICLES[i][gb_vehicle_COLOR_1] ]  >>> 8), i, (VEHICLE_COLORS[ GLOBAL_VEHICLES[i][gb_vehicle_COLOR_1] ]  >>> 8), VEHICLE_INFO[vehicle_modelid - 400][vehicle_info_NAME]);
+                if (PLAYER_VEHICLES[i][player_vehicle_OWNER_ID] != PI[playerid][pi_ID]) strcatf(dialog_body, "- {%06x}[{f0f0f0}ID: %d{%06x}] %s\n", (VEHICLE_COLORS[ GLOBAL_VEHICLES[i][gb_vehicle_COLOR_1] ]  >>> 8), i, (VEHICLE_COLORS[ GLOBAL_VEHICLES[i][gb_vehicle_COLOR_1] ]  >>> 8), VEHICLE_INFO[vehicle_modelid - 400][vehicle_info_NAME]);
+                else strcatf(dialog_body, "- {%06x}[{f0f0f0}ID: %d{%06x}] %s {"#WARNING_COLOR"}(Personal)\n", (VEHICLE_COLORS[ GLOBAL_VEHICLES[i][gb_vehicle_COLOR_1] ]  >>> 8), i, (VEHICLE_COLORS[ GLOBAL_VEHICLES[i][gb_vehicle_COLOR_1] ]  >>> 8), VEHICLE_INFO[vehicle_modelid - 400][vehicle_info_NAME]);
                 counter ++;
                 if(counter > 10) break;
             }
@@ -260,7 +260,7 @@ DialogResponse:GasCanisterSelectVehicle(playerid, response, listitem, inputtext[
 }
 
 DialogCreate:GasCanisterRefuelAmount(playerid) {
-    Dialog_Open(playerid, Dialog:GasCanisterRefuelAmount, DIALOG_STYLE_INPUT, "{"#GAS_STATION_COLOR"}Bidon de Gasolina", "{"#GAS_STATION_COLOR"}·{ffffff}¿Cuantos litros deseas repostar desde el bidon? (Ingresa un valor numérico):", "Repostar", "Cancelar");
+    Dialog_Open(playerid, Dialog:GasCanisterRefuelAmount, DIALOG_STYLE_INPUT, "{"#GAS_STATION_COLOR"}Bidon de Gasolina", "{"#GAS_STATION_COLOR"}·{f0f0f0}¿Cuantos litros deseas repostar desde el bidon? (Ingresa un valor numérico):", "Repostar", "Cancelar");
     return 1;
 }
 DialogResponse:GasCanisterRefuelAmount(playerid, response, listitem, inputtext[]) {
@@ -305,7 +305,7 @@ DialogCreate:PlayerGPSSite_6(playerid) {
     new dialog[90 * (sizeof(g_fuel_stations) + 1)], sites;
     for(new i = 0; i != sizeof(g_fuel_stations); i++ ) {
         PLAYER_TEMP[playerid][pt_PLAYER_LISTITEM][sites] = i;
-        strcatf(dialog, "{FFFFFF}Gasolinera %d\t{"#GAS_STATION_COLOR"}%.2f Km\n", sites + 1, (GetPlayerDistanceFromPoint(playerid, g_fuel_stations[i][fuel_station_pos_x], g_fuel_stations[i][fuel_station_pos_y], g_fuel_stations[i][fuel_station_pos_z]) * 0.01));
+        strcatf(dialog, "{f0f0f0}Gasolinera %d\t{"#GAS_STATION_COLOR"}%.2f Km\n", sites + 1, (GetPlayerDistanceFromPoint(playerid, g_fuel_stations[i][fuel_station_pos_x], g_fuel_stations[i][fuel_station_pos_y], g_fuel_stations[i][fuel_station_pos_z]) * 0.01));
         sites ++;
     }
     Dialog_Open(playerid, Dialog:PlayerGPSSite_6, DIALOG_STYLE_TABLIST, "GPS - {"#GAS_STATION_COLOR"}Gasolineras", dialog, "Continuar", "Atrás");

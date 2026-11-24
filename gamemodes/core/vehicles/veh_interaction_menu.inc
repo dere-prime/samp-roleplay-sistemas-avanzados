@@ -16,26 +16,26 @@ DialogCreate:VehicleInteractionMenu(playerid) {
     new caption[120], dialog[256];
     format(caption, sizeof(caption), "Vehiculo · {%06x}%s [%d]", (VEHICLE_COLORS[ GLOBAL_VEHICLES[vehicleid][gb_vehicle_COLOR_1] ]  >>> 8), VEHICLE_INFO[modelid-400][vehicle_info_NAME], vehicleid);
 
-    strcatf(dialog, "{ffffff}Motor\t%s\n", (GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_ENGINE]) ? "{"#GREEN_COLOR"}Encendido" : "{"#ERROR_COLOR"}Apagado");
-    strcatf(dialog, "{ffffff}Luces\t%s\n", (GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_LIGHTS]) ? "{"#GREEN_COLOR"}Encendidas" : "{"#ERROR_COLOR"}Apagadas");
+    strcatf(dialog, "{f0f0f0}Motor\t%s\n", (GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_ENGINE]) ? "{"#GREEN_COLOR"}Encendido" : "{"#ERROR_COLOR"}Apagado");
+    strcatf(dialog, "{f0f0f0}Luces\t%s\n", (GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_LIGHTS]) ? "{"#GREEN_COLOR"}Encendidas" : "{"#ERROR_COLOR"}Apagadas");
     strcatf(dialog, "{000000}\n");
-    strcatf(dialog, "{ffffff}Combustible: {"#PRIMARY_COLOR"}%.1f/%.1fL\n", GLOBAL_VEHICLES[vehicleid][gb_vehicle_GAS], GLOBAL_VEHICLES[vehicleid][gb_vehicle_MAX_GAS]);
+    strcatf(dialog, "{f0f0f0}Combustible: {"#PRIMARY_COLOR"}%.1f/%.1fL\n", GLOBAL_VEHICLES[vehicleid][gb_vehicle_GAS], GLOBAL_VEHICLES[vehicleid][gb_vehicle_MAX_GAS]);
     strcatf(dialog, "Estado de el motor: {"#PRIMARY_COLOR"}%.1f\n", GLOBAL_VEHICLES[vehicleid][gb_vehicle_HEALTH]);
     strcatf(dialog, "{000000}\n");
     if (PLAYER_VEHICLES[vehicleid][player_vehicle_OWNER_ID] != PI[playerid][pi_ID]) {
         strcatf(dialog, "{cccccc}Acceso al vehiculo\t{cccccc}%s\n", (GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_DOORS]) ? "Nadie" : "Todos");
     } else {
-        strcatf(dialog, "{ffffff}Acceso al vehiculo\t%s\n", (GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_DOORS]) ? "{"#ERROR_COLOR"}Nadie" : "{"#GREEN_COLOR"}Todos");
+        strcatf(dialog, "{f0f0f0}Acceso al vehiculo\t%s\n", (GLOBAL_VEHICLES[vehicleid][gb_vehicle_PARAMS_DOORS]) ? "{"#ERROR_COLOR"}Nadie" : "{"#GREEN_COLOR"}Todos");
     }
-    strcatf(dialog, "{ffffff}Sacar a alguien\t-\n");
-    strcatf(dialog, "{ffffff}Otras opciones\n");
+    strcatf(dialog, "{f0f0f0}Sacar a alguien\t-\n");
+    strcatf(dialog, "{f0f0f0}Otras opciones\n");
 
     if (GLOBAL_VEHICLES[vehicleid][gb_vehicle_TYPE] == VEHICLE_TYPE_WORK) {
         switch (WORK_VEHICLES[vehicleid][work_vehicle_WORK]) {
             case WORK_TAXI: {
                 if (IsPlayerWorking(playerid, WORK_TAXI)) {
                     strcatf(dialog, "{000000}\n");
-                    strcatf(dialog, "{ffffff}Taxímetro\t{"#YELLOW_COLOR"}Taxista\n");
+                    strcatf(dialog, "{f0f0f0}Taxímetro\t{"#YELLOW_COLOR"}Taxista\n");
                 }
             }
         }
@@ -76,7 +76,7 @@ DialogCreate:VehicleInteractionKick(playerid) {
 
     new caption[120];
     format(caption, sizeof(caption), "Vehiculo · {%06x}%s [%d]", (VEHICLE_COLORS[ GLOBAL_VEHICLES[vehicleid][gb_vehicle_COLOR_1] ]  >>> 8), VEHICLE_INFO[modelid-400][vehicle_info_NAME], vehicleid);
-    Dialog_Open(playerid, Dialog:VehicleInteractionKick, DIALOG_STYLE_INPUT, caption, "Escribe la {"#SECONDARY_COLOR"}ID de el jugador{ffffff} que esta en el vehiculo:", "Sacar", "Cerrar");
+    Dialog_Open(playerid, Dialog:VehicleInteractionKick, DIALOG_STYLE_INPUT, caption, "Escribe la {"#SECONDARY_COLOR"}ID de el jugador{f0f0f0} que esta en el vehiculo:", "Sacar", "Cerrar");
     return 1;
 }
 DialogResponse:VehicleInteractionKick(playerid, response, listitem, inputtext[]) {

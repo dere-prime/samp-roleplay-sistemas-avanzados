@@ -28,29 +28,29 @@ CMD:ayuda(playerid, params[]) {
 hook OnScriptInit() {
     format(DIALOG_CREDIT_String, sizeof DIALOG_CREDIT_String,
         "\
-        {"#PRIMARY_COLOR"}"SERVER_NAME"{FFFFFF}\n\n\
+        {"#PRIMARY_COLOR"}"SERVER_NAME"{f0f0f0}\n\n\
         Servidor RolePlay medio/bajo con misiones fuera de rol y dentro de rol.\n\
         Con este servidor, se espera que disfrutes de las misiones y el rol con buenos sistemas hechos con <3\n\
         La mayoría de misiones están fuera de contexto con tu rol principal con otros usuarios,\n\
         pero algunas misiones pueden o ser necesario hacerse en conjunto con otras personas y podrían formar parte del rol.\n\
         Aunque la idea es que hagas tu rol aparte, las misiones son un extra para mejorar un poco el entretenimiento.\n\
         \n\
-        {"#PRIMARY_COLOR"}INFORMACIÓN Y CRÉDITOS{FFFFFF}\n\
-        Desarrollado por: {"#SECONDARY_COLOR"}Dere.Prime{FFFFFF}\n\
-        Ayuda mínima de: {"#SECONDARY_COLOR"}Joseph1416{FFFFFF}\n\
-        Número de compilación (versión): {"#SECONDARY_COLOR"}#%d{FFFFFF}\n\
+        {"#PRIMARY_COLOR"}INFORMACIÓN Y CRÉDITOS{f0f0f0}\n\
+        Desarrollado por: {"#SECONDARY_COLOR"}Dere.Prime{f0f0f0}\n\
+        Ayuda mínima de: {"#SECONDARY_COLOR"}Joseph1416{f0f0f0}\n\
+        Número de compilación (versión): {"#SECONDARY_COLOR"}#%d{f0f0f0}\n\
         \n\
-        {"#PRIMARY_COLOR"}Encuéntranos en:{FFFFFF}\n\
-        Discord: {"#SECONDARY_COLOR"}"SERVER_WEBSITE"{FFFFFF}\n\
+        {"#PRIMARY_COLOR"}Encuéntranos en:{f0f0f0}\n\
+        Discord: {"#SECONDARY_COLOR"}"SERVER_WEBSITE"{f0f0f0}\n\
         \n\
-        {"#PRIMARY_COLOR"}Librerías y plugins:{FFFFFF}\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} ColAndreas, Crashdetect, FCNPC, MySQL, PawnCMD, PawnPlus\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} PawnRaknet, PawnRegex, SSCANF, streamer, YSF\n\
+        {"#PRIMARY_COLOR"}Librerías y plugins:{f0f0f0}\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} ColAndreas, Crashdetect, FCNPC, MySQL, PawnCMD, PawnPlus\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} PawnRaknet, PawnRegex, SSCANF, streamer, YSF\n\
         \n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} YSI, pawn-easing-functions, mdialog, logger, TextureStudio, samp-textdraw-editor\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} YSI, pawn-easing-functions, mdialog, logger, TextureStudio, samp-textdraw-editor\n\
         \n\
-        {"#PRIMARY_COLOR"}Mapeos: {FFFFFF}\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} La mayoría fueron sacados de internet (foros, Discord, etc.), y algunos mapeos simples fueron propios.\n\
+        {"#PRIMARY_COLOR"}Mapeos: {f0f0f0}\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} La mayoría fueron sacados de internet (foros, Discord, etc.), y algunos mapeos simples fueron propios.\n\
         \n\
         {cccccc}¡Es todo!\n\
         ", g_last_build_version
@@ -60,14 +60,14 @@ hook OnScriptInit() {
 /* DIALOGS GENERAL INFO */
 DialogCreate:PlayerHelpMenu(playerid) {
     Dialog_Open(playerid, Dialog:PlayerHelpMenu, DIALOG_STYLE_TABLIST, ""SERVER_NAME_FORMAT" · Ayuda",
-    "{"#SECONDARY_COLOR"}•{FFFFFF} Informacion\n\
-    {"#SECONDARY_COLOR"}•{FFFFFF} Reportar un Problema\n\
-    {"#SECONDARY_COLOR"}•{FFFFFF} General\n\
-    {"#SECONDARY_COLOR"}•{FFFFFF} Propiedades\n\
-    {"#SECONDARY_COLOR"}•{FFFFFF} Trabajos\n\
-    {"#SECONDARY_COLOR"}•{FFFFFF} Vehículos\n\
-    {"#SECONDARY_COLOR"}•{FFFFFF} Bandas\n\
-    {"#SECONDARY_COLOR"}•{FFFFFF} Membresia VIP\n"
+    "{"#SECONDARY_COLOR"}•{f0f0f0} Informacion\n\
+    {"#SECONDARY_COLOR"}•{f0f0f0} Reportar un Problema\n\
+    {"#SECONDARY_COLOR"}•{f0f0f0} General\n\
+    {"#SECONDARY_COLOR"}•{f0f0f0} Propiedades\n\
+    {"#SECONDARY_COLOR"}•{f0f0f0} Trabajos\n\
+    {"#SECONDARY_COLOR"}•{f0f0f0} Vehículos\n\
+    {"#SECONDARY_COLOR"}•{f0f0f0} Bandas\n\
+    {"#SECONDARY_COLOR"}•{f0f0f0} Membresia VIP\n"
     , "Continuar", "Cerrar");
     return 1;
 }
@@ -90,14 +90,14 @@ DialogResponse:ReturnToMainHelpMenu(playerid, response, listitem, inputtext[]) {
 /* REPORT */
 DialogCreate:PlayerHelpReport(playerid) {
     Dialog_Open(playerid, Dialog:ReturnToMainHelpMenu, DIALOG_STYLE_MSGBOX, "Ayuda · {"#PRIMARY_COLOR"}Reportar", 
-        "{FFFFFF}Para reportar a un jugador, utiliza el comando {"#PRIMARY_COLOR"}/reportar <ID>{FFFFFF}.\n\
-        Tu reporte será enviado a la administración y será visible para el rango {"#ADMIN_COLOR"}Moderador{FFFFFF} en adelante.\n\
+        "{f0f0f0}Para reportar a un jugador, utiliza el comando {"#PRIMARY_COLOR"}/reportar <ID>{f0f0f0}.\n\
+        Tu reporte será enviado a la administración y será visible para el rango {"#ADMIN_COLOR"}Moderador{f0f0f0} en adelante.\n\
         \n\
         La ID del jugador es el número que aparece junto a su nombre, ilustrado de la siguiente manera:\n\
         Nombre_Apellido (ID)\n\
         \n\
         Si necesitas reportar algún bug del servidor o cualquier conflicto que no esté relacionado con un jugador,\n\
-        hazlo directamente desde nuestro servidor de {"#PRIMARY_COLOR"}Discord{FFFFFF}.",
+        hazlo directamente desde nuestro servidor de {"#PRIMARY_COLOR"}Discord{f0f0f0}.",
         "Volver", ""
     );
     return 1;
@@ -105,38 +105,38 @@ DialogCreate:PlayerHelpReport(playerid) {
 /* GENERAL */
 DialogCreate:PlayerHelpGeneral(playerid) {
     Dialog_Open(playerid, Dialog:ReturnToMainHelpMenu, DIALOG_STYLE_MSGBOX, "Ayuda · {"#PRIMARY_COLOR"}General", 
-        "{FFFFFF}Un día del juego dura tres horas reales.\n\
+        "{f0f0f0}Un día del juego dura tres horas reales.\n\
         \n\
-        Cada hora recibirás entre {"#PRIMARY_COLOR"}100 y 500 de experiencia{FFFFFF}.\n\
+        Cada hora recibirás entre {"#PRIMARY_COLOR"}100 y 500 de experiencia{f0f0f0}.\n\
         La experiencia se obtiene trabajando y realizando distintas actividades dentro del servidor.\n\
         \n\
         Cada vez que tu experiencia cambie, se mostrará una barra dinámica con tu progreso actual.\n\
         Cuando la barra se complete, subirás de nivel automáticamente.\n\
         \n\
-        El pago de juego (payday) se recibe cada {"#PRIMARY_COLOR"}3 horas{FFFFFF}.\n\
+        El pago de juego (payday) se recibe cada {"#PRIMARY_COLOR"}3 horas{f0f0f0}.\n\
         \n\
         A excepción de los comandos de seguridad, todas las funciones del jugador\n\
-        se gestionan desde el menú de interacción {"#PRIMARY_COLOR"}(tecla Y){FFFFFF}.\n\
+        se gestionan desde el menú de interacción {"#PRIMARY_COLOR"}(tecla Y){f0f0f0}.\n\
         Desde allí puedes acceder a:\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} GPS\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Teléfono\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Guía telefónica\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Consumir medicamento, marihuana o crack\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Dar dinero u objetos\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Vender o tirar objetos\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Estadísticas\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Experiencia\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Inventario\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Configuración\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} GPS\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Teléfono\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Guía telefónica\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Consumir medicamento, marihuana o crack\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Dar dinero u objetos\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Vender o tirar objetos\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Estadísticas\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Experiencia\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Inventario\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Configuración\n\
         \n\
-        Para interactuar con opciones como (dar, vender, tirar) debes ser {"#PRIMARY_COLOR"}Nivel 15{FFFFFF}\n\
+        Para interactuar con opciones como (dar, vender, tirar) debes ser {"#PRIMARY_COLOR"}Nivel 15{f0f0f0}\n\
         \n\
-        Utiliza {"#YELLOW_COLOR"}/panel{FFFFFF}, {"#YELLOW_COLOR"}/nombre{FFFFFF}, {"#YELLOW_COLOR"}/correo{FFFFFF} o {"#YELLOW_COLOR"}/pass{FFFFFF}\n\
+        Utiliza {"#YELLOW_COLOR"}/panel{f0f0f0}, {"#YELLOW_COLOR"}/nombre{f0f0f0}, {"#YELLOW_COLOR"}/correo{f0f0f0} o {"#YELLOW_COLOR"}/pass{f0f0f0}\n\
         para gestionar la seguridad de tu cuenta y configuracion.\n\
         \n\
-        Para ver el tiempo restante en la cárcel, utiliza {"#YELLOW_COLOR"}/tiempo{FFFFFF}.\n\
+        Para ver el tiempo restante en la cárcel, utiliza {"#YELLOW_COLOR"}/tiempo{f0f0f0}.\n\
         \n\
-        Para enviar una duda, usa el comando {"#YELLOW_COLOR"}/duda{FFFFFF} seguido de tu mensaje.\n",
+        Para enviar una duda, usa el comando {"#YELLOW_COLOR"}/duda{f0f0f0} seguido de tu mensaje.\n",
         "Volver", ""
     );
     return 1;
@@ -144,23 +144,23 @@ DialogCreate:PlayerHelpGeneral(playerid) {
 /* PROPIEDADES */
 DialogCreate:PlayerHelpProperties(playerid) {
     Dialog_Open(playerid, Dialog:ReturnToMainHelpMenu, DIALOG_STYLE_MSGBOX, "Ayuda · {"#PRIMARY_COLOR"}Propiedades",
-        "{FFFFFF}Puedes encontrar diferentes propiedades en todo {"#SECONDARY_COLOR"}San Andreas{FFFFFF}.\n\
+        "{f0f0f0}Puedes encontrar diferentes propiedades en todo {"#SECONDARY_COLOR"}San Andreas{f0f0f0}.\n\
         Para comprar una, debes conocer la ID de la propiedad y acudir a cualquier banco;\n\
         el dinero se descontará automáticamente de tu cuenta bancaria.\n\
         \n\
         Puedes localizar tus propiedades utilizando el GPS.\n\
         Cualquier persona puede tocar el timbre de tu propiedad y tú decides si deseas permitirle la entrada.\n\
         \n\
-        El comando {d1d1d1}/casa{FFFFFF} puede utilizarse desde cualquier lugar.\n\
+        El comando {d1d1d1}/casa{f0f0f0} puede utilizarse desde cualquier lugar.\n\
         Desde allí podrás:\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Cambiar el nombre de la propiedad.\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Echar a un jugador que se encuentre dentro.\n\
-        {"#SECONDARY_COLOR"}•{FFFFFF} Expulsar a todos los huéspedes.\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Cambiar el nombre de la propiedad.\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Echar a un jugador que se encuentre dentro.\n\
+        {"#SECONDARY_COLOR"}•{f0f0f0} Expulsar a todos los huéspedes.\n\
         \n\
-        Si deseas vender tu propiedad, puedes hacerlo en {"#PRIMARY_COLOR"}\"Gobierno San Andreas\"{FFFFFF};\n\
+        Si deseas vender tu propiedad, puedes hacerlo en {"#PRIMARY_COLOR"}\"Gobierno San Andreas\"{f0f0f0};\n\
         localízalo desde el GPS.\n\
-        Puedes venderla al banco de inmediato, pero solo recibirás el {"#SECONDARY_COLOR"}25% del valor original{FFFFFF}\n\
-        ({"#SECONDARY_COLOR"}50% si eres VIP{FFFFFF}).\n\
+        Puedes venderla al banco de inmediato, pero solo recibirás el {"#SECONDARY_COLOR"}25% del valor original{f0f0f0}\n\
+        ({"#SECONDARY_COLOR"}50% si eres VIP{f0f0f0}).\n\
         \n\
         También puedes venderla a otro jugador dentro de un rango de precio preestablecido.\n",
         "Cerrar", ""
@@ -171,37 +171,37 @@ DialogCreate:PlayerHelpProperties(playerid) {
 DialogCreate:PlayerHelpVehicles(playerid) {
     Dialog_Open(playerid, Dialog:ReturnToMainHelpMenu, DIALOG_STYLE_MSGBOX, "Ayuda · {"#PRIMARY_COLOR"}Vehiculos",
         "{"#PRIMARY_COLOR"}GENERAL\n\
-        {FFFFFF}La gestión del vehículo se realiza desde el {"#SECONDARY_COLOR"}menú de interacción (Y){FFFFFF}.\n\
+        {f0f0f0}La gestión del vehículo se realiza desde el {"#SECONDARY_COLOR"}menú de interacción (Y){f0f0f0}.\n\
         \n\
-        Si estás como {"#GREEN_COLOR"}conductor{FFFFFF}, tendrás acceso al menú vehicular con:\n\
+        Si estás como {"#GREEN_COLOR"}conductor{f0f0f0}, tendrás acceso al menú vehicular con:\n\
         - Motor\n\
         - Luces\n\
         - Puertas\n\
         - Combustible\n\
         - Estado del motor\n\
-        - {"#RED_COLOR"}Echar{FFFFFF}\n\
+        - {"#RED_COLOR"}Echar{f0f0f0}\n\
         - Opciones de trabajo (si aplica)\n\
         - Otras opciones\n\
         \n\
         También puedes usar directamente:\n\
-        {"#BLUE_COLOR"}/motor{FFFFFF} • {"#BLUE_COLOR"}/luces{FFFFFF} • {"#BLUE_COLOR"}/seguro{FFFFFF}\n\
+        {"#BLUE_COLOR"}/motor{f0f0f0} • {"#BLUE_COLOR"}/luces{f0f0f0} • {"#BLUE_COLOR"}/seguro{f0f0f0}\n\
         \n\
-        El combustible se reposta en {"#RED_COLOR"}gasolineras{FFFFFF}.\n\
-        Si usas un bidón, debes {"#WARNING_COLOR"}estar fuera del vehículo{FFFFFF}\n\
-        y hacerlo desde el {"#SECONDARY_COLOR"}Inventario{FFFFFF}.\n\
+        El combustible se reposta en {"#RED_COLOR"}gasolineras{f0f0f0}.\n\
+        Si usas un bidón, debes {"#WARNING_COLOR"}estar fuera del vehículo{f0f0f0}\n\
+        y hacerlo desde el {"#SECONDARY_COLOR"}Inventario{f0f0f0}.\n\
         \n\
         {"#PRIMARY_COLOR"}VEHÍCULOS PERSONALES\n\
-        {FFFFFF}Se compran en {"#YELLOW_COLOR"}concesionarios{FFFFFF} con dinero de tu {"#GREEN_COLOR"}cuenta bancaria{FFFFFF}.\n\
+        {f0f0f0}Se compran en {"#YELLOW_COLOR"}concesionarios{f0f0f0} con dinero de tu {"#GREEN_COLOR"}cuenta bancaria{f0f0f0}.\n\
         Puedes localizarlos con el GPS.\n\
         \n\
-        El maletero se gestiona desde el {"#SECONDARY_COLOR"}Inventario{FFFFFF}.\n\
+        El maletero se gestiona desde el {"#SECONDARY_COLOR"}Inventario{f0f0f0}.\n\
         Si el vehículo es destruido, reaparecerá en su último estacionamiento.\n\
-        Las modificaciones se realizan en el {"#YELLOW_COLOR"}mecánico{FFFFFF}.\n\
+        Las modificaciones se realizan en el {"#YELLOW_COLOR"}mecánico{f0f0f0}.\n\
         \n\
-        Para venderlo, acude a {"#PRIMARY_COLOR"}\"Gobierno San Andreas\"{FFFFFF}.\n\
-        Recibirás {"#WARNING_COLOR"}25%{FFFFFF} del valor ({"#WARNING_COLOR"}50% VIP{FFFFFF}).\n\
+        Para venderlo, acude a {"#PRIMARY_COLOR"}\"Gobierno San Andreas\"{f0f0f0}.\n\
+        Recibirás {"#WARNING_COLOR"}25%{f0f0f0} del valor ({"#WARNING_COLOR"}50% VIP{f0f0f0}).\n\
         \n\
-        {"#ERROR_COLOR"}Importante:{FFFFFF} Se vende con todo lo que haya en el maletero.\n\
+        {"#ERROR_COLOR"}Importante:{f0f0f0} Se vende con todo lo que haya en el maletero.\n\
         ",
         "Cerrar", ""
     );
@@ -211,10 +211,10 @@ DialogCreate:PlayerHelpVehicles(playerid) {
 DialogCreate:PlayerHelpCrews(playerid) {
     Dialog_Open(playerid, Dialog:ReturnToMainHelpMenu, DIALOG_STYLE_MSGBOX, "Ayuda · {"#PRIMARY_COLOR"}Bandas",
         "\
-        {FFFFFF}Utiliza {"#BLUE_COLOR"}/banda{FFFFFF} para crear una banda o administrar la tuya.\n\
-        Al entrar a una banda podrás conquistar territorios por todo {"#PRIMARY_COLOR"}San Andreas{FFFFFF}.\n\
+        {f0f0f0}Utiliza {"#BLUE_COLOR"}/banda{f0f0f0} para crear una banda o administrar la tuya.\n\
+        Al entrar a una banda podrás conquistar territorios por todo {"#PRIMARY_COLOR"}San Andreas{f0f0f0}.\n\
         \n\
-        Visita {"#SECONDARY_COLOR"}"SERVER_WEBSITE"{FFFFFF} para más información.\n\
+        Visita {"#SECONDARY_COLOR"}"SERVER_WEBSITE"{f0f0f0} para más información.\n\
         \n\
         ",
         "Cerrar", ""
@@ -225,24 +225,24 @@ DialogCreate:PlayerHelpCrews(playerid) {
 DialogCreate:PlayerHelpMembership(playerid) {
     Dialog_Open(playerid, Dialog:ReturnToMainHelpMenu, DIALOG_STYLE_MSGBOX, "Ayuda · {"#PRIMARY_COLOR"}Membresia",
         "{"#MEMBERSHIP_COLOR"}MEMBRESÍA VIP (30 DÍAS)\n\
-        {FFFFFF}Puedes comprar VIP por 30 días con el comando {"#BLUE_COLOR"}/vip{FFFFFF}.\n\
-        Se adquiere con {"#YELLOW_COLOR"}"SERVER_COIN"{FFFFFF}; para saber cómo obtener esta moneda,\n\
+        {f0f0f0}Puedes comprar VIP por 30 días con el comando {"#BLUE_COLOR"}/vip{f0f0f0}.\n\
+        Se adquiere con {"#YELLOW_COLOR"}"SERVER_COIN"{f0f0f0}; para saber cómo obtener esta moneda,\n\
         visita el servidor de discord oficial.\n\
         \n\
         {"#PRIMARY_COLOR"}VENTAJAS\n\
-        {FFFFFF}- Hasta {"#GREEN_COLOR"}"#MAX_SU_WORKS"{FFFFFF} trabajos.\n\
-        - Hasta {"#GREEN_COLOR"}"#MAX_SU_VEHICLES"{FFFFFF} vehículos.\n\
-        - Hasta {"#GREEN_COLOR"}"#MAX_SU_TOYS"{FFFFFF} accesorios.\n\
-        - Hasta {"#GREEN_COLOR"}"#MAX_SU_PROPERTIES"{FFFFFF} propiedades.\n\
-        - No pagas {"#WARNING_COLOR"}seguro{FFFFFF} de propiedades ni vehículos en el Payday.\n\
-        - No pierdes {"#BLUE_COLOR"}chaleco{FFFFFF} al morir.\n\
-        - Al vender una propiedad o vehículo al banco recibes el {"#GREEN_COLOR"}50%{FFFFFF}.\n\
-        - Recuperación {"#GREEN_COLOR"}doble de rápida{FFFFFF} en el hospital.\n\
-        - Al recuperarte, tu vida vuelve al {"#GREEN_COLOR"}100%{FFFFFF}.\n\
-        - Reducción de condena al {"#GREEN_COLOR"}50%{FFFFFF}.\n\
-        - Cuando un médico te cure, recuperarás {"#GREEN_COLOR"}50% de vida{FFFFFF}.\n\
+        {f0f0f0}- Hasta {"#GREEN_COLOR"}"#MAX_SU_WORKS"{f0f0f0} trabajos.\n\
+        - Hasta {"#GREEN_COLOR"}"#MAX_SU_VEHICLES"{f0f0f0} vehículos.\n\
+        - Hasta {"#GREEN_COLOR"}"#MAX_SU_TOYS"{f0f0f0} accesorios.\n\
+        - Hasta {"#GREEN_COLOR"}"#MAX_SU_PROPERTIES"{f0f0f0} propiedades.\n\
+        - No pagas {"#WARNING_COLOR"}seguro{f0f0f0} de propiedades ni vehículos en el Payday.\n\
+        - No pierdes {"#BLUE_COLOR"}chaleco{f0f0f0} al morir.\n\
+        - Al vender una propiedad o vehículo al banco recibes el {"#GREEN_COLOR"}50%{f0f0f0}.\n\
+        - Recuperación {"#GREEN_COLOR"}doble de rápida{f0f0f0} en el hospital.\n\
+        - Al recuperarte, tu vida vuelve al {"#GREEN_COLOR"}100%{f0f0f0}.\n\
+        - Reducción de condena al {"#GREEN_COLOR"}50%{f0f0f0}.\n\
+        - Cuando un médico te cure, recuperarás {"#GREEN_COLOR"}50% de vida{f0f0f0}.\n\
         \n\
-        Visita {"#PRIMARY_COLOR"}"SERVER_WEBSITE"{FFFFFF} para más información.\n\
+        Visita {"#PRIMARY_COLOR"}"SERVER_WEBSITE"{f0f0f0} para más información.\n\
         \n\
         ",
         "Cerrar", ""

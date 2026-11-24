@@ -10,40 +10,40 @@
 forward OnPlayerAbsoluteFinishTA(playerid);
 
 #define WELCOME_STRING \
-	"{"#PRIMARY_COLOR"}Bienvenido a {"#SECONDARY_COLOR"}"SERVER_NAME"{FFFFFF}\n\n\
+	"{"#PRIMARY_COLOR"}Bienvenido a {"#SECONDARY_COLOR"}"SERVER_NAME"{f0f0f0}\n\n\
 	Gracias por elegir jugar aquí. Como viste en la cinemática, no eres de este lugar.\n\
 	No conoces la ciudad, no tienes pertenencias y solo cuentas con un poco de dinero\n\
 	entregado por las personas del faro.\n\
 	\n\
 	Empiezas desde cero, elige bien tu camino…\n\
-	{"#WARNING_COLOR"}pero recuerda:{FFFFFF} tu pasado te persigue y algunos acontecimientos lo demostrarán.\n\
+	{"#WARNING_COLOR"}pero recuerda:{f0f0f0} tu pasado te persigue y algunos acontecimientos lo demostrarán.\n\
 	\n\
-	{"#PRIMARY_COLOR"}INFORMACIÓN ROLEPLAY{FFFFFF}\n\
-	Este es un servidor {"#BLUE_COLOR"}RolePlay{FFFFFF}. Puedes jugar RP normalmente, sin embargo,\n\
+	{"#PRIMARY_COLOR"}INFORMACIÓN ROLEPLAY{f0f0f0}\n\
+	Este es un servidor {"#BLUE_COLOR"}RolePlay{f0f0f0}. Puedes jugar RP normalmente, sin embargo,\n\
 	algunas misiones y cinemáticas están fuera del contexto del RP,\n\
 	ya que se enfocan en tu pasado antes de llegar a la ciudad.\n\
 	\n\
-	{"#PRIMARY_COLOR"}HAMBRE Y SED{FFFFFF} abajo a la derecha de la pantalla\n\
-	• Hambre: icono de {"#GREEN_COLOR"}hamburguesa{FFFFFF}.\n\
-	• Sed: icono de {"#BLUE_COLOR"}vaso{FFFFFF}.\n\
+	{"#PRIMARY_COLOR"}HAMBRE Y SED{f0f0f0} abajo a la derecha de la pantalla\n\
+	• Hambre: icono de {"#GREEN_COLOR"}hamburguesa{f0f0f0}.\n\
+	• Sed: icono de {"#BLUE_COLOR"}vaso{f0f0f0}.\n\
 	Si bajan demasiado, perderás salud.\n\
 	\n\
-	{"#PRIMARY_COLOR"}CONTROLES RÁPIDOS{FFFFFF}\n\
-	• Inventario: pulsa {"#SECONDARY_COLOR"}N{FFFFFF}\n\
-	• Menú de interacción: pulsa {"#SECONDARY_COLOR"}Y{FFFFFF}\n\
+	{"#PRIMARY_COLOR"}CONTROLES RÁPIDOS{f0f0f0}\n\
+	• Inventario: pulsa {"#SECONDARY_COLOR"}N{f0f0f0}\n\
+	• Menú de interacción: pulsa {"#SECONDARY_COLOR"}Y{f0f0f0}\n\
 	\n\
-	{"#PRIMARY_COLOR"}MENÚ DE INTERACCIÓN{FFFFFF}\n\
+	{"#PRIMARY_COLOR"}MENÚ DE INTERACCIÓN{f0f0f0}\n\
 	Configuraciones básicas, información de cuenta,\n\
 	interacción con jugadores e inventario rápido sin comandos.\n\n\
-	{"#PRIMARY_COLOR"}COMANDOS ÚTILES{FFFFFF}\n\
+	{"#PRIMARY_COLOR"}COMANDOS ÚTILES{f0f0f0}\n\
 	/consumir\n\
 	/telefono | /tlf | /movil | /celular\n\
 	/gps\n\
 	\n\
-	{"#PRIMARY_COLOR"}OTROS{FFFFFF}\n\
+	{"#PRIMARY_COLOR"}OTROS{f0f0f0}\n\
 	• Accesorios: /accesorios\n\
 	\n\
-	{"#GREEN_COLOR"}¡Eso es todo, disfruta y a jugar!{FFFFFF}\n\
+	{"#GREEN_COLOR"}¡Eso es todo, disfruta y a jugar!{f0f0f0}\n\
 	{666666}Debes esperar 30 segundos para cerrar este mensaje."
 
 
@@ -74,15 +74,15 @@ DialogCreate:PlayerRegisterInputPass(playerid) {
 		playerid, Dialog:PlayerRegisterInputPass, DIALOG_STYLE_INPUT, 
 		""SERVER_NAME_FORMAT" · Registrarse", 
 		"\
-			{FFFFFF}Bienvenido, este usuario no esta registrado.\n\
+			{f0f0f0}Bienvenido, este usuario no esta registrado.\n\
 			\n\
-			Si tiene una {"#WARNING_COLOR"}cuenta registrada{FFFFFF} siga estos pasos:\n\
-			{"#SECONDARY_COLOR"}• {FFFFFF}Verifique su {"#ERROR_COLOR"}nombre de usuario{FFFFFF} e intente una vez mas.\n\
-			{"#SECONDARY_COLOR"}• {FFFFFF}Si todo esta correcto, contacta con el soporte administrativo a traves de discord.\n\
+			Si tiene una {"#WARNING_COLOR"}cuenta registrada{f0f0f0} siga estos pasos:\n\
+			{"#SECONDARY_COLOR"}• {f0f0f0}Verifique su {"#ERROR_COLOR"}nombre de usuario{f0f0f0} e intente una vez mas.\n\
+			{"#SECONDARY_COLOR"}• {f0f0f0}Si todo esta correcto, contacta con el soporte administrativo a traves de discord.\n\
 			\n\
-			Para crear tu cuenta asegurate de que la clave {"#WARNING_COLOR"}cumpla los siguientes requisitos{FFFFFF}:\n\
-			{"#SECONDARY_COLOR"}• {FFFFFF}Caracteres minimos: {"#WARNING_COLOR"}"#MIN_PASS_LENGTH"\n\
-			{"#SECONDARY_COLOR"}• {FFFFFF}Caracteres maximos: {"#WARNING_COLOR"}"#MAX_PASS_LENGTH"\n\
+			Para crear tu cuenta asegurate de que la clave {"#WARNING_COLOR"}cumpla los siguientes requisitos{f0f0f0}:\n\
+			{"#SECONDARY_COLOR"}• {f0f0f0}Caracteres minimos: {"#WARNING_COLOR"}"#MIN_PASS_LENGTH"\n\
+			{"#SECONDARY_COLOR"}• {f0f0f0}Caracteres maximos: {"#WARNING_COLOR"}"#MAX_PASS_LENGTH"\n\
 		",
 		"»", "-"
 	);
@@ -100,7 +100,7 @@ DialogResponse:PlayerRegisterInputPass(playerid, response, listitem, inputtext[]
 		Dialog_Show(playerid, Dialog:PlayerRegisterInputEmail);
 	}
 	else {
-		Dialog_Message(playerid, DIALOG_STYLE_MSGBOX, ""SERVER_NAME_FORMAT" · Boton de salir", "{FFFFFF}Ha cancelado el registro de su cuenta.\n\nSi desea registrarse en otro momento\npuede hacerlo reiniciando el proceso de conexion al servidor.", "Salir");
+		Dialog_Message(playerid, DIALOG_STYLE_MSGBOX, ""SERVER_NAME_FORMAT" · Boton de salir", "{f0f0f0}Ha cancelado el registro de su cuenta.\n\nSi desea registrarse en otro momento\npuede hacerlo reiniciando el proceso de conexion al servidor.", "Salir");
 		KickEx(playerid, 500);
 	}
 	return 1;
@@ -111,11 +111,11 @@ DialogCreate:PlayerRegisterInputEmail(playerid) {
 	Dialog_Open(
 		playerid, Dialog:PlayerRegisterInputEmail, DIALOG_STYLE_INPUT, 
 		""SERVER_NAME_FORMAT" · Correo Electronico", 
-		"{FFFFFF}Necesitamos un {"#SECONDARY_COLOR"}correo electrónico{FFFFFF} válido.\n\
+		"{f0f0f0}Necesitamos un {"#SECONDARY_COLOR"}correo electrónico{f0f0f0} válido.\n\
 		\n\
 		El correo electrónico es necesario para:\n\
-		{"#SECONDARY_COLOR"}•{FFFFFF} Recuperar la clave en caso de olvido.\n\
-		{"#SECONDARY_COLOR"}•{FFFFFF} Enviar notificaciones importantes sobre su cuenta.\n\
+		{"#SECONDARY_COLOR"}•{f0f0f0} Recuperar la clave en caso de olvido.\n\
+		{"#SECONDARY_COLOR"}•{f0f0f0} Enviar notificaciones importantes sobre su cuenta.\n\
 		\n\
 		{cccccc}Ingrese su correo electrónico a continuación:",
 		"»", "-"

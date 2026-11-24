@@ -13,7 +13,7 @@ new Float:WaterVehsStations[][] = {
 
 hook OnScriptInit() {
     for(new i = 0; i < sizeof WaterVehsStations; i ++) {
-        CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/barco {FFFFFF}para ver opciones.", 0xFFFFFFFF, WaterVehsStations[i][0], WaterVehsStations[i][1], WaterVehsStations[i][2], 100.0, .testlos = false, .interiorid = 0, .worldid = 0);
+        CreateDynamic3DTextLabel("Usa {"#PRIMARY_COLOR"}/barco {f0f0f0}para ver opciones.", 0xFFFFFFFF, WaterVehsStations[i][0], WaterVehsStations[i][1], WaterVehsStations[i][2], 100.0, .testlos = false, .interiorid = 0, .worldid = 0);
         new areaId = CreateDynamicCylinder(WaterVehsStations[i][0], WaterVehsStations[i][1], WaterVehsStations[i][2] - 10.0, WaterVehsStations[i][2] + 10.0, 30.0, 0, 0);
         Streamer_SetArrayData(STREAMER_TYPE_AREA, areaId, E_STREAMER_EXTRA_ID, { AREA_TYPE_WATERVEH_STATION });
     }

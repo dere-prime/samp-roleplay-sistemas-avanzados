@@ -106,7 +106,7 @@ public OnPlayerLogin(playerid) {
 	
 	PLAYER_TEMP[playerid][pt_BAD_LOGIN_ATTEMP] = 0;
     SendPlayerClientMessage(playerid, "--------------------------------------------------------------------------------------------------------------------------------");
-	SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}»{ffffff} Bienvenido {"#PRIMARY_COLOR"}%s{ffffff}. te conectaste por ultima vez el {"#SECONDARY_COLOR"}%s{ffffff}.", PLAYER_TEMP[playerid][pt_NAME], PI[playerid][pi_LAST_CONNECTION]);
+	SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}»{f0f0f0} Bienvenido {"#PRIMARY_COLOR"}%s{f0f0f0}. te conectaste por ultima vez el {"#SECONDARY_COLOR"}%s{f0f0f0}.", PLAYER_TEMP[playerid][pt_NAME], PI[playerid][pi_LAST_CONNECTION]);
     SendPlayerClientMessage(playerid, "--------------------------------------------------------------------------------------------------------------------------------");
 
     TogglePlayerSpectatingEx(playerid, false);
@@ -119,10 +119,10 @@ DialogCreate:PlayerLoginInputPass(playerid) {
         playerid, Dialog:PlayerLoginInputPass, DIALOG_STYLE_INPUT, 
         ""SERVER_NAME_FORMAT" · Iniciar sesion", 
         "\
-            {ffffff}Bienvenido de nuevo, Escriba su clave para {"#SECONDARY_COLOR"}ingresar a su cuenta{ffffff}.\n\
+            {f0f0f0}Bienvenido de nuevo, Escriba su clave para {"#SECONDARY_COLOR"}ingresar a su cuenta{f0f0f0}.\n\
             \n\
-            Si {"#ERROR_COLOR"}no tiene una cuenta registrada{ffffff} con este nombre:\n\
-            {"#SECONDARY_COLOR"}•{ffffff} Cierre el juego y vuelva a ingresar con otro nombre que no este en uso.\n\
+            Si {"#ERROR_COLOR"}no tiene una cuenta registrada{f0f0f0} con este nombre:\n\
+            {"#SECONDARY_COLOR"}•{f0f0f0} Cierre el juego y vuelva a ingresar con otro nombre que no este en uso.\n\
         ",
         "»", "-"
     );
@@ -143,7 +143,7 @@ DialogResponse:PlayerLoginInputPass(playerid, response, listitem, inputtext[]) {
             ShowPlayerMessage(playerid, "Contraseña incorrecta, intente de nuevo. %d/%d intentos fallidos.", PLAYER_TEMP[playerid][pt_BAD_LOGIN_ATTEMP], MAX_BAD_LOGIN_ATTEMPS);
         }
     } else {
-        Dialog_Message(playerid, DIALOG_STYLE_MSGBOX, ""SERVER_NAME_FORMAT" · Boton de salir", "{FFFFFF}Ha cancelado el inicio de sesion de su cuenta.\n\nSi desea ingresar en otro momento\npuede hacerlo reiniciando el proceso de conexion al servidor.", "Salir");
+        Dialog_Message(playerid, DIALOG_STYLE_MSGBOX, ""SERVER_NAME_FORMAT" · Boton de salir", "{f0f0f0}Ha cancelado el inicio de sesion de su cuenta.\n\nSi desea ingresar en otro momento\npuede hacerlo reiniciando el proceso de conexion al servidor.", "Salir");
         KickEx(playerid, 500);
     }
     return 1;

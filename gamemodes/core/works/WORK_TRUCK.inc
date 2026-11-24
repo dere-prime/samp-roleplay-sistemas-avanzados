@@ -74,7 +74,7 @@ Truck_StartWork(const playerid, const vehicleid) {
     if (!Vehicle_IsValid(vehicleid)) return 0;
     switch (v_truck_info[vehicleid][v_truck_state]) {
         case TRUCK_STATE_INVALID: {
-            SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{ffffff}Estacionate muy cerca de el punto rojo que te aparece en el mapa para continuar.");
+            SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{f0f0f0}Estacionate muy cerca de el punto rojo que te aparece en el mapa para continuar.");
 
             if (IsValidDynamicCP(p_truck_checkpoint[playerid])) {
                 DestroyDynamicCP(p_truck_checkpoint[playerid]);
@@ -119,7 +119,7 @@ SetPlayerTruckCheckpoint(const playerid, const vehicleid) {
         Streamer_SetArrayData(STREAMER_TYPE_CP, p_truck_checkpoint[playerid], E_STREAMER_EXTRA_ID, info);
         Streamer_Update(playerid, STREAMER_TYPE_CP);
 
-        SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{ffffff}Lleva la mercancia al punto de entrega, pago: %s{"#GREEN_COLOR"}${ffffff}.", number_format_thousand(floatround(2.5 * distance)));
+        SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{f0f0f0}Lleva la mercancia al punto de entrega, pago: %s{"#GREEN_COLOR"}${f0f0f0}.", number_format_thousand(floatround(2.5 * distance)));
     }
 
     if (v_truck_info[vehicleid][v_truck_state] == TRUCK_STATE_RETURN) {
@@ -129,7 +129,7 @@ SetPlayerTruckCheckpoint(const playerid, const vehicleid) {
         Streamer_SetArrayData(STREAMER_TYPE_CP, p_truck_checkpoint[playerid], E_STREAMER_EXTRA_ID, info);
         Streamer_Update(playerid, STREAMER_TYPE_CP);
 
-        SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{ffffff}Regresa al trabajo para recibir tu pago: %s{"#GREEN_COLOR"}${ffffff}.", number_format_thousand(floatround(2.5 * distance)));
+        SendPlayerClientMessage(playerid, "{"#PRIMARY_COLOR"}·{f0f0f0}Regresa al trabajo para recibir tu pago: %s{"#GREEN_COLOR"}${f0f0f0}.", number_format_thousand(floatround(2.5 * distance)));
     }
 	return 1;
 }

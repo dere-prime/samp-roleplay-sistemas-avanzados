@@ -16,7 +16,7 @@ GetWorkInfo(work, string[]) {
         }
         case WORK_TAXI: {
             format(string, 1800,
-                "{FFFFFF}Trabaja llevando personas de un destino a otro.\n\
+                "{f0f0f0}Trabaja llevando personas de un destino a otro.\n\
                 \n\
                 Sacas un vehículo del garaje de la compañía y esperas a que te llegue trabajo.\n\
                 Si no hay jugadores dispuestos a usar un taxi, puedes esperar a que llegue un trabajo NPC.\n\
@@ -30,7 +30,7 @@ GetWorkInfo(work, string[]) {
         }
         case WORK_TRUCK: {
             format(string, 1800,
-                "{FFFFFF}Trabaja llevando cargas de un lado a otro.\n\
+                "{f0f0f0}Trabaja llevando cargas de un lado a otro.\n\
                 \n\
                 Para empezar saca un camión del garaje cerca de la oficina del trabajo.\n\
                 Estaciónalo cerca del punto marcado en rojo, ni tan cerca ni tan lejos.\n\
@@ -44,16 +44,16 @@ GetWorkInfo(work, string[]) {
         }
         case WORK_FARMER: {
             format(string, 1800,
-                "{FFFFFF}Compra semillas de distintos tipos.\n\
+                "{f0f0f0}Compra semillas de distintos tipos.\n\
                 Plántalas en el terreno marcado con una bandera en el mapa y espera a que crezcan.\n\
                 Cuando estén listas, cosecha la planta antes de que el tiempo restante finalice.\n\
                 Luego puedes vender la producción o consumirla a tu antojo.\n\
                 Ganas experiencia cada vez que plantas.\n\
                 \n\
                 Desbloqueos:\n\
-                {"#SECONDARY_COLOR"}•{FFFFFF} Cada +1 de exp plantas más rápido, hasta un límite de +150 experiencia.\n\
-                {"#SECONDARY_COLOR"}•{FFFFFF} Las semillas de marihuana se desbloquean desde +100 de experiencia.\n\
-                {"#SECONDARY_COLOR"}•{FFFFFF} Las semillas de crack se desbloquean desde +200 de experiencia.\n"
+                {"#SECONDARY_COLOR"}•{f0f0f0} Cada +1 de exp plantas más rápido, hasta un límite de +150 experiencia.\n\
+                {"#SECONDARY_COLOR"}•{f0f0f0} Las semillas de marihuana se desbloquean desde +100 de experiencia.\n\
+                {"#SECONDARY_COLOR"}•{f0f0f0} Las semillas de crack se desbloquean desde +200 de experiencia.\n"
             );
         }
     }
@@ -62,7 +62,7 @@ GetWorkInfo(work, string[]) {
 DialogCreate:PlayerWorksHelp(playerid) {
     new dialog[45 * sizeof work_info];
     for(new i = 1; i < E_WORKS; i ++) {
-        strcatf(dialog, "{"#SECONDARY_COLOR"}•{FFFFFF} %c%s\n", toupper(work_info[i][work_info_NAME][0]), work_info[i][work_info_NAME][1]);
+        strcatf(dialog, "{"#SECONDARY_COLOR"}•{f0f0f0} %c%s\n", toupper(work_info[i][work_info_NAME][0]), work_info[i][work_info_NAME][1]);
     }
     Dialog_Open(playerid, Dialog:PlayerWorksHelp, DIALOG_STYLE_TABLIST, "Ayuda · {"#PRIMARY_COLOR"}Trabajos", dialog, "Ver", "Atras");
     return 1;
@@ -171,7 +171,7 @@ hook OnScriptInit() {
 		switch(work_info[i][work_info_TYPE]) {
 			case WORK_TYPE_NORMAL: {
 				if (obtain_work_coords[i][obtain_work_LABELS]) {
-					format(label_str, sizeof label_str, "{%s}%c%s\n{FFFFFF}Nivel: {%s}%d\n\n{"#PRIMARY_COLOR"}Acercate{FFFFFF} para conseguir el trabajo", work_info[i][work_info_COLOR], toupper(work_info[i][work_info_NAME][0]), work_info[i][work_info_NAME][1], work_info[i][work_info_COLOR], work_info[i][work_info_LEVEL]);
+					format(label_str, sizeof label_str, "{%s}%c%s\n{f0f0f0}Nivel: {%s}%d\n\n{"#PRIMARY_COLOR"}Acercate{f0f0f0} para conseguir el trabajo", work_info[i][work_info_COLOR], toupper(work_info[i][work_info_NAME][0]), work_info[i][work_info_NAME][1], work_info[i][work_info_COLOR], work_info[i][work_info_LEVEL]);
 					CreateDynamic3DTextLabel(label_str, 0xFFFFFFFF, obtain_work_coords[i][obtain_work_X], obtain_work_coords[i][obtain_work_Y], obtain_work_coords[i][obtain_work_Z], 10.0, .testlos = true, .interiorid = obtain_work_coords[i][obtain_work_INTERIOR]);
 					pickup_id = CreateDynamicPickup(1314, 1, obtain_work_coords[i][obtain_work_X], obtain_work_coords[i][obtain_work_Y], (obtain_work_coords[i][obtain_work_Z] - 0.5), -1, obtain_work_coords[i][obtain_work_INTERIOR]);
                     info[0] = PICKUP_TYPE_OBTAIN_WORK;
@@ -184,7 +184,7 @@ hook OnScriptInit() {
 		}
 	}
     for (new i = 0; i != sizeof(work_vehicles_spawn); i ++) {
-        format(label_str, sizeof(label_str), "{%s}%c%s\n{"#PRIMARY_COLOR"}Acercate{FFFFFF} para sacar un vehiculo", work_info[ work_vehicles_spawn[i][v_work] ][work_info_COLOR], toupper(work_info[ work_vehicles_spawn[i][v_work] ][work_info_NAME][0]), work_info[ work_vehicles_spawn[i][v_work] ][work_info_NAME][1]);
+        format(label_str, sizeof(label_str), "{%s}%c%s\n{"#PRIMARY_COLOR"}Acercate{f0f0f0} para sacar un vehiculo", work_info[ work_vehicles_spawn[i][v_work] ][work_info_COLOR], toupper(work_info[ work_vehicles_spawn[i][v_work] ][work_info_NAME][0]), work_info[ work_vehicles_spawn[i][v_work] ][work_info_NAME][1]);
         work_vehicles_spawn[i][v_text_3d] = CreateDynamic3DTextLabel(label_str, 0xFFFFFFFF, work_vehicles_spawn[i][v_x], work_vehicles_spawn[i][v_y], (work_vehicles_spawn[i][v_z]), 10.0, .testlos = true, .worldid = 0, .interiorid = 0);
         work_vehicles_spawn[i][v_pickup_id] = CreateDynamicPickup(1098, 1, work_vehicles_spawn[i][v_x], work_vehicles_spawn[i][v_y], (work_vehicles_spawn[i][v_z]), 0, 0);
         info[0] = PICKUP_TYPE_VEHICLE_SPAWNER;

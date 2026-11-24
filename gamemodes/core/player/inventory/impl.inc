@@ -154,9 +154,9 @@ stock HidePlayerInventory(const playerid) {
 stock ShowPlayerDialogInventory(const playerid, const pid) {
     new dialog[80 * MAX_PLAYER_SLOTS + 256];
     
-    strcatf(dialog, "{FFFFFF}Dinero {d1d1d1}(%s{27F587}${d1d1d1})\n", number_format_thousand(PI[pid][pi_CASH]));
+    strcatf(dialog, "{f0f0f0}Dinero {d1d1d1}(%s{27F587}${d1d1d1})\n", number_format_thousand(PI[pid][pi_CASH]));
     new toys = CountPlayerToys(pid);
-	if (toys > 0) strcatf(dialog, "{FFFFFF}Accesorios {d1d1d1}(%d)\n", toys);
+	if (toys > 0) strcatf(dialog, "{f0f0f0}Accesorios {d1d1d1}(%d)\n", toys);
 
     for (new i = 0; i != MAX_PLAYER_SLOTS; i ++) {
         if (!p_inventory[pid][i][p_inventory_valid]) strcatf(dialog, "{cccccc}%d. Slot Vacio\n", (i + 1));
@@ -169,9 +169,9 @@ stock ShowPlayerDialogInventory(const playerid, const pid) {
 stock ShowPlayerDialogInventoryEx(const playerid, const pid) {
     new dialog[200 * MAX_PLAYER_SLOTS + 256];
     
-    strcatf(dialog, "{FFFFFF}Dinero {d1d1d1}(%s{27F587}${d1d1d1})\n", number_format_thousand(PI[pid][pi_CASH]));
+    strcatf(dialog, "{f0f0f0}Dinero {d1d1d1}(%s{27F587}${d1d1d1})\n", number_format_thousand(PI[pid][pi_CASH]));
     new toys = CountPlayerToys(pid);
-	if (toys > 0) strcatf(dialog, "{FFFFFF}Accesorios {d1d1d1}(%d)\n", toys);
+	if (toys > 0) strcatf(dialog, "{f0f0f0}Accesorios {d1d1d1}(%d)\n", toys);
 
     for (new i = 0; i != MAX_PLAYER_SLOTS; i ++) {
         if (!p_inventory[pid][i][p_inventory_valid]) strcatf(dialog, "{cccccc}%d. Slot Vacio\n", (i + 1));

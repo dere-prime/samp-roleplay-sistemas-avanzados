@@ -23,15 +23,15 @@
 
 [Sayfaya Git]
 .sayfa_baslik   = Go to page
-.sayfa_icerik   = {FFFFFF}The page number should be between {ff7979}1 {FFFFFF}and {ff7979}#d
+.sayfa_icerik   = {f0f0f0}The page number should be between {ff7979}1 {f0f0f0}and {ff7979}#d
 .sayfa_btn1     = Next
 .sayfa_btn2     = Back
 .sayfa_hata     = Page number incorrect.
 
 [Indexleri Yeniden Sırala]
 .iys_baslik     = Reorder Indexes
-.iys_icerik_1   = {ffffff}This will reorder your index to {f1c40f}"0, 1, 2, 3" {ffffff}if your index is something like {f1c40f}"0, 1, 2, 4"
-.iys_icerik_2   = {e74c3c}Warning: {ffffff}This will delete the undo and redo data. Do you want to perform this operation?
+.iys_icerik_1   = {f0f0f0}This will reorder your index to {f1c40f}"0, 1, 2, 3" {f0f0f0}if your index is something like {f1c40f}"0, 1, 2, 4"
+.iys_icerik_2   = {e74c3c}Warning: {f0f0f0}This will delete the undo and redo data. Do you want to perform this operation?
 .iys_buton_1    = Yes
 .iys_buton_2    = No
 .iys_bilgi      = Indexes have been reordered. Select a textdraw to edit your textdrawings.
@@ -48,7 +48,7 @@
 
 [Proje Olustur]
 .po_baslik      = New project
-.po_metin       = {ffffff}Enter the name of the project you want to create:
+.po_metin       = {f0f0f0}Enter the name of the project you want to create:
 .po_buton_1     = Create
 .po_buton_2     = Back
 .po_hata_1      = You did not specify the project name.
@@ -56,7 +56,7 @@
 .po_hata_3      = There are invalid characters in the project name.
 .po_hata_4      = There is already a project with that name.
 .po_hata_5      = To create a new project, close the existing project.
-.po_bilgi_1     = Project "#s" {FFFFFF}created.
+.po_bilgi_1     = Project "#s" {f0f0f0}created.
 
 [Projeler]
 .pler_baslik    = Projects [#d / #d]
@@ -76,9 +76,9 @@
 .pi_hata_1      = This project is already loaded.
 .pi_hata_2      = To load a new project close the existing project.
 .pi_hata_3      = The project cannot be loaded because the database file has not been found.
-.pi_bilgi       = Project "#s" {FFFFFF}loaded. [Global TDs: #d, Player TDs: #d, Total: #d]
+.pi_bilgi       = Project "#s" {f0f0f0}loaded. [Global TDs: #d, Player TDs: #d, Total: #d]
 .pi_uyari_bslk  = Delete project
-.pi_uyari_icrk  = {FFFFFF}Are you sure you want to delete the project?
+.pi_uyari_icrk  = {f0f0f0}Are you sure you want to delete the project?
 .pi_uyari_btn1  = Yes
 .pi_uyari_btn2  = No
 .pi_uyari_bilgi = Project "#s" deleted.
@@ -86,8 +86,8 @@
 
 [Ice Aktar]
 .ia_baslik      = Import
-.ia_icerik_1    = {FFFFFF}Enter the name of the file you want to import.
-.ia_icerik_2    = {badc58}Example: {FFFFFF}phone.txt
+.ia_icerik_1    = {f0f0f0}Enter the name of the file you want to import.
+.ia_icerik_2    = {badc58}Example: {f0f0f0}phone.txt
 .ia_btn1        = Import
 .ia_btn2        = Back
 .ia_hata_1      = You need to create a project before importing a textdraw.
@@ -99,7 +99,7 @@
 
 [Disa Aktar]
 .da_baslik      = Export
-.da_icerik_1    = {FFFFFF}Enter the name of the file you want to export.
+.da_icerik_1    = {f0f0f0}Enter the name of the file you want to export.
 .da_icerik_2    = If you dont specify a file name, you will get the output as "#s.txt".
 .da_btn1        = Export
 .da_btn2        = Back
@@ -133,8 +133,8 @@
 
 [Degisken - Global | Player]
 .dg_baslik      = Default variable name
-.dg_icerik_1    = {FFFFFF}Specifies the variable name of the output you will receive when exporting your project.
-.dg_icerik_2    = {FFFFFF}Leave the screen blank to set the default variable name.
+.dg_icerik_1    = {f0f0f0}Specifies the variable name of the output you will receive when exporting your project.
+.dg_icerik_2    = {f0f0f0}Leave the screen blank to set the default variable name.
 .dg_buton1      = Change
 .dg_buton2      = Back
 .dg_hata        = The variable name is too long.
@@ -178,7 +178,7 @@
 
 [Index Degistir]
 .idgstr_bslk    = Change Index
-.idgstr_icerik  = {ffffff}Enter the index number you want to change. {3498db}(0, #d)
+.idgstr_icerik  = {f0f0f0}Enter the index number you want to change. {3498db}(0, #d)
 .idgstr_btn1    = Change
 .idgstr_btn2    = Close
 .idgstr_hata    = Index number is incorrect.
@@ -186,8 +186,8 @@
 
 [Degisken Adi]
 .degadi_bslk    = Edit variable name
-.degadi_icrk_1  = {ff7979}Note: {FFFFFF}Leave the box blank to remove the variable name.
-.degadi_icrk_2  = {ffffff}Enter the variable name you want to use for this textdraw.
+.degadi_icrk_1  = {ff7979}Note: {f0f0f0}Leave the box blank to remove the variable name.
+.degadi_icrk_2  = {f0f0f0}Enter the variable name you want to use for this textdraw.
 .degadi_btn1    = Change
 .degadi_btn2    = Back
 .degadi_hata    = The variable name is too long.
@@ -209,17 +209,17 @@
 
 [Boyut | Textsize | Lettersize]
 .btl_baslik     = Manual editing
-.btl_icrk_1     = {FFFFFF}Enter the new values you want to use.
+.btl_icrk_1     = {f0f0f0}Enter the new values you want to use.
 .btl_icrk_2     = {70a1ff}Example:
-.btl_icrk_3     = {ffffff}10 20  or  10.0 20.0
+.btl_icrk_3     = {f0f0f0}10 20  or  10.0 20.0
 .btl_icrk_4     = {70a1ff}Current values:
-.btl_icrk_5     = {eccc68}X: {FFFFFF}#.2f
-.btl_icrk_6     = {eccc68}Y: {FFFFFF}#.2f
+.btl_icrk_5     = {eccc68}X: {f0f0f0}#.2f
+.btl_icrk_6     = {eccc68}Y: {f0f0f0}#.2f
 .btl_icrk_7     = {70a1ff}For X value only:
-.btl_icrk_8     = {ffffff}value 0
+.btl_icrk_8     = {f0f0f0}value 0
 .btl_icrk_9     = {70a1ff}For y value only:
-.btl_icrk_10    = {ffffff}0 value
-.btl_icrk_11    = {FFFFFF}Enter {ff7f50}0 0 {FFFFFF} to remove the textsize feature.
+.btl_icrk_10    = {f0f0f0}0 value
+.btl_icrk_11    = {f0f0f0}Enter {ff7f50}0 0 {f0f0f0} to remove the textsize feature.
 .btl_buton_1    = Update
 .btl_buton_2    = Close
 .btl_hata_1     = You entered an incorrect value.
@@ -228,7 +228,7 @@
 [Metin]
 .metin_baslik   = Text
 .metin_icerik   = {f1c40f}Current text:
-.metin_icerik2  = {ffffff}Enter the text you want to use.
+.metin_icerik2  = {f0f0f0}Enter the text you want to use.
 .metin_buton1   = Change
 .metin_buton2   = Close
 .metin_hata     = You must specify a text.
@@ -236,8 +236,8 @@
 
 [Outline | Shadow]
 .os_baslik      = Manual edit
-.os_icerik_1    = {f9ca24}Current value: {FFFFFF}#d
-.os_icerik_2    = {FFFFFF}Enter the value you want to use. Type {f9ca24}0 {FFFFFF} to remove.
+.os_icerik_1    = {f9ca24}Current value: {f0f0f0}#d
+.os_icerik_2    = {f0f0f0}Enter the value you want to use. Type {f9ca24}0 {f0f0f0} to remove.
 .os_buton_1     = Set
 .os_buton_2     = Close
 .os_hata        = You entered an incorrect value.
@@ -251,36 +251,36 @@
 
 [Renk - Hex]
 .rhex_baslik    = Color: Hex
-.rhex_icerik_1  = {FFFFFF}Enter the hex code of the color you want to use.
+.rhex_icerik_1  = {f0f0f0}Enter the hex code of the color you want to use.
 .rhex_icerik_2  = {badc58}Example:
-.rhex_icerik_3  = {FFFFFF}FFBE76
-.rhex_icerik_4  = {FFFFFF}#FFBE76
-.rhex_icerik_5  = {FFFFFF}0xFFBE76
-.rhex_icerik_6  = {FFFFFF}0xFFBE76FF
+.rhex_icerik_3  = {f0f0f0}FFBE76
+.rhex_icerik_4  = {f0f0f0}#FFBE76
+.rhex_icerik_5  = {f0f0f0}0xFFBE76
+.rhex_icerik_6  = {f0f0f0}0xFFBE76FF
 .rhex_buton_1   = Change
 .rhex_buton_2   = Back
 .rhex_hata      = The hex code you entered is incorrect.
 
 [Renk - RGB]
 .rgb_baslik     = Color: RGB
-.rgb_icerik_1   = {FFFFFF}Enter the RGB code of the color you want to use.
+.rgb_icerik_1   = {f0f0f0}Enter the RGB code of the color you want to use.
 .rgb_icerik_2   = {badc58}Example:
-.rgb_icerik_3   = {FFFFFF}66 135 245
-.rgb_icerik_4   = {FFFFFF}66, 135, 245
-.rgb_icerik_5   = {FFFFFF}rgb(66, 135, 245)
-.rgb_icerik_6   = {FFFFFF}rgb(66, 135, 245);
+.rgb_icerik_3   = {f0f0f0}66 135 245
+.rgb_icerik_4   = {f0f0f0}66, 135, 245
+.rgb_icerik_5   = {f0f0f0}rgb(66, 135, 245)
+.rgb_icerik_6   = {f0f0f0}rgb(66, 135, 245);
 .rgb_buton_1    = Change
 .rgb_buton_2    = Back
 .rgb_hata       = The RGB code you entered is incorrect.
 
 [Renk - RGBA]
 .rgba_baslik    = Color: RGBA
-.rgba_icerik_1  = {FFFFFF}Enter the RGBA code of the color you want to use.
+.rgba_icerik_1  = {f0f0f0}Enter the RGBA code of the color you want to use.
 .rgba_icerik_2  = {badc58}Example:
-.rgba_icerik_3  = {FFFFFF}66 135 245 255
-.rgba_icerik_4  = {FFFFFF}66, 135, 245, 255
-.rgba_icerik_5  = {FFFFFF}rgba(66, 135, 245, 255)
-.rgba_icerik_6  = {FFFFFF}rgba(66, 135, 245, 255);
+.rgba_icerik_3  = {f0f0f0}66 135 245 255
+.rgba_icerik_4  = {f0f0f0}66, 135, 245, 255
+.rgba_icerik_5  = {f0f0f0}rgba(66, 135, 245, 255)
+.rgba_icerik_6  = {f0f0f0}rgba(66, 135, 245, 255);
 .rgba_buton_1   = Change
 .rgba_buton_2   = Back
 .rgba_hata      = The RGBA code you entered is incorrect.
@@ -293,22 +293,22 @@
 
 [Preview Models Manuel]
 .pmdls_mbaslik  = Manual edit
-.pmdls_icerik_1 = {FFFFFF}Enter the value you want to use.
-.pmdls_icerik_2 = {badc58}Your current value is: {FFFFFF}#d
-.pmdls_icerik_3 = {badc58}Your current value is: {FFFFFF}#.2f
+.pmdls_icerik_1 = {f0f0f0}Enter the value you want to use.
+.pmdls_icerik_2 = {badc58}Your current value is: {f0f0f0}#d
+.pmdls_icerik_3 = {badc58}Your current value is: {f0f0f0}#.2f
 .pmdls_buton_3  = Update
 .pmdls_buton_4  = Close
 
 [Back, Ileri Al]
 .gi_baslik      = Undo and Redo
-.gi_icerik_1    = Choose the index you want to show. The index can be from {ff7979}1 {ffffff}to {ff7979}#%d
+.gi_icerik_1    = Choose the index you want to show. The index can be from {ff7979}1 {f0f0f0}to {ff7979}#%d
 .gi_buton_1     = Show
 .gi_buton_2     = Close
 .gi_hata        = You entered an incorrect value.
 
 [Back, Ileri Al | Onay]
 .gio_baslik     = Confirm Changes
-.gio_icerik_1   = {FFFFFF}Are you sure you want the confirm the changes?
+.gio_icerik_1   = {f0f0f0}Are you sure you want the confirm the changes?
 .gio_buton_1    = Yes
 .gio_buton_2    = No
 .gio_bilgi_1    = The changes have been saved.
@@ -330,15 +330,15 @@
 
 [Silinenler - Temizle]
 .st_baslik      = Erase all data
-.st_icerik1     = {ff7f50}Warning: {FFFFFF}This operation will delete the data of all textdraws you have deleted.
-.st_icerik2     = {FFFFFF}Confirm this action?
+.st_icerik1     = {ff7f50}Warning: {f0f0f0}This operation will delete the data of all textdraws you have deleted.
+.st_icerik2     = {f0f0f0}Confirm this action?
 .st_buton1      = Yes
 .st_buton2      = No
 .st_bilgi       = Erased all data.
 
 [Silinenler - Tum Verileri Back Yukle]
 .stgy_baslik    = Restore all data
-.stgy_icerik1   = {FFFFFF}Are you sure you want to restore all data?
+.stgy_icerik1   = {f0f0f0}Are you sure you want to restore all data?
 .stgy_buton1    = Yes
 .stgy_buton2    = No
 .stgy_bilgi     = All data has been restored. Total data: #d
@@ -445,14 +445,14 @@
 
 [Gruplama: Metin Degistir]
 .gmd_baslik     = Text change
-.gmd_icerik     = {FFFFFF}Enter the new text of the grouped items.
+.gmd_icerik     = {f0f0f0}Enter the new text of the grouped items.
 .gmd_buton1     = Change
 .gmd_buton2     = Back
 .gmd_hata       = The text can't be empty.
 
 [Gruplama Outline]
 .goline_baslik  = Outline
-.goline_icerik  = {FFFFFF}Enter the outline value you want to use.
+.goline_icerik  = {f0f0f0}Enter the outline value you want to use.
 .goline_buton1  = Change
 .goline_buton2  = Back
 .goline_bilgi   = The outline value of grouped textdraws is set to #d.
@@ -460,7 +460,7 @@
 
 [Gruplama Shadow]
 .gshdow_baslik  = Shadow
-.gshdow_icerik  = {FFFFFF}Enter the shadow value you want to use.
+.gshdow_icerik  = {f0f0f0}Enter the shadow value you want to use.
 .gshdow_buton1  = Change
 .gshdow_buton2  = Back
 .gshdow_bilgi   = The shadow value of grouped textdraws is set to #d.
@@ -468,9 +468,9 @@
 
 [Gruplama Offset Konum]
 .gko_baslik     = Offset Value
-.gko_icrk_1     = {eccc68}offsetX: {FFFFFF}#.1f    {eccc68}offsetY: {FFFFFF}#.1f
-.gko_icrk_2     = {70a1ff}For offsetX value only: {ffffff}value 0
-.gko_icrk_3     = {70a1ff}For offsetY value only: {ffffff}0 value
+.gko_icrk_1     = {eccc68}offsetX: {f0f0f0}#.1f    {eccc68}offsetY: {f0f0f0}#.1f
+.gko_icrk_2     = {70a1ff}For offsetX value only: {f0f0f0}value 0
+.gko_icrk_3     = {70a1ff}For offsetY value only: {f0f0f0}0 value
 .gko_buton_1    = Update
 .gko_buton_2    = Close
 .gko_hata_1     = You entered an incorrect value.

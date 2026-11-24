@@ -140,16 +140,16 @@ ShowPlayerTaxiMeter(playerid) {
 DialogCreate:VehicleTaximeterMenu(playerid) {
 	new dialog[300];
 
-	strcatf(dialog, "{ffffff}Precio por kilometro\t{"#YELLOW_COLOR"}%s$\n", number_format_thousand(TAXI_METER_VEHICLE[ GetPlayerVehicleID(playerid) ][veh_taxi_meter_PRICE]));
-	strcatf(dialog, "{ffffff}Distancia recorrida\t{"#YELLOW_COLOR"}%.2fkm\n", TAXI_METER_VEHICLE[ GetPlayerVehicleID(playerid) ][veh_taxi_meter_DISTANCE]);
-	strcatf(dialog, "{ffffff}Dinero a pagar\t{"#YELLOW_COLOR"}%s$\n", number_format_thousand(TAXI_METER_VEHICLE[ GetPlayerVehicleID(playerid) ][veh_taxi_meter_PAYMENT]));
+	strcatf(dialog, "{f0f0f0}Precio por kilometro\t{"#YELLOW_COLOR"}%s$\n", number_format_thousand(TAXI_METER_VEHICLE[ GetPlayerVehicleID(playerid) ][veh_taxi_meter_PRICE]));
+	strcatf(dialog, "{f0f0f0}Distancia recorrida\t{"#YELLOW_COLOR"}%.2fkm\n", TAXI_METER_VEHICLE[ GetPlayerVehicleID(playerid) ][veh_taxi_meter_DISTANCE]);
+	strcatf(dialog, "{f0f0f0}Dinero a pagar\t{"#YELLOW_COLOR"}%s$\n", number_format_thousand(TAXI_METER_VEHICLE[ GetPlayerVehicleID(playerid) ][veh_taxi_meter_PAYMENT]));
 
 	if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
 		strcatf(dialog, "{000000}\n");
-		strcatf(dialog, "{ffffff}Cambiar tarifa\t{"#YELLOW_COLOR"}Taxista\n");
+		strcatf(dialog, "{f0f0f0}Cambiar tarifa\t{"#YELLOW_COLOR"}Taxista\n");
 	}
 
-	Dialog_Open(playerid, Dialog:VehicleTaximeterMenu, DIALOG_STYLE_TABLIST, "{"#YELLOW_COLOR"}·{ffffff}Taxímetro", dialog, "Continuar", "Cancelar");
+	Dialog_Open(playerid, Dialog:VehicleTaximeterMenu, DIALOG_STYLE_TABLIST, "{"#YELLOW_COLOR"}·{f0f0f0}Taxímetro", dialog, "Continuar", "Cancelar");
 	return 1;
 }
 DialogResponse:VehicleTaximeterMenu(playerid, response, listitem, inputtext[]) {
@@ -165,7 +165,7 @@ DialogResponse:VehicleTaximeterMenu(playerid, response, listitem, inputtext[]) {
 }
 
 DialogCreate:VehicleTaximeterPrice(playerid) {
-	Dialog_Open(playerid, Dialog:VehicleTaximeterPrice, DIALOG_STYLE_INPUT, "{"#YELLOW_COLOR"}·{ffffff}Cambiar tarifa", "{ffffff}Introduce el nuevo precio por kilometro:", "Cambiar", "Cancelar");
+	Dialog_Open(playerid, Dialog:VehicleTaximeterPrice, DIALOG_STYLE_INPUT, "{"#YELLOW_COLOR"}·{f0f0f0}Cambiar tarifa", "{f0f0f0}Introduce el nuevo precio por kilometro:", "Cambiar", "Cancelar");
 	return 1;
 }
 DialogResponse:VehicleTaximeterPrice(playerid, response, listitem, inputtext[]) {
