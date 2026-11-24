@@ -1,5 +1,5 @@
 /*
-	Prime Roleplay
+	Server Roleplay
 		by: dere.prime
 */
 
@@ -123,9 +123,9 @@ const MAX_PLAYERS = 100;
 #define COLOR_FADE5 0x6E6E6E6E
 #define PLAYER_COLOR 0xCCCCCC00
 
-#define SERVER_NAME "Prime RolePlay"
-#define SERVER_NAME_FORMAT "{"#PRIMARY_COLOR"}Prime {f0f0f0}RolePlay"
-#define SERVER_SHORT_NAME "Prime"
+#define SERVER_NAME "Server RolePlay"
+#define SERVER_NAME_FORMAT "{"#PRIMARY_COLOR"}Server {f0f0f0}RolePlay"
+#define SERVER_SHORT_NAME "Server"
 #define SERVER_GAMEMODE "RolePlay en Español"
 #define SERVER_LANGUAGE "Español - Spanish"
 #define SERVER_WEBSITE "https://discord.com/users/1303170133702868992"
@@ -3494,7 +3494,7 @@ new ADMIN_LEVELS[][] = {
 	"Moderador",
 	"Moderador Global",
 	"Administrador",
-	"Prime"
+	"Dueño"
 };
 
 new
@@ -4628,7 +4628,7 @@ CreateTextDraws() {
     TextDrawFont(Textdraws[textdraw_LOAD_SCREEN][2], 3);
     TextDrawSetProportional(Textdraws[textdraw_LOAD_SCREEN][2], 1);
 
-    Textdraws[textdraw_LOAD_SCREEN][3] = TextDrawCreate(320.000, 95.000, "PRIME");
+    Textdraws[textdraw_LOAD_SCREEN][3] = TextDrawCreate(320.000, 95.000, "Server");
     TextDrawLetterSize(Textdraws[textdraw_LOAD_SCREEN][3], 0.800, 3.000);
     TextDrawAlignment(Textdraws[textdraw_LOAD_SCREEN][3], 2);
     TextDrawColor(Textdraws[textdraw_LOAD_SCREEN][3], -1);
